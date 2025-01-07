@@ -1,1 +1,1 @@
-# Studio
+# Sanity Content Studio
