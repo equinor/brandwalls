@@ -1,3 +1,73 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer base {
+  html {
+    font-family: theme('fontFamily.sans');
+    @apply text-slate-80;
+  }
+  body {
+    -webkit-font-smoothing: antialiased;
+  }
+
+  input,
+  button,
+  textarea,
+  select {
+    font: inherit;
+  }
+
+  #root,
+  #__next {
+    isolation: isolate;
+  }
+  p,
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    overflow-wrap: break-word;
+  }
+}
+
+@layer components {
+  .react-clock {
+    display: block;
+    position: relative;
+  }
+
+  /*   .react-clock,
+  .react-clock *,
+  .react-clock *:before,
+  .react-clock *:after {
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+  }
+ */
+  .react-clock > .react-clock__face {
+    @apply absolute inset-0 rounded-full border border-black-100;
+  }
+
+  .react-clock > .react-clock__hand {
+    @apply absolute bottom-0 left-1/2 right-1/2 top-0;
+  }
+
+  .react-clock > .react-clock__hand > .react-clock__hand__body {
+    @apply absolute -translate-x-1/2 rounded-md bg-black-100;
+  }
+
+  .react-clock > .react-clock__face > .react-clock__mark {
+    @apply absolute bottom-0 left-1/2 right-1/2 top-0;
+  }
+
+  .react-clock
+    > .react-clock__face
+    > .react-clock__mark.react-clock__hour-mark:nth-child(3n)
+    > .react-clock__mark__body {
+    @apply absolute h-[10px] w-[10px] -translate-x-[50%] translate-y-2 rounded-full bg-black-100;
+  }
+}

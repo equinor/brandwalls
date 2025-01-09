@@ -5,6 +5,7 @@ export default defineCliConfig({
     projectId: 'l3891ift',
     dataset: 'development',
   },
+  studioHost: 'brandwall',
   /**
    * Enable auto-updates for studios.
    * Learn more at https://www.sanity.io/docs/cli#auto-updates

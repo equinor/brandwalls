@@ -1,9 +1,13 @@
+import FullscreenImage from '@/components/slides/FullscreenImage'
+import InfoBoard from '@/components/slides/InfoBoard'
+import { fullwidthImageText } from '@/sanity/lib/demo'
+import fullWidthDemoImage from './img/temp/doggerBank.jpg'
+
 export default async function Page() {
   return (
-    <>
-      <h1 className="font-display mx-auto flex max-w-[1300] justify-center p-40 text-5xl font-bold tracking-tighter text-black sm:text-6xl md:text-7xl lg:text-8xl">
-        You have not routed to an location for brandwall
-      </h1>
-    </>
+    <div className="h-full w-full">
+      {/* <InfoBoard sif="0.4" /> */}
+      <FullscreenImage content={fullwidthImageText} image={fullWidthDemoImage} credit="Photo: Einar Aslaksen | TRY" />
+    </div>
   )
 }
