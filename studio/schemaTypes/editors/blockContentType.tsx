@@ -1,8 +1,6 @@
 import { IconSubScript, IconSuperScript } from '../../icons'
 import type { BlockDefinition } from 'sanity'
-import { SubScriptRenderer, SuperScriptRenderer } from '../components'
-
-import { strictExternal, warnHttpExternal, warnHttpOrNotValidSlugExternal } from '../validations/validateSlug'
+import { SubScriptRenderer, SuperScriptRenderer } from '../components/renderers'
 
 export type BlockContentProps = {
   h2?: boolean
