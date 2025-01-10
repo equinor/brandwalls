@@ -7,6 +7,12 @@ export default {
   title: 'Slide',
   icon: TbDeviceIpadHorizontalStar,
   fieldsets: [],
+  groups: [
+    {
+      name: 'scheduling',
+      title: 'Schedule',
+    },
+  ],
   fields: [
     defineField({
       name: 'title',

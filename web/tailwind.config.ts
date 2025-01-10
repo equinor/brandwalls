@@ -399,7 +399,7 @@ export default {
                 marginBottom: '0px',
               },
               p: {
-                textWrap: 'balance',
+                textWrap: 'pretty',
                 marginTop: '0.25em',
                 marginBottom: '0.25em',
               },

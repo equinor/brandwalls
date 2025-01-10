@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 import {text_field} from '@equinor/eds-icons'
-import type {PortableTextBlock} from 'sanity'
+import {defineField, type PortableTextBlock} from 'sanity'
 import {EdsIcon} from '../../icons'
 import {configureBlockContent} from '../editors/blockContentType'
 import blocksToText from '../../helpers/blocksToText'
@@ -21,12 +21,16 @@ export default {
   type: 'object',
   fieldsets: [],
   fields: [
-    {
+    defineField({
       name: 'text',
       title: 'Text content',
       type: 'array',
       of: [blockContentType],
-    },
+    }),
+    defineField({
+      name: 'textOptions',
+      type: 'textOptions',
+    }),
   ].filter((e) => e),
   preview: {
     select: {

@@ -18,6 +18,14 @@ export const getPageQuery = defineQuery(`
   }
 `)
 
+export const textOptions = /* groq */ `
+  textOptions{
+    textAlignment,
+    contentXAlignment,
+    contentYAlignment,
+  }
+`
+
 export const getSlideshowsQuery = defineQuery(`
   *[_type == 'slideshow' && (count((showLocations[]->slug.current)[@ in [$slug]]) > 0)][0...30]{
     "type": _type,
@@ -43,9 +51,28 @@ export const getSlideshowsQuery = defineQuery(`
             ...,
           },
         },
-        contentXAlignment,
-        contentYAlignment,
-      }
+        "textOptions":${textOptions}
+      },
+      _type == "fullWidthVideo" => {
+        "type": _type,
+        "id": _key,
+        "video": videoFile->{
+          "url": video.asset->url,
+          thumbnail
+        },
+      },
+      _type == "textBlock" => {
+          ...,
+          "type": _type,
+          "id": _key,
+          "textOptions":${textOptions},
+          text[]{
+          ...,
+          markDefs[]{
+            ...,
+          },
+          },
+        },
       }
     }
   }

@@ -11,7 +11,7 @@ export default function Slideshow({ slideshows }: SlideshowProps) {
   const [activeSlideIndex, setActiveSlideIndex] = useState(0)
 
   useEffect(() => {
-    const interval = setInterval(() => setActiveSlideIndex((i) => (i + 1) % slideshows?.[0]?.slides.length), 10000)
+    const interval = setInterval(() => setActiveSlideIndex((i) => (i + 1) % slideshows?.[0]?.slides.length), 30000)
 
     return () => {
       clearInterval(interval)

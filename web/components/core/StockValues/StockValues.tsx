@@ -52,9 +52,9 @@ const StockValues = ({ className }: { className?: string }) => {
   const getTemplate = (price: string, currency: string, change: string, title: string, date: Date) => {
     return (
       <>
-        <div className="grid grid-cols-2 items-baseline gap-12">
+        <div className="grid grid-cols-[1fr_max-content] items-baseline gap-12">
           <div className="flex items-baseline gap-1">
-            <div className="text-7xl font-normal text-norwegian-woods-100">{price}</div>
+            <div className="text-8xl font-normal text-norwegian-woods-100">{price}</div>
             <div className="text-lg font-normal text-grey-60">{currency}</div>
           </div>
           <div className="flex items-center gap-2">

@@ -8,6 +8,7 @@ import fullWidthVideo from './objects/fullWidthVideo'
 import textBlock from './objects/textBlock'
 import slideScheduling from './objects/slideScheduling'
 import videoFile from './objects/videoFile'
+import textOptions from './objects/textOptions'
 
 export const schemaTypes = [
   // Singletons
@@ -22,4 +23,5 @@ export const schemaTypes = [
   fullWidthVideo,
   slideScheduling,
   videoFile,
+  textOptions,
 ]

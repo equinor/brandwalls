@@ -1,12 +1,57 @@
-import {defineField} from 'sanity'
+import {defineField, Rule} from 'sanity'
 
 export default {
   name: 'slideScheduling',
   title: 'Slide scheduling',
   type: 'object',
+  group: 'scheduling',
   fields: [
     defineField({
-      title: 'Show on selected Weekdays',
+      title: 'Choose type of scheduling',
+      name: 'scheduleType',
+      type: 'string',
+      options: {
+        list: [
+          {title: 'Specific period', value: '1'},
+          {title: 'Selected weekdays', value: '2'},
+          {title: 'Slide frequency', value: '3'},
+        ],
+        layout: 'radio',
+        direction: 'horizontal',
+      },
+    }),
+    defineField({
+      title: 'Show on specific period',
+      name: 'period',
+      type: 'object',
+      fields: [
+        {
+          name: 'from',
+          title: 'Show from',
+          type: 'datetime',
+          options: {
+            dateFormat: 'YYYY-MM-DD',
+            timeFormat: 'HH:mm',
+            timeStep: 15,
+            calendarTodayLabel: 'Today',
+          },
+        },
+        {
+          name: 'to',
+          title: 'Show to',
+          type: 'datetime',
+          options: {
+            dateFormat: 'YYYY-MM-DD',
+            timeFormat: 'HH:mm',
+            timeStep: 15,
+            calendarTodayLabel: 'Today',
+          },
+        },
+      ],
+      hidden: ({document}) => document?.scheduling?.scheduleType !== '1',
+    }),
+    defineField({
+      title: 'Show on selected weekdays',
       name: 'weekdays',
       type: 'array',
       of: [{type: 'string'}],
@@ -21,6 +66,7 @@ export default {
           {title: 'Sunday', value: 'sunday'},
         ],
       },
+      hidden: ({document}) => document?.scheduling?.scheduleType !== '2',
     }),
     defineField({
       title: 'Show in frequency',
@@ -34,12 +80,7 @@ export default {
           {title: 'Every 5th', value: '5'},
         ],
       },
+      hidden: ({document}) => document?.scheduling?.scheduleType !== '3',
     }),
   ],
-  preview: {},
-  prepare({}: {}) {
-    return {
-      title: 'Slide scheduling',
-    }
-  },
 }
