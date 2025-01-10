@@ -70,15 +70,15 @@ export default async function RootLayout({
     >
       <body>
         {/* The <Toaster> component is responsible for rendering toast notifications used in /app/client-utils.ts and /components/DraftModeToast.tsx */}
-        {/*           <Toaster /> */}
-        {/*           {isDraftMode && (
-            <>
-              <DraftModeToast />
-              <VisualEditing />
-            </>
-          )} */}
+        <Toaster />
+        {isDraftMode && (
+          <>
+            <DraftModeToast />
+            <VisualEditing />
+          </>
+        )}
         {/* The <SanityLive> component is responsible for making all sanityFetch calls in your application live, so should always be rendered. */}
-        {/*           <SanityLive onError={handleError} /> */}
+        <SanityLive onError={handleError} />
         <main className="relative h-screen w-screen">{children}</main>
       </body>
     </html>
