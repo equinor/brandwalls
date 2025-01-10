@@ -1,0 +1,29 @@
+name: DEV - Build & Deploy Brandwalls
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - staging
+    paths:
+      - 'web/**'
+      - '!web/README.md'
+      - '!web/.gitignore'
+permissions:
+  id-token: write
+  packages: write
+jobs:
+  deploy-development:
+    runs-on: ubuntu-latest
+    env:
+      DOCKER_BUILDKIT: 1
+    steps:
+      - name: Checkout 🛎️
+        uses: actions/checkout@v3
+      - id: deploy-development
+        uses: ./.github/workflows/deploy-website/
+        with:
+          imageName: ghcr.io/equinor/brandwalls/web-development
+          datasetName: development
+          githubToken: ${{ secrets.GITHUB_TOKEN }}
+          sanityApiToken: ${{ secrets.SANITY_API_TOKEN }}
+          environment: ${{ secrets.ENV }}
