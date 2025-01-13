@@ -25,6 +25,13 @@ COPY --from=deps /app/node_modules ./node_modules
 COPY --from=deps /app/web/node_modules ./web/node_modules
 COPY . .
 
+ARG ARG_SANITY_DATASET
+ARG ARG_SANITY_API_TOKEN
+ARG ARG_SANITY_PROJECT_ID
+ENV SANITY_API_READ_TOKEN ${ARG_SANITY_API_TOKEN}
+ENV NEXT_PUBLIC_SANITY_DATASET ${ARG_SANITY_DATASET}
+ENV NEXT_PUBLIC_SANITY_PROJECT_ID ${ARG_SANITY_PROJECT_ID}
+
 # Next.js collects completely anonymous telemetry data about general usage.
 # Learn more here: https://nextjs.org/telemetry
 # Uncomment the following line in case you want to disable telemetry during the build.
