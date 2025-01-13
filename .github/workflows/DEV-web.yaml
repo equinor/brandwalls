@@ -27,4 +27,4 @@ jobs:
           projectId: ${{ secrets.SANITY_PROJECT_ID }}
           githubToken: ${{ secrets.GITHUB_TOKEN }}
           sanityApiReadToken: ${{ secrets.SANITY_API_READ_TOKEN }}
-          environment: ${{ secrets.ENV }}
+          environment: development

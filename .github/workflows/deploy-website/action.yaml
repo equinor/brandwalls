@@ -63,7 +63,7 @@ runs:
       id: build
       run: |
         docker build . \
-          --cache-from ${{ inputs.imageName }}:${{ env.IMAGE_TAG}} \
+          --cache-from ${{ inputs.imageName }}:${{ env.IMAGE_TAG }} \
           --build-arg ARG_SANITY_PROJECT_ID=${{ inputs.projectId }} \
           --build-arg ARG_SANITY_DATASET=${{ inputs.datasetName }} \
           --build-arg ARG_SANITY_API_READ_TOKEN=${{ inputs.sanityApiReadToken }} \
