@@ -38,7 +38,7 @@ ENV NEXT_PUBLIC_SANITY_PROJECT_ID ${ARG_SANITY_PROJECT_ID}
 # Uncomment the following line in case you want to disable telemetry during the build.
 ENV NEXT_TELEMETRY_DISABLED=1
 
-RUN cd web && pnpm build
+RUN corepack enable pnpm && cd web &&  pnpm build
 
 # Production image, copy all the files and run next
 FROM base AS runner
