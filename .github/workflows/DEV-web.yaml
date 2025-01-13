@@ -24,6 +24,7 @@ jobs:
         with:
           imageName: ghcr.io/equinor/brandwalls/web-development
           datasetName: development
+          projectId: ${{ secrets.SANITY_PROJECT_ID }}
           githubToken: ${{ secrets.GITHUB_TOKEN }}
           sanityApiToken: ${{ secrets.SANITY_API_READ_TOKEN }}
           environment: ${{ secrets.ENV }}
