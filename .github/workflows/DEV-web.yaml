@@ -3,7 +3,7 @@ on:
   workflow_dispatch:
   push:
     branches:
-      - development
+      - staging
     paths:
       - 'web/**'
       - '!web/README.md'
@@ -22,8 +22,8 @@ jobs:
       - id: deploy-development
         uses: ./.github/workflows/deploy-website/
         with:
-          imageName: ghcr.io/equinor/brandwalls/web-${{ secrets.ENV }}
-          datasetName: ${{ secrets.ENV }}
+          imageName: ghcr.io/equinor/brandwalls/web-development
+          datasetName: development
           githubToken: ${{ secrets.GITHUB_TOKEN }}
-          sanityApiReadToken: ${{ secrets.SANITY_API_READ_TOKEN }}
+          sanityApiToken: ${{ secrets.SANITY_API_READ_TOKEN }}
           environment: ${{ secrets.ENV }}
