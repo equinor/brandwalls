@@ -12,6 +12,8 @@ ENV NODE_ENV production
 
 # Install dependencies based on the preferred package manager
 COPY package.json package-lock.json* pnpm-lock.yaml* .npmrc* ./
+COPY web/package.json web/pnpm-lock.yaml web/
+
 RUN \
   if [ -f yarn.lock ]; then yarn --frozen-lockfile; \
   elif [ -f package-lock.json ]; then npm ci; \
@@ -24,6 +26,7 @@ RUN \
 FROM base AS builder
 WORKDIR /app
 COPY --from=deps /app/node_modules ./node_modules
+COPY --from=deps /app/web/node_modules ./web/node_modules
 COPY . .
 
 # Next.js collects completely anonymous telemetry data about general usage.
@@ -32,9 +35,9 @@ COPY . .
 ENV NEXT_TELEMETRY_DISABLED=1
 
 RUN \
-  if [ -f yarn.lock ]; then yarn run build; \
-  elif [ -f package-lock.json ]; then npm run build; \
-  elif [ -f pnpm-lock.yaml ]; then corepack enable pnpm && pnpm run build; \
+  if [ -f yarn.lock ]; then cd web && yarn run build; \
+  elif [ -f package-lock.json ]; then cd web && npm run build; \
+  elif [ -f pnpm-lock.yaml ]; then corepack enable pnpm && cd web && pnpm run build; \
   else echo "Lockfile not found." && exit 1; \
   fi
 
@@ -49,12 +52,12 @@ ENV NEXT_TELEMETRY_DISABLED=1
 RUN addgroup --system --gid 1001 nodejs
 RUN adduser --system --uid 1001 nextjs
 
-COPY --from=builder /app/public ./public
+COPY --from=builder /app/web/public ./public
 
 # Automatically leverage output traces to reduce image size
 # https://nextjs.org/docs/advanced-features/output-file-tracing
-COPY --from=builder --chown=nextjs:nodejs /app/.next/standalone ./
-COPY --from=builder --chown=nextjs:nodejs /app/.next/static ./.next/static
+COPY --from=builder --chown=nextjs:nodejs /app/web/.next/standalone ./
+COPY --from=builder --chown=nextjs:nodejs /app/web/.next/static ./.next/static
 
 USER nextjs
 
