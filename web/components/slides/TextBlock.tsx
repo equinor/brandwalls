@@ -17,8 +17,6 @@ type TextBlockProps = {
 }
 
 export default function TextBlock({ text, textOptions }: TextBlockProps) {
-  const { textAlignment = 'left', contentXAlignment = 'left', contentYAlignment = 'center' } = textOptions!
-
   const xAlignment = {
     center: 'justify-center',
     right: 'justify-end',
@@ -36,12 +34,9 @@ export default function TextBlock({ text, textOptions }: TextBlockProps) {
     left: 'text-start',
   }
 
-  const x = xAlignment[contentXAlignment]
-  const y = yAlignment[contentYAlignment]
-
   return (
-    <div className={`flex h-full w-full max-w-prose text-balance p-12 ${contentXAlignment} ${contentYAlignment}`}>
-      {text && <Blocks value={text} className={`${textX[textAlignment]}`} />}
+    <div className={`justify-left flex h-full w-full max-w-prose items-center text-balance p-12`}>
+      {text && <Blocks value={text} className={`text-left`} />}
     </div>
   )
 }
