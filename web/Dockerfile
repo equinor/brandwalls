@@ -8,16 +8,12 @@ FROM base AS deps
 RUN apk add --no-cache libc6-compat
 WORKDIR /app
 
-ENV NODE_ENV production
-
 # Install dependencies based on the preferred package manager
 COPY package.json package-lock.json* pnpm-lock.yaml* .npmrc* ./
 COPY web/package.json web/pnpm-lock.yaml web/
 
 RUN \
-  if [ -f yarn.lock ]; then yarn --frozen-lockfile; \
-  elif [ -f package-lock.json ]; then npm ci; \
-  elif [ -f pnpm-lock.yaml ]; then corepack enable pnpm && pnpm i --frozen-lockfile; \
+  if [ -f pnpm-lock.yaml ]; then corepack enable pnpm && pnpm m i --frozen-lockfile; \
   else echo "Lockfile not found." && exit 1; \
   fi
 
@@ -29,37 +25,54 @@ COPY --from=deps /app/node_modules ./node_modules
 COPY --from=deps /app/web/node_modules ./web/node_modules
 COPY . .
 
+ARG ARG_SANITY_DATASET
+ARG ARG_SANITY_API_READ_TOKEN
+ARG ARG_SANITY_PROJECT_ID
+
+ENV SANITY_API_READ_TOKEN ${ARG_SANITY_API_READ_TOKEN}
+ENV NEXT_PUBLIC_SANITY_DATASET ${ARG_SANITY_DATASET}
+ENV NEXT_PUBLIC_SANITY_PROJECT_ID ${ARG_SANITY_PROJECT_ID}
+
 # Next.js collects completely anonymous telemetry data about general usage.
 # Learn more here: https://nextjs.org/telemetry
 # Uncomment the following line in case you want to disable telemetry during the build.
 ENV NEXT_TELEMETRY_DISABLED=1
 
-RUN \
-  if [ -f yarn.lock ]; then cd web && yarn run build; \
-  elif [ -f package-lock.json ]; then cd web && npm run build; \
-  elif [ -f pnpm-lock.yaml ]; then corepack enable pnpm && cd web && pnpm run build; \
-  else echo "Lockfile not found." && exit 1; \
-  fi
+RUN corepack enable pnpm && cd web && pnpm build
 
 # Production image, copy all the files and run next
 FROM base AS runner
 WORKDIR /app
 
 ENV NODE_ENV=production
+
+ARG ARG_SANITY_DATASET
+ARG ARG_SANITY_API_READ_TOKEN
+ARG ARG_SANITY_PROJECT_ID
+
+ENV SANITY_API_READ_TOKEN ${ARG_SANITY_API_READ_TOKEN}
+ENV NEXT_PUBLIC_SANITY_DATASET ${ARG_SANITY_DATASET}
+ENV NEXT_PUBLIC_SANITY_PROJECT_ID ${ARG_SANITY_PROJECT_ID}
+
 # Uncomment the following line in case you want to disable telemetry during runtime.
 ENV NEXT_TELEMETRY_DISABLED=1
 
-RUN addgroup --system --gid 1001 nodejs
-RUN adduser --system --uid 1001 nextjs
+ENV USER nextjs
+ENV UID 1001
 
-COPY --from=builder /app/web/public ./public
+RUN addgroup -S "$USER"
+RUN adduser -S --uid "$UID" "$USER"
+RUN apk add --no-cache tini
+
+# Do we need this in next 15, everything is in app?
+# COPY --from=builder /app/web/public ./public
 
 # Automatically leverage output traces to reduce image size
 # https://nextjs.org/docs/advanced-features/output-file-tracing
-COPY --from=builder --chown=nextjs:nodejs /app/web/.next/standalone ./
+COPY --from=builder --chown=nextjs:nodejs /app/web/.next/standalone .
 COPY --from=builder --chown=nextjs:nodejs /app/web/.next/static ./.next/static
 
-USER nextjs
+USER "$UID"
 
 EXPOSE 3000
 
@@ -67,5 +80,7 @@ ENV PORT=3000
 
 # server.js is created by next build from the standalone output
 # https://nextjs.org/docs/pages/api-reference/config/next-config-js/output
-ENV HOSTNAME="0.0.0.0"
+# ENV HOSTNAME="0.0.0.0"
+ENTRYPOINT ["/sbin/tini", "--"]
+
 CMD ["node", "server.js"]

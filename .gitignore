@@ -18,6 +18,10 @@ coverage
 out/
 videos
 
+# studio
+.sanity/
+
+
 # production
 build
 dist

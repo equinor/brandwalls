@@ -16,11 +16,11 @@ inputs:
   githubToken:
     description: 'GitHub token'
     required: true
-  sanityApiToken:
-    description: 'Sanity API token'
+  sanityApiReadToken:
+    description: 'Sanity API read token'
     required: true
   environment:
-    description: 'dev, preprod or prod'
+    description: 'development or production'
     required: true
 
 runs:
@@ -63,10 +63,10 @@ runs:
       id: build
       run: |
         docker build . \
-          --cache-from ${{ inputs.imageName }}:${{ env.IMAGE_TAG}} \
+          --cache-from ${{ inputs.imageName }}:${{ env.IMAGE_TAG }} \
           --build-arg ARG_SANITY_PROJECT_ID=${{ inputs.projectId }} \
           --build-arg ARG_SANITY_DATASET=${{ inputs.datasetName }} \
-          --build-arg ARG_SANITY_API_TOKEN=${{ inputs.sanityApiToken }} \
+          --build-arg ARG_SANITY_API_READ_TOKEN=${{ inputs.sanityApiReadToken }} \
           --build-arg ARG_ENV=${{ inputs.environment }} \
           --file web/Dockerfile \
           --tag ${{ inputs.imageName }}:${{ env.IMAGE_TAG }} \
@@ -92,7 +92,7 @@ runs:
           deploy
           --token-environment
           --component brandwalls-web
-          --image-tag-name brandwalls-web=${{ env.IMAGE_TAG}}
+          --image-tag-name brandwalls-web=${{ env.IMAGE_TAG }}
           --context playground
           -a brandwalls
           -e ${{ inputs.environment }}
