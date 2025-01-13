@@ -57,8 +57,11 @@ ENV NEXT_PUBLIC_SANITY_PROJECT_ID ${ARG_SANITY_PROJECT_ID}
 # Uncomment the following line in case you want to disable telemetry during runtime.
 ENV NEXT_TELEMETRY_DISABLED=1
 
-RUN addgroup --system --gid 1001 nodejs
-RUN adduser --system --uid 1001 nextjs
+ENV USER nextjs
+ENV UID 1001
+
+RUN addgroup -S "$USER"
+RUN adduser -S --uid "$UID" "$USER"
 RUN apk add --no-cache tini
 
 # Do we need this in next 15, everything is in app?
@@ -69,7 +72,7 @@ RUN apk add --no-cache tini
 COPY --from=builder --chown=nextjs:nodejs /app/web/.next/standalone .
 COPY --from=builder --chown=nextjs:nodejs /app/web/.next/static ./.next/static
 
-USER nextjs
+USER "$UID"
 
 EXPOSE 3000
 
