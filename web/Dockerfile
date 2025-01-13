@@ -39,9 +39,7 @@ ENV NEXT_PUBLIC_SANITY_PROJECT_ID ${ARG_SANITY_PROJECT_ID}
 ENV NEXT_TELEMETRY_DISABLED=1
 
 RUN \
-  if [ -f yarn.lock ]; then cd web && yarn run build; \
-  elif [ -f package-lock.json ]; then cd web && npm run build; \
-  elif [ -f pnpm-lock.yaml ]; then corepack enable pnpm && cd web && pnpm run build; \
+  if [ -f pnpm-lock.yaml ]; then corepack enable pnpm && pnpm web build; \
   else echo "Lockfile not found." && exit 1; \
   fi
 
