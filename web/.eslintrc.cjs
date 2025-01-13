@@ -12,16 +12,16 @@ module.exports = {
     'next/core-web-vitals',
     'prettier',
   ],
+  parser: '@typescript-eslint/parser',
+  parserOptions: {
+    ecmaFeatures: {
+      jsx: true,
+    },
+    ecmaVersion: 12,
+    sourceType: 'module',
+  },
   plugins: [],
   rules: {
-    '@typescript-eslint/no-unused-vars': [
-      'warn',
-      {
-        varsIgnorePattern: '^React$',
-      },
-    ],
-    // This rule was so noicy so let's turn it off and see how that works
-    '@typescript-eslint/explicit-module-boundary-types': 'off',
     '@typescript-eslint/ban-ts-comment': ['error', { 'ts-ignore': 'allow-with-description' }],
   },
 }

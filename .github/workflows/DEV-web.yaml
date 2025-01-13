@@ -26,5 +26,5 @@ jobs:
           datasetName: development
           projectId: ${{ secrets.SANITY_PROJECT_ID }}
           githubToken: ${{ secrets.GITHUB_TOKEN }}
-          sanityApiToken: ${{ secrets.SANITY_API_READ_TOKEN }}
+          sanityApiReadToken: ${{ secrets.SANITY_API_READ_TOKEN }}
           environment: ${{ secrets.ENV }}
