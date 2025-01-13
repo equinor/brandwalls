@@ -22,8 +22,8 @@ jobs:
       - id: deploy-development
         uses: ./.github/workflows/deploy-website/
         with:
-          imageName: ghcr.io/equinor/brandwalls/web-development
-          datasetName: development
+          imageName: ghcr.io/equinor/brandwalls/web-${{ secrets.ENV }}
+          datasetName: ${{ secrets.ENV }}
           githubToken: ${{ secrets.GITHUB_TOKEN }}
-          sanityApiToken: ${{ secrets.SANITY_API_TOKEN }}
+          sanityApiReadToken: ${{ secrets.SANITY_API_READ_TOKEN }}
           environment: ${{ secrets.ENV }}
