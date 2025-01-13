@@ -3,7 +3,7 @@ on:
   workflow_dispatch:
   push:
     branches:
-      - staging
+      - development
     paths:
       - 'web/**'
       - '!web/README.md'

@@ -20,7 +20,7 @@ inputs:
     description: 'Sanity API read token'
     required: true
   environment:
-    description: 'dev, preprod or prod'
+    description: 'development or production'
     required: true
 
 runs:
