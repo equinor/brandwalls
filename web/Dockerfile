@@ -8,16 +8,12 @@ FROM base AS deps
 RUN apk add --no-cache libc6-compat
 WORKDIR /app
 
-ENV NODE_ENV production
-
 # Install dependencies based on the preferred package manager
 COPY package.json package-lock.json* pnpm-lock.yaml* .npmrc* ./
 COPY web/package.json web/pnpm-lock.yaml web/
 
 RUN \
-  if [ -f yarn.lock ]; then yarn --frozen-lockfile; \
-  elif [ -f package-lock.json ]; then npm ci; \
-  elif [ -f pnpm-lock.yaml ]; then corepack enable pnpm && pnpm i --frozen-lockfile; \
+  if [ -f pnpm-lock.yaml ]; then corepack enable pnpm && pnpm m i --frozen-lockfile; \
   else echo "Lockfile not found." && exit 1; \
   fi
 
