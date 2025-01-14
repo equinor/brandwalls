@@ -9,6 +9,7 @@ import textBlock from './objects/textBlock'
 import slideScheduling from './objects/slideScheduling'
 import videoFile from './objects/videoFile'
 import textOptions from './objects/textOptions'
+import testSlide from './objects/testSlide'
 
 export const schemaTypes = [
   // Singletons
@@ -24,4 +25,5 @@ export const schemaTypes = [
   slideScheduling,
   videoFile,
   textOptions,
+  testSlide,
 ]

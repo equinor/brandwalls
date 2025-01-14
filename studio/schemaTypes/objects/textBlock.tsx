@@ -5,11 +5,7 @@ import {EdsIcon} from '../../icons'
 import {configureBlockContent} from '../editors/blockContentType'
 import blocksToText from '../../helpers/blocksToText'
 
-const blockContentType = configureBlockContent({
-  h2: false,
-  h3: true,
-  h4: false,
-})
+const blockContentType = configureBlockContent()
 
 type TextBlock = {
   text?: string

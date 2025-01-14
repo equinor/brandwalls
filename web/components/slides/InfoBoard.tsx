@@ -2,9 +2,9 @@
 
 import { format } from 'date-fns'
 import { LogoPrimary, LogoSecondary } from '../core/Logo/Logo'
-import Clock from '../core/Clock/Clock'
 import SIFNumber from '../core/SIFNumber/SIFNumber'
 import StockValues from '../core/StockValues/StockValues'
+import { Clock } from '../core/Clock/Clock'
 
 type InfoBoardProps = {
   sif: string

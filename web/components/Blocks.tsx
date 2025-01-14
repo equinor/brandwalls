@@ -18,6 +18,7 @@ const defaultSerializers = {
     sub: ({ children }: TypeProps) => <sub>{children}</sub>,
     sup: ({ children }: TypeProps) => <sup>{children}</sup>,
     s: ({ children }: TypeProps) => <s>{children}</s>,
+    highlight: ({ children }: TypeProps) => <span className="text-energy-red-100">{children}</span>,
   },
 }
 

@@ -1,3 +1,5 @@
+'use client'
+
 import { forwardRef, HTMLAttributes, useEffect, useState } from 'react'
 import ReactClock from 'react-clock'
 

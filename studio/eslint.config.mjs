@@ -1,3 +1,1 @@
-import studio from '@sanity/eslint-config-studio'
-
-export default [...studio]
+export default ['@sanity/eslint-config-studio', 'prettier']
