@@ -30,4 +30,4 @@ jobs:
       - name: Install dependencies
         run: pnpm install
       - name: Deploy Studio
-        run: pnpm run deploy
+        run: pnpm studio run deploy
