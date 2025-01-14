@@ -13,8 +13,21 @@ permissions:
 
 jobs:
   deploy:
-    uses: ./.github/workflows/deploy-studio/
-    #with:
-    # environment: 'development'
-    secrets:
-      sanity_deploy_token: ${{ secrets.SANITY_DEPLOY_TOKEN }}
+    runs-on: ubuntu-latest
+    env:
+      SANITY_AUTH_TOKEN: ${{ secrets.SANITY_DEPLOY_TOKEN }}
+    steps:
+      - name: Checkout 🛎️
+        uses: actions/checkout@v3
+      - name: Install pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 10
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'pnpm'
+      - name: Install dependencies
+        run: pnpm install
+      - name: Deploy Studio
+        run: pnpm run deploy
