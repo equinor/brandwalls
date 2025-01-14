@@ -1,6 +1,9 @@
 # syntax=docker.io/docker/dockerfile:1
 
 FROM node:18-alpine AS base
+ENV PNPM_HOME="/pnpm"
+ENV PATH="$PNPM_HOME:$PATH"
+RUN corepack enable
 
 # Install dependencies only when needed
 FROM base AS deps
@@ -9,14 +12,18 @@ RUN apk add --no-cache libc6-compat
 WORKDIR /app
 
 # Install dependencies based on the preferred package manager
-COPY package.json package-lock.json* pnpm-lock.yaml* .npmrc* ./
-COPY web/package.json web/pnpm-lock.yaml web/
+#COPY package.json pnpm-lock.yaml* .npmrc* ./
+#COPY web/package.json web/
+COPY pnpm-lock.yaml ./
 
-RUN \
-  if [ -f pnpm-lock.yaml ]; then corepack enable pnpm && pnpm m i --frozen-lockfile; \
-  else echo "Lockfile not found." && exit 1; \
-  fi
+#RUN \
+#  if [ -f pnpm-lock.yaml ]; then pnpm m i --frozen-lockfile; \
+#  else echo "Lockfile not found." && exit 1; \
+#  fi
 
+RUN pnpm fetch --prod
+ADD . ./
+RUN pnpm install -r --offline --prod
 
 # Rebuild the source code only when needed
 FROM base AS builder
@@ -38,7 +45,7 @@ ENV NEXT_PUBLIC_SANITY_PROJECT_ID ${ARG_SANITY_PROJECT_ID}
 # Uncomment the following line in case you want to disable telemetry during the build.
 ENV NEXT_TELEMETRY_DISABLED=1
 
-RUN corepack enable pnpm && cd web && pnpm build
+RUN pnpm web build
 
 # Production image, copy all the files and run next
 FROM base AS runner
