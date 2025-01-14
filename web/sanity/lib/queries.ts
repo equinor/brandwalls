@@ -18,7 +18,7 @@ export const getPageQuery = defineQuery(`
   }
 `)
 
-export const textOptions = /* groq */ `
+const textOptions = /* groq */ `
   textOptions{
     textAlignment,
     contentXAlignment,
@@ -73,6 +73,11 @@ export const getSlideshowsQuery = defineQuery(`
           },
           },
         },
+        _type == "testSlide" => {
+        "type": _type,
+        "id": _key,
+        title
+      },
       }
     }
   }

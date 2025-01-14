@@ -13,21 +13,449 @@
  */
 
 // Source: schema.json
-export type Slug = {
-  _type: "slug";
-  current: string;
-  source?: string;
-};
+export type SanityImagePaletteSwatch = {
+  _type: 'sanity.imagePaletteSwatch'
+  background?: string
+  foreground?: string
+  population?: number
+  title?: string
+}
 
-export type Page = {
-  _id: string;
-  _type: "page";
-  _createdAt: string;
-  _updatedAt: string;
-  _rev: string;
-  name: string;
-  slug: Slug;
-  heading: string;
-  subheading?: string;
-  pageBuilder?: any;
-};
+export type SanityImagePalette = {
+  _type: 'sanity.imagePalette'
+  darkMuted?: SanityImagePaletteSwatch
+  lightVibrant?: SanityImagePaletteSwatch
+  darkVibrant?: SanityImagePaletteSwatch
+  vibrant?: SanityImagePaletteSwatch
+  dominant?: SanityImagePaletteSwatch
+  lightMuted?: SanityImagePaletteSwatch
+  muted?: SanityImagePaletteSwatch
+}
+
+export type SanityImageDimensions = {
+  _type: 'sanity.imageDimensions'
+  height?: number
+  width?: number
+  aspectRatio?: number
+}
+
+export type Geopoint = {
+  _type: 'geopoint'
+  lat?: number
+  lng?: number
+  alt?: number
+}
+
+export type FullWidthVideo = {
+  _type: 'fullWidthVideo'
+  videoFile: {
+    _ref: string
+    _type: 'reference'
+    _weak?: boolean
+    [internalGroqTypeReferenceTo]?: 'videoFile'
+  }
+}
+
+export type VideoFile = {
+  _id: string
+  _type: 'videoFile'
+  _createdAt: string
+  _updatedAt: string
+  _rev: string
+  video: {
+    asset?: {
+      _ref: string
+      _type: 'reference'
+      _weak?: boolean
+      [internalGroqTypeReferenceTo]?: 'sanity.fileAsset'
+    }
+    _type: 'file'
+  }
+  thumbnail?: {
+    asset?: {
+      _ref: string
+      _type: 'reference'
+      _weak?: boolean
+      [internalGroqTypeReferenceTo]?: 'sanity.imageAsset'
+    }
+    hotspot?: SanityImageHotspot
+    crop?: SanityImageCrop
+    _type: 'image'
+  }
+}
+
+export type SanityFileAsset = {
+  _id: string
+  _type: 'sanity.fileAsset'
+  _createdAt: string
+  _updatedAt: string
+  _rev: string
+  originalFilename?: string
+  label?: string
+  title?: string
+  description?: string
+  altText?: string
+  sha1hash?: string
+  extension?: string
+  mimeType?: string
+  size?: number
+  assetId?: string
+  uploadId?: string
+  path?: string
+  url?: string
+  source?: SanityAssetSourceData
+}
+
+export type FullWidthImage = {
+  _type: 'fullWidthImage'
+  image: {
+    asset?: {
+      _ref: string
+      _type: 'reference'
+      _weak?: boolean
+      [internalGroqTypeReferenceTo]?: 'sanity.imageAsset'
+    }
+    hotspot?: SanityImageHotspot
+    crop?: SanityImageCrop
+    _type: 'image'
+  }
+  text?: Array<{
+    children?: Array<{
+      marks?: Array<string>
+      text?: string
+      _type: 'span'
+      _key: string
+    }>
+    style?: 'normal' | 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'blockquote'
+    listItem?: 'number' | 'bullet'
+    markDefs?: null
+    level?: number
+    _type: 'block'
+    _key: string
+  }>
+  textOptions?: TextOptions
+}
+
+export type InfoBoard = {
+  _type: 'infoBoard'
+  sif?: string
+}
+
+export type TextBlock = {
+  _type: 'textBlock'
+  text?: Array<{
+    children?: Array<{
+      marks?: Array<string>
+      text?: string
+      _type: 'span'
+      _key: string
+    }>
+    style?: 'normal' | 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'blockquote'
+    listItem?: 'number' | 'bullet'
+    markDefs?: null
+    level?: number
+    _type: 'block'
+    _key: string
+  }>
+  textOptions?: TextOptions
+}
+
+export type TextOptions = {
+  _type: 'textOptions'
+  textAlignment?: string
+  contentXAlignment?: string
+  contentYAlignment?: string
+}
+
+export type Slide = {
+  _id: string
+  _type: 'slide'
+  _createdAt: string
+  _updatedAt: string
+  _rev: string
+  title?: string
+  scheduling?: SlideScheduling
+  content?: Array<
+    | ({
+        _key: string
+      } & TextBlock)
+    | ({
+        _key: string
+      } & FullWidthImage)
+    | ({
+        _key: string
+      } & FullWidthVideo)
+    | ({
+        _key: string
+      } & InfoBoard)
+  >
+}
+
+export type SanityImageCrop = {
+  _type: 'sanity.imageCrop'
+  top?: number
+  bottom?: number
+  left?: number
+  right?: number
+}
+
+export type SanityImageHotspot = {
+  _type: 'sanity.imageHotspot'
+  x?: number
+  y?: number
+  height?: number
+  width?: number
+}
+
+export type SanityImageAsset = {
+  _id: string
+  _type: 'sanity.imageAsset'
+  _createdAt: string
+  _updatedAt: string
+  _rev: string
+  originalFilename?: string
+  label?: string
+  title?: string
+  description?: string
+  altText?: string
+  sha1hash?: string
+  extension?: string
+  mimeType?: string
+  size?: number
+  assetId?: string
+  uploadId?: string
+  path?: string
+  url?: string
+  metadata?: SanityImageMetadata
+  source?: SanityAssetSourceData
+}
+
+export type SanityAssetSourceData = {
+  _type: 'sanity.assetSourceData'
+  name?: string
+  id?: string
+  url?: string
+}
+
+export type SanityImageMetadata = {
+  _type: 'sanity.imageMetadata'
+  location?: Geopoint
+  dimensions?: SanityImageDimensions
+  palette?: SanityImagePalette
+  lqip?: string
+  blurHash?: string
+  hasAlpha?: boolean
+  isOpaque?: boolean
+}
+
+export type SlideScheduling = {
+  _type: 'slideScheduling'
+  scheduleType?: '1' | '2' | '3'
+  period?: {
+    from?: string
+    to?: string
+  }
+  weekdays?: Array<string>
+  slideFrequency?: Array<string>
+}
+
+export type Slideshow = {
+  _id: string
+  _type: 'slideshow'
+  _createdAt: string
+  _updatedAt: string
+  _rev: string
+  title?: string
+  showLocations?: Array<{
+    _ref: string
+    _type: 'reference'
+    _weak?: boolean
+    _key: string
+    [internalGroqTypeReferenceTo]?: 'location'
+  }>
+  slides?: Array<{
+    _ref: string
+    _type: 'reference'
+    _weak?: boolean
+    _key: string
+    [internalGroqTypeReferenceTo]?: 'slide'
+  }>
+}
+
+export type Location = {
+  _id: string
+  _type: 'location'
+  _createdAt: string
+  _updatedAt: string
+  _rev: string
+  title?: string
+  slug?: Slug
+  lat?: string
+  lon?: string
+}
+
+export type Slug = {
+  _type: 'slug'
+  current: string
+  source?: string
+}
+
+export type AllSanitySchemaTypes =
+  | SanityImagePaletteSwatch
+  | SanityImagePalette
+  | SanityImageDimensions
+  | Geopoint
+  | FullWidthVideo
+  | VideoFile
+  | SanityFileAsset
+  | FullWidthImage
+  | InfoBoard
+  | TextBlock
+  | TextOptions
+  | Slide
+  | SanityImageCrop
+  | SanityImageHotspot
+  | SanityImageAsset
+  | SanityAssetSourceData
+  | SanityImageMetadata
+  | SlideScheduling
+  | Slideshow
+  | Location
+  | Slug
+export declare const internalGroqTypeReferenceTo: unique symbol
+// Source: ./sanity/lib/queries.ts
+// Variable: settingsQuery
+// Query: *[_type == "settings"][0]
+export type SettingsQueryResult = null
+// Variable: pagesSlugs
+// Query: *[_type == "location" && defined(slug.current)]  {    "slug": slug.current  }
+export type PagesSlugsResult = Array<{
+  slug: string | null
+}>
+// Variable: getPageQuery
+// Query: *[_type == 'location' && slug.current == $slug][0]{    _id,    _type,    slug,    ...  }
+export type GetPageQueryResult = {
+  _id: string
+  _type: 'location'
+  slug?: Slug
+  _createdAt: string
+  _updatedAt: string
+  _rev: string
+  title?: string
+  lat?: string
+  lon?: string
+} | null
+// Variable: getSlideshowsQuery
+// Query: *[_type == 'slideshow' && (count((showLocations[]->slug.current)[@ in [$slug]]) > 0)][0...30]{    "type": _type,    "id": _id,    title,    slides[]->{      scheduling{        ...,      },      content[]{        _type == "infoBoard" => {        "type": _type,        "id": _key,        sif,      },      _type == "fullWidthImage" => {        "type": _type,        "id": _key,        image,        text[]{          ...,          markDefs[]{            ...,          },        },        "textOptions":  textOptions{    textAlignment,    contentXAlignment,    contentYAlignment,  }      },      _type == "fullWidthVideo" => {        "type": _type,        "id": _key,        "video": videoFile->{          "url": video.asset->url,          thumbnail        },      },      _type == "textBlock" => {          ...,          "type": _type,          "id": _key,          "textOptions":  textOptions{    textAlignment,    contentXAlignment,    contentYAlignment,  },          text[]{          ...,          markDefs[]{            ...,          },          },        },      }    }  }
+export type GetSlideshowsQueryResult = Array<{
+  type: 'slideshow'
+  id: string
+  title: string | null
+  slides: Array<{
+    scheduling: {
+      _type: 'slideScheduling'
+      scheduleType?: '1' | '2' | '3'
+      period?: {
+        from?: string
+        to?: string
+      }
+      weekdays?: Array<string>
+      slideFrequency?: Array<string>
+    } | null
+    content: Array<
+      | {
+          _key: string
+          _type: 'textBlock'
+          text: Array<{
+            children?: Array<{
+              marks?: Array<string>
+              text?: string
+              _type: 'span'
+              _key: string
+            }>
+            style?: 'blockquote' | 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'normal'
+            listItem?: 'bullet' | 'number'
+            markDefs: null
+            level?: number
+            _type: 'block'
+            _key: string
+          }> | null
+          textOptions: {
+            textAlignment: string | null
+            contentXAlignment: string | null
+            contentYAlignment: string | null
+          } | null
+          type: 'textBlock'
+          id: string
+        }
+      | {
+          type: 'fullWidthImage'
+          id: string
+          image: {
+            asset?: {
+              _ref: string
+              _type: 'reference'
+              _weak?: boolean
+              [internalGroqTypeReferenceTo]?: 'sanity.imageAsset'
+            }
+            hotspot?: SanityImageHotspot
+            crop?: SanityImageCrop
+            _type: 'image'
+          }
+          text: Array<{
+            children?: Array<{
+              marks?: Array<string>
+              text?: string
+              _type: 'span'
+              _key: string
+            }>
+            style?: 'blockquote' | 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'normal'
+            listItem?: 'bullet' | 'number'
+            markDefs: null
+            level?: number
+            _type: 'block'
+            _key: string
+          }> | null
+          textOptions: {
+            textAlignment: string | null
+            contentXAlignment: string | null
+            contentYAlignment: string | null
+          } | null
+        }
+      | {
+          type: 'infoBoard'
+          id: string
+          sif: string | null
+        }
+      | {
+          type: 'fullWidthVideo'
+          id: string
+          video: {
+            url: string | null
+            thumbnail: {
+              asset?: {
+                _ref: string
+                _type: 'reference'
+                _weak?: boolean
+                [internalGroqTypeReferenceTo]?: 'sanity.imageAsset'
+              }
+              hotspot?: SanityImageHotspot
+              crop?: SanityImageCrop
+              _type: 'image'
+            } | null
+          }
+        }
+    > | null
+  }> | null
+}>
+
+// Query TypeMap
+import '@sanity/client'
+declare module '@sanity/client' {
+  interface SanityQueries {
+    '*[_type == "settings"][0]': SettingsQueryResult
+    '\n  *[_type == "location" && defined(slug.current)]\n  {\n    "slug": slug.current\n  }\n': PagesSlugsResult
+    "\n  *[_type == 'location' && slug.current == $slug][0]{\n    _id,\n    _type,\n    slug,\n    ...\n  }\n": GetPageQueryResult
+    '\n  *[_type == \'slideshow\' && (count((showLocations[]->slug.current)[@ in [$slug]]) > 0)][0...30]{\n    "type": _type,\n    "id": _id,\n    title,\n    slides[]->{\n      scheduling{\n        ...,\n      },\n      content[]{\n        _type == "infoBoard" => {\n        "type": _type,\n        "id": _key,\n        sif,\n      },\n      _type == "fullWidthImage" => {\n        "type": _type,\n        "id": _key,\n        image,\n        text[]{\n          ...,\n          markDefs[]{\n            ...,\n          },\n        },\n        "textOptions":\n  textOptions{\n    textAlignment,\n    contentXAlignment,\n    contentYAlignment,\n  }\n\n      },\n      _type == "fullWidthVideo" => {\n        "type": _type,\n        "id": _key,\n        "video": videoFile->{\n          "url": video.asset->url,\n          thumbnail\n        },\n      },\n      _type == "textBlock" => {\n          ...,\n          "type": _type,\n          "id": _key,\n          "textOptions":\n  textOptions{\n    textAlignment,\n    contentXAlignment,\n    contentYAlignment,\n  }\n,\n          text[]{\n          ...,\n          markDefs[]{\n            ...,\n          },\n          },\n        },\n      }\n    }\n  }\n': GetSlideshowsQueryResult
+  }
+}

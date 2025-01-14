@@ -71,3 +71,10 @@
     @apply absolute h-[10px] w-[10px] -translate-x-[50%] translate-y-2 rounded-full bg-black-100;
   }
 }
+
+@layer utilities {
+  .text-stroke {
+    -webkit-text-stroke-width: 1px;
+    -webkit-text-stroke-color: theme(colors.slate.80);
+  }
+}

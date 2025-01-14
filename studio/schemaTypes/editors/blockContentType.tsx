@@ -1,15 +1,16 @@
 import {IconSubScript, IconSuperScript} from '../../icons'
 import type {BlockDefinition} from 'sanity'
+import {BiSolidColorFill} from 'react-icons/bi'
 import {SubScriptRenderer, SuperScriptRenderer} from '../components/renderers'
+import {defaultColors} from '../defaultColors'
 
 export type BlockContentProps = {
+  h1?: boolean
   h2?: boolean
   h3?: boolean
   h4?: boolean
   lists?: boolean
-  smallText?: boolean
-  largeText?: boolean
-  extraLargeText?: boolean
+  highlight?: boolean
 }
 
 const round = (num: number) =>
@@ -19,30 +20,9 @@ const round = (num: number) =>
     .replace(/\.0$/, '')
 export const em = (px: number, base: number) => `${round(px / base)}em`
 
-const SmallTextRender = (props: any) => {
-  const {children} = props
-  return <span style={{fontSize: '0.8rem'}}>{children}</span>
-}
-export const LargeTextRender = (props: any) => {
-  const {children} = props
-  return <span style={{fontSize: `${em(36, 16)}`, fontWeight: '600'}}>{children}</span>
-}
-export const ExtraLargeTextRender = (props: any) => {
-  const {children} = props
-  return <span style={{fontSize: `${em(56, 16)}`, fontWeight: '600'}}>{children}</span>
-}
-
 // H1 not allowed in block content since it should be a document title.
 export const configureBlockContent = (options: BlockContentProps = {}): BlockDefinition => {
-  const {
-    h2 = true,
-    h3 = true,
-    h4 = false,
-    lists = true,
-    largeText = false,
-    extraLargeText = false,
-    smallText = true,
-  } = options
+  const {h1 = true, h2 = true, h3 = true, h4 = true, lists = true, highlight = false} = options
 
   /** comment */
   const config: BlockDefinition = {
@@ -71,29 +51,23 @@ export const configureBlockContent = (options: BlockContentProps = {}): BlockDef
           icon: IconSuperScript,
           component: SuperScriptRenderer,
         },
+        {
+          title: 'Brand text color',
+          value: 'highlight',
+          icon: BiSolidColorFill,
+          component: ({children}: {children: React.ReactNode}) => {
+            return <span style={{color: defaultColors[8].value}}>{children}</span>
+          },
+        },
       ],
       annotations: [],
     },
   }
 
-  const h2DefaultConfig = {title: 'Heading 2', value: 'h2'}
-  const h3DefaultConfig = {title: 'Heading 3', value: 'h3'}
-  const h4Config = {title: 'Heading 4', value: 'h4'}
-  const smallTextConfig = {
-    title: 'Small text',
-    value: 'smallText',
-    component: SmallTextRender,
-  }
-  const largeTextConfig = {
-    title: 'Large text',
-    value: 'largeText',
-    component: LargeTextRender,
-  }
-  const extraLargeTextConfig = {
-    title: 'Extra large text',
-    value: 'extraLargeText',
-    component: ExtraLargeTextRender,
-  }
+  const h1DefaultConfig = {title: 'Extra Large text', value: 'h1'}
+  const h2DefaultConfig = {title: 'Large text', value: 'h2'}
+  const h3DefaultConfig = {title: 'Medium text', value: 'h3'}
+  const h4Config = {title: 'Small text', value: 'h4'}
 
   type ReferenceType = {
     _ref: string
@@ -103,7 +77,9 @@ export const configureBlockContent = (options: BlockContentProps = {}): BlockDef
   type ReferenceTarget = {
     type: string
   }
-
+  if (h1) {
+    config?.styles?.push(h1DefaultConfig)
+  }
   if (h2) {
     config?.styles?.push(h2DefaultConfig)
   }
@@ -115,14 +91,9 @@ export const configureBlockContent = (options: BlockContentProps = {}): BlockDef
   if (h4) {
     config?.styles?.push(h4Config)
   }
-  if (smallText) {
-    config?.styles?.push(smallTextConfig)
-  }
-  if (largeText) {
-    config?.styles?.push(largeTextConfig)
-  }
-  if (extraLargeText) {
-    config?.styles?.push(extraLargeTextConfig)
+
+  if (highlight) {
+    config.marks?.decorators?.push(textColorConfig)
   }
 
   return config

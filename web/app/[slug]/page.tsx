@@ -1,12 +1,13 @@
-import type { Metadata } from 'next'
-import { sanityFetch } from '@/sanity/lib/live'
-import { getPageQuery, getSlideshowsQuery, pagesSlugs } from '@/sanity/lib/queries'
-import { Page as PageType } from '@/sanity.types'
+import { getSlideshowsQuery, pagesSlugs } from '@/sanity/lib/queries'
 import Slideshow from '@/components/sections/Slideshow'
+import { sanityFetch } from '@/sanity/lib/live'
 
 type Props = {
   params: Promise<{ slug: string }>
 }
+
+export const revalidate = 60
+export const dynamicParams = true
 
 export async function generateStaticParams() {
   /** Fetching all locations to create separate route for each */
@@ -16,27 +17,13 @@ export async function generateStaticParams() {
     perspective: 'published',
     stega: false,
   })
+
   return data
-}
-
-export async function generateMetadata(props: Props): Promise<Metadata> {
-  const params = await props.params
-  const { data: page } = await sanityFetch({
-    query: getPageQuery,
-    params,
-    // Metadata should never contain stega
-    stega: false,
-  })
-
-  return {
-    title: page?.name,
-    description: page?.heading,
-  } satisfies Metadata
 }
 
 export default async function Page(props: Props) {
   const params = await props.params
-  const [{ data: slideshows }] = await Promise.all([sanityFetch({ query: getSlideshowsQuery, params })])
+  const { data: slideshows } = await sanityFetch({ query: getSlideshowsQuery, params })
 
   return (
     <div className="h-full w-full">

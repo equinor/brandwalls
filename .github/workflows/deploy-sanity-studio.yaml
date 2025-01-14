@@ -1,0 +1,20 @@
+name: Deploy sanity studio
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+    paths:
+      - 'studio/**/*'
+      - '!./README.md'
+permissions:
+  id-token: write
+  packages: write
+
+jobs:
+  deploy:
+    uses: ./.github/workflows/deploy-studio/
+    #with:
+    # environment: 'development'
+    secrets:
+      sanity_deploy_token: ${{ secrets.SANITY_DEPLOY_TOKEN }}

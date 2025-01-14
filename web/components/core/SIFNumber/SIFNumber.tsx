@@ -1,5 +1,5 @@
 import SafetyHelmet from '@/icons/SafetyHelmet'
-import { forwardRef, HTMLAttributes, useEffect, useState } from 'react'
+import { forwardRef, HTMLAttributes } from 'react'
 
 export type SIFNumberProps = {
   sif: string

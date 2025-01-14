@@ -33,6 +33,7 @@ export default {
         {type: 'fullWidthImage'},
         {type: 'fullWidthVideo'},
         {type: 'infoBoard'},
+        {type: 'testSlide'},
       ].filter((e) => e),
     }),
   ].filter((e) => e),
@@ -51,7 +52,7 @@ export default {
       const {title} = selection
       return {
         title: title,
-        subtitle: 'Slide  ',
+        subtitle: 'Slide ',
       }
     },
   },

@@ -1,5 +1,5 @@
 import {StringInputProps, set} from 'sanity'
-import {Stack, Button, Grid, Label, Text, Flex} from '@sanity/ui'
+import {Button, Label, Flex} from '@sanity/ui'
 import {createElement, useCallback} from 'react'
 
 type RadioIconSelectorOption = {

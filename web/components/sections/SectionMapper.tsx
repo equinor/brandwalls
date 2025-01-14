@@ -2,12 +2,14 @@ import FullscreenImage from '../slides/FullscreenImage'
 import FullscreenVideo from '../slides/FullscreenVideo'
 import InfoBoard from '../slides/InfoBoard'
 import TextBlock from '../slides/TextBlock'
+import TestSlide from '../slides/TestSlide'
 
 const componentMap: { [key: string]: React.ComponentType<any> } = {
   fullWidthImage: FullscreenImage,
   fullWidthVideo: FullscreenVideo,
   infoBoard: InfoBoard,
   textBlock: TextBlock,
+  testSlide: TestSlide,
 }
 
 export default function SectionMapper({ section }: { section?: any }) {
