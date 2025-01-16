@@ -3,20 +3,37 @@
 import { useEffect, useState } from 'react'
 import SectionMapper from './SectionMapper'
 
+type Slide = {
+  content: any
+  duration?: number | null
+}
+
 type SlideshowProps = {
-  slideshows: any[]
+  slideshows: {
+    slides: Slide[]
+  }[]
 }
 
 export default function Slideshow({ slideshows }: SlideshowProps) {
   const [activeSlideIndex, setActiveSlideIndex] = useState(0)
+  const [currentDuration, setCurrentDuration] = useState(30000)
+
+  const slides = slideshows?.[0]?.slides || []
 
   useEffect(() => {
-    const interval = setInterval(() => setActiveSlideIndex((i) => (i + 1) % slideshows?.[0]?.slides.length), 30000)
+    if (!slides.length) return
+    const duration = (slides[activeSlideIndex]?.duration || 30) * 1000
+
+    setCurrentDuration(duration)
+
+    const interval = setInterval(() => {
+      setActiveSlideIndex((i) => (i + 1) % slides.length)
+    }, duration)
 
     return () => {
       clearInterval(interval)
     }
-  }, [])
+  }, [activeSlideIndex, slides])
 
-  return <SectionMapper section={slideshows?.[0]?.slides[activeSlideIndex]} />
+  return <SectionMapper section={slides[activeSlideIndex]} />
 }
