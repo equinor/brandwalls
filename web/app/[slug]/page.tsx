@@ -1,6 +1,7 @@
 import { getSlideshowsQuery, pagesSlugs } from '@/sanity/lib/queries'
 import Slideshow from '@/components/sections/Slideshow'
 import { sanityFetch } from '@/sanity/lib/live'
+import isSlideActive from '@/common/helpers/isSlideActive'
 
 type Props = {
   params: Promise<{ slug: string }>
@@ -25,9 +26,16 @@ export default async function Page(props: Props) {
   const params = await props.params
   const { data: slideshows } = await sanityFetch({ query: getSlideshowsQuery, params })
 
+  const filteredSlideshows = slideshows.map((show: any) => {
+    return {
+      ...show,
+      slides: show.slides?.filter(isSlideActive) || [],
+    }
+  })
+
   return (
     <div className="h-full w-full">
-      <Slideshow slideshows={slideshows} />
+      <Slideshow slideshows={filteredSlideshows} />
     </div>
   )
 }
