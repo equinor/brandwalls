@@ -39,8 +39,9 @@ export default {
     defineField({
       name: 'duration',
       type: 'number',
-      title: 'Slide Duration (seconds)',
-      description: 'Optional duration for the slide in seconds. Default is 30 seconds',
+      title: 'Optional slide duration in seconds, default is 30',
+      description:
+        'If there is a video it will play the duration of the video, except if this field is set',
       validation: (Rule) =>
         Rule.min(1).integer().positive().warning('Duration should be a positive whole number'),
     }),
