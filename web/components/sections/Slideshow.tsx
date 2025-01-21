@@ -19,6 +19,11 @@ type SlideshowProps = {
 export default function Slideshow({ slideshows }: SlideshowProps) {
   const [activeSlides, setActiveSlides] = useState<Slide[]>([])
   const [currentIndex, setCurrentIndex] = useState(0)
+  const [videoDuration, setVideoDuration] = useState<number | null>(null)
+
+  function handleVideoDuration(durationSeconds: number) {
+    setVideoDuration(durationSeconds)
+  }
 
   useEffect(() => {
     if (!slideshows[0]) return
@@ -30,7 +35,7 @@ export default function Slideshow({ slideshows }: SlideshowProps) {
   useEffect(() => {
     if (activeSlides.length === 0) return
     const currentSlide = activeSlides[currentIndex]
-    const durationMs = (currentSlide?.duration || 30) * 1000
+    const durationMs = (currentSlide?.duration || videoDuration || 30) * 1000
 
     const timer = setTimeout(() => {
       const refreshed = slideshows[0]?.slides?.filter(isSlideActive) || []
@@ -60,5 +65,5 @@ export default function Slideshow({ slideshows }: SlideshowProps) {
     return <div>This slide has no content</div>
   }
 
-  return <SectionMapper section={slide} />
+  return <SectionMapper section={slide} onVideoDuration={handleVideoDuration} />
 }
