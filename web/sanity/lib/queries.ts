@@ -35,6 +35,7 @@ export const getSlideshowsQuery = defineQuery(`
       scheduling{
         ...,
       },
+      duration,
       content[]{
         _type == "infoBoard" => {
         "type": _type,

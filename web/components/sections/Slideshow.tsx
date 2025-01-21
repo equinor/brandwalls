@@ -2,21 +2,63 @@
 
 import { useEffect, useState } from 'react'
 import SectionMapper from './SectionMapper'
+import isSlideActive from '@/common/helpers/isSlideActive'
+
+type Slide = {
+  content: any
+  duration?: number | null
+  scheduling?: any
+}
 
 type SlideshowProps = {
-  slideshows: any[]
+  slideshows: {
+    slides: Slide[]
+  }[]
 }
 
 export default function Slideshow({ slideshows }: SlideshowProps) {
-  const [activeSlideIndex, setActiveSlideIndex] = useState(0)
+  const [activeSlides, setActiveSlides] = useState<Slide[]>([])
+  const [currentIndex, setCurrentIndex] = useState(0)
 
   useEffect(() => {
-    const interval = setInterval(() => setActiveSlideIndex((i) => (i + 1) % slideshows?.[0]?.slides.length), 30000)
+    if (!slideshows[0]) return
+    const initiallyActive = slideshows[0].slides.filter(isSlideActive) || []
+    setActiveSlides(initiallyActive)
+    setCurrentIndex(0)
+  }, [slideshows])
 
-    return () => {
-      clearInterval(interval)
-    }
-  }, [])
+  useEffect(() => {
+    if (activeSlides.length === 0) return
+    const currentSlide = activeSlides[currentIndex]
+    const durationMs = (currentSlide?.duration || 30) * 1000
 
-  return <SectionMapper section={slideshows?.[0]?.slides[activeSlideIndex]} />
+    const timer = setTimeout(() => {
+      const refreshed = slideshows[0]?.slides?.filter(isSlideActive) || []
+
+      setActiveSlides((prevActive) => {
+        if (refreshed.length !== prevActive.length && currentIndex >= refreshed.length) {
+          setCurrentIndex(0)
+        }
+        return refreshed
+      })
+
+      setCurrentIndex((prev) => {
+        if (refreshed.length === 0) return 0
+        return (prev + 1) % refreshed.length
+      })
+    }, durationMs)
+
+    return () => clearTimeout(timer)
+  }, [activeSlides, currentIndex, slideshows])
+
+  if (activeSlides.length === 0) {
+    return <div>No active slides</div>
+  }
+
+  const slide = activeSlides[currentIndex]
+  if (!slide || !slide.content || slide.content.length === 0) {
+    return <div>This slide has no content</div>
+  }
+
+  return <SectionMapper section={slide} />
 }
