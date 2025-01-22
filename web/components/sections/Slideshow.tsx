@@ -18,5 +18,5 @@ export default function Slideshow({ slideshows }: SlideshowProps) {
     }
   }, [])
 
-  return <SectionMapper section={slideshows?.[0]?.slides[activeSlideIndex]} />
+  return <SectionMapper section={slideshows?.[0]?.slides[2]} />
 }

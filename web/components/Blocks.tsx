@@ -31,7 +31,6 @@ const inlineBlockTypes = ['block']
 //@ts-ignore
 export default function Blocks({ value, components, className = '' }: BlockProps) {
   let div: PortableTextBlock[] = []
-  console.log('value', value)
   return (
     <>
       {//@ts-ignore

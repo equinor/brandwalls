@@ -22,7 +22,6 @@ const contentYAlignmentOptions = [
 
 export default {
   name: 'textOptions',
-  title: 'Text options',
   type: 'object',
   fields: [
     defineField({
@@ -36,24 +35,8 @@ export default {
       },
     }),
     defineField({
-      name: 'contentXAlignment',
-      title: 'Alignment of text on slide along x axis',
-      description: '',
-      type: 'string',
-      initialValue: 'left',
-      components: {
-        input: (props) => <RadioInput {...props} options={contentXAlignmentOptions} />,
-      },
-    }),
-    defineField({
-      name: 'contentYAlignment',
-      title: 'Alignment of text on slide along Y axis',
-      description: '',
-      type: 'string',
-      initialValue: 'center',
-      components: {
-        input: (props) => <RadioInput {...props} options={contentYAlignmentOptions} />,
-      },
+      name: 'screens',
+      type: 'screens',
     }),
   ],
 }

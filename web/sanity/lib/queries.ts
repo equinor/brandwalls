@@ -21,8 +21,7 @@ export const getPageQuery = defineQuery(`
 const textOptions = /* groq */ `
   textOptions{
     textAlignment,
-    contentXAlignment,
-    contentYAlignment,
+    screens,
   }
 `
 

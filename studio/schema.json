@@ -190,6 +190,39 @@
     }
   },
   {
+    "name": "screens",
+    "type": "type",
+    "value": {
+      "type": "array",
+      "of": {
+        "type": "string"
+      }
+    }
+  },
+  {
+    "name": "testSlide",
+    "type": "type",
+    "value": {
+      "type": "object",
+      "attributes": {
+        "_type": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "string",
+            "value": "testSlide"
+          }
+        },
+        "title": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "string"
+          },
+          "optional": true
+        }
+      }
+    }
+  },
+  {
     "name": "fullWidthVideo",
     "type": "type",
     "value": {
@@ -967,17 +1000,11 @@
           },
           "optional": true
         },
-        "contentXAlignment": {
+        "screens": {
           "type": "objectAttribute",
           "value": {
-            "type": "string"
-          },
-          "optional": true
-        },
-        "contentYAlignment": {
-          "type": "objectAttribute",
-          "value": {
-            "type": "string"
+            "type": "inline",
+            "name": "screens"
           },
           "optional": true
         }
@@ -1099,6 +1126,21 @@
                 "rest": {
                   "type": "inline",
                   "name": "infoBoard"
+                }
+              },
+              {
+                "type": "object",
+                "attributes": {
+                  "_key": {
+                    "type": "objectAttribute",
+                    "value": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "rest": {
+                  "type": "inline",
+                  "name": "testSlide"
                 }
               }
             ]
