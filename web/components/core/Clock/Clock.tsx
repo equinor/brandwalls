@@ -20,10 +20,10 @@ export const Clock = forwardRef<HTMLDivElement, ClockProps>(function Clock({ cla
     <ReactClock
       value={value}
       size="100%"
-      hourMarksWidth={10}
-      hourMarksLength={10}
-      hourHandWidth={8}
-      minuteHandWidth={8}
+      hourMarksWidth={4}
+      hourMarksLength={4}
+      hourHandWidth={16}
+      minuteHandWidth={16}
       renderMinuteMarks={false}
     />
   )

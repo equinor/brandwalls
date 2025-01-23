@@ -39,7 +39,7 @@ const fetchData = async (url: string) => {
 
 const ENDPOINT = `https://tools.eurolandir.com/tools/pricefeed/xmlirmultiiso5.aspx?companyid=9053`
 
-const StockValues = ({ className }: { className?: string }) => {
+const StockValues = ({}: {}) => {
   const { data, error } = useSWR(ENDPOINT, fetchData, { refreshInterval: 60000 })
 
   if (error) {
@@ -51,37 +51,35 @@ const StockValues = ({ className }: { className?: string }) => {
 
   const getTemplate = (price: string, currency: string, change: string, title: string, date: Date) => {
     return (
-      <>
-        <div className="grid grid-cols-[1fr_max-content] items-baseline gap-12">
+      <div className="">
+        <div className="flex items-end">
           <div className="flex items-baseline gap-1">
-            <div className="text-8xl font-normal text-norwegian-woods-100">{price}</div>
-            <div className="text-lg font-normal text-grey-60">{currency}</div>
+            <div className="text-10xl font-normal text-norwegian-woods-100">{price}</div>
+            <div className="text-3xl font-normal text-grey-60">{currency}</div>
           </div>
-          <div className="flex items-center gap-2">
-            <div className="text-lg">{change}%</div>
-            <ArrowRight className={`-mt-1 scale-150 ${Number(change) < 0 ? 'rotate-90' : '-rotate-90'}`} />
+          <div className="mb-2 ms-40 flex items-center gap-3">
+            <ArrowRight className={`h-auto w-[14%] ${Number(change) < 0 ? 'rotate-90' : 'mb-2 -rotate-90'}`} />
+            <div className="text-3xl">{change}%</div>
           </div>
         </div>
-        <div className="flex items-center gap-6">
-          <Data className="h-fit w-auto scale-75 text-slate-80" />
+        <div className="mt-8 flex w-full items-center">
+          <Data className="me-20 h-auto w-[17%] text-slate-80" />
           <div>
-            <h2 className="text-lg font-medium">{title}</h2>
+            <h2 className="text-3xl font-normal">{title}</h2>
             <div>
-              <div className="text-base font-normal">{format(new Date(date), 'd LLLL yyyy hh:mm (z)')}</div>{' '}
+              <div className="text-2xl font-normal">{format(new Date(date), 'd LLLL yyyy hh:mm (z)')}</div>{' '}
             </div>
           </div>
         </div>
-      </>
+      </div>
     )
   }
 
   return (
-    <div className={twMerge(`flex flex-col gap-16`, className)}>
-      <div>{getTemplate(data.OSE?.Quote, data.OSE?.currency, data.OSE.PctChange, data.OSE?.title, data.OSE?.Date)}</div>
-      <div>
-        {getTemplate(data.NYSE?.Quote, data.NYSE?.currency, data.NYSE.PctChange, data.NYSE?.title, data.NYSE?.Date)}
-      </div>
-    </div>
+    <>
+      {getTemplate(data.OSE?.Quote, data.OSE?.currency, data.OSE.PctChange, data.OSE?.title, data.OSE?.Date)}
+      {getTemplate(data.NYSE?.Quote, data.NYSE?.currency, data.NYSE.PctChange, data.NYSE?.title, data.NYSE?.Date)}
+    </>
   )
 }
 

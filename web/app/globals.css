@@ -6,7 +6,7 @@
   html {
     font-family: theme('fontFamily.sans');
     @apply text-slate-80;
-    font-size: 20px;
+    font-size: 24px;
   }
   /*   @media screen and (max-width: 4000px) {
     html {
@@ -56,7 +56,7 @@
   }
 
   .react-clock > .react-clock__face {
-    @apply absolute inset-0 rounded-full border border-black-100;
+    @apply absolute inset-0 rounded-full border-2 border-black-100;
   }
 
   .react-clock > .react-clock__hand {
@@ -75,8 +75,18 @@
     > .react-clock__face
     > .react-clock__mark.react-clock__hour-mark:nth-child(3n)
     > .react-clock__mark__body {
-    @apply absolute h-[10px] w-[10px] -translate-x-[50%] translate-y-2 rounded-full bg-black-100;
+    @apply absolute -translate-x-[50%] translate-y-0 rounded-full bg-slate-80/60;
   }
+  /*   .react-clock
+    > .react-clock__face
+    > .react-clock__mark.react-clock__hour-mark:nth-child(3n - 1)
+    > .react-clock__mark__body,
+  .react-clock
+    > .react-clock__face
+    > .react-clock__mark.react-clock__hour-mark:nth-child(3n - 2)
+    > .react-clock__mark__body {
+    @apply absolute h-[30px] -translate-x-[50%] translate-y-0 rounded-md bg-slate-80/40;
+  } */
 }
 
 @layer utilities {

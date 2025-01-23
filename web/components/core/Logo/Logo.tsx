@@ -1,11 +1,12 @@
 import { SVGAttributes } from 'react'
+import { twMerge } from 'tailwind-merge'
 
 type LogoProps = SVGAttributes<SVGElement>
 
-export const LogoSecondary = ({ style, ...rest }: LogoProps) => {
+export const LogoSecondary = ({ style, className = '', ...rest }: LogoProps) => {
   return (
     <svg
-      className="box-content h-[4em] fill-energy-red-100"
+      className={twMerge(`box-content fill-energy-red-100`, className)}
       viewBox="0 0 402 160"
       xmlns="http://www.w3.org/2000/svg"
       xmlnsXlink="http://www.w3.org/1999/xlink"
