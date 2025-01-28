@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react'
 import SectionMapper from './SectionMapper'
-import isSlideActive from '@/common/helpers/isSlideActive'
+import isSlideActive, { processSlides } from '@/common/helpers/isSlideActive'
 
 type Slide = {
   content: any
@@ -27,7 +27,7 @@ export default function Slideshow({ slideshows }: SlideshowProps) {
 
   useEffect(() => {
     if (!slideshows[0]) return
-    const initiallyActive = slideshows[0].slides.filter(isSlideActive) || []
+    const initiallyActive = processSlides(slideshows[0].slides) || []
     setActiveSlides(initiallyActive)
     setCurrentIndex(0)
   }, [slideshows])
@@ -38,7 +38,7 @@ export default function Slideshow({ slideshows }: SlideshowProps) {
     const durationMs = (currentSlide?.duration || videoDuration || 30) * 1000
 
     const timer = setTimeout(() => {
-      const refreshed = slideshows[0]?.slides?.filter(isSlideActive) || []
+      const refreshed = processSlides(slideshows[0]?.slides || [])
 
       setActiveSlides((prevActive) => {
         if (refreshed.length !== prevActive.length && currentIndex >= refreshed.length) {

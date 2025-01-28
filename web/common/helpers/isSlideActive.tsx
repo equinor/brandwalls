@@ -1,3 +1,9 @@
+type Slide = {
+  content: any
+  duration?: number | null
+  scheduling?: any
+}
+
 export function isSlideActive(slide: any): boolean {
   const scheduling = slide.scheduling
   if (!scheduling) return true
@@ -20,21 +26,37 @@ export function isSlideActive(slide: any): boolean {
       return scheduling.weekdays?.includes(today) || false
     }
 
-    case '3': {
-      // Slide frequency
-      const dayOfMonth = now.getDate()
-      return (
-        scheduling.slideFrequency?.some((freq: string) => {
-          const freqNum = parseInt(freq, 10)
-          // Basic example: "every Xth day" means dayOfMonth % X == 0
-          return dayOfMonth % freqNum === 0
-        }) || false
-      )
-    }
-
     default:
       return true
   }
+}
+
+// Function to process slides based on scheduleType
+export function processSlides(slides: Slide[]): Slide[] {
+  const activeSlides: Slide[] = []
+  const recurringSlides: Slide[] = []
+
+  // Separate slides with scheduleType 3 (frequency-based)
+  slides.forEach((slide) => {
+    const scheduleType = slide.scheduling?.scheduleType
+    if (scheduleType === '3') {
+      recurringSlides.push(slide)
+    } else if (isSlideActive(slide)) {
+      activeSlides.push(slide)
+    }
+  })
+
+  // Insert recurring slides into activeSlides
+  recurringSlides.forEach((slide) => {
+    const frequencies = slide.scheduling?.slideFrequency?.map(Number) || []
+    frequencies.forEach((freq: number) => {
+      for (let i = freq - 1; i < activeSlides.length; i += freq) {
+        activeSlides.splice(i, 0, slide)
+      }
+    })
+  })
+
+  return activeSlides
 }
 
 export default isSlideActive
