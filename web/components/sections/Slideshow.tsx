@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react'
 import SectionMapper from './SectionMapper'
-import isSlideActive, { processSlides } from '@/common/helpers/isSlideActive'
+import { processSlides } from '@/common/helpers/slideScheduling'
 
 type Slide = {
   content: any

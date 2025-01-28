@@ -4,7 +4,7 @@ type Slide = {
   scheduling?: any
 }
 
-export function isSlideActive(slide: any): boolean {
+function isSlideActive(slide: any): boolean {
   const scheduling = slide.scheduling
   if (!scheduling) return true
 
@@ -59,4 +59,4 @@ export function processSlides(slides: Slide[]): Slide[] {
   return activeSlides
 }
 
-export default isSlideActive
+export default processSlides
