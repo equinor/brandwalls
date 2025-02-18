@@ -34,11 +34,13 @@ export const getSlideshowsQuery = defineQuery(`
       scheduling{
         ...,
       },
+      duration,
       content[]{
         _type == "infoBoard" => {
         "type": _type,
         "id": _key,
         sif,
+        trif
       },
       _type == "fullWidthImage" => {
         "type": _type,

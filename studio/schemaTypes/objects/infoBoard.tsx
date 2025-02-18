@@ -4,13 +4,18 @@ import {EdsIcon} from '../../icons'
 export default {
   name: 'infoBoard',
   title: 'Information board',
-  description: 'Slide type with clock, stock prices and SIF number',
+  description: 'Slide type with clock, stock prices and SIF,TRIF number',
   type: 'object',
   fields: [
     {
       name: 'sif',
       type: 'string',
-      title: 'Serious Incident Frequency ',
+      title: 'Serious Incident Frequency',
+    },
+    {
+      name: 'trif',
+      type: 'string',
+      title: 'Total Recordable Incident Frequency',
     },
   ],
   preview: {

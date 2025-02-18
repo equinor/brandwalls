@@ -1,9 +1,6 @@
 import useSWR from 'swr'
 import * as xml2js from 'xml2js'
-import { twMerge } from 'tailwind-merge'
-import Data from '@/icons/Data'
 import { format } from 'date-fns'
-import ArrowRight from '@/icons/ArrowRight'
 
 const fetchData = async (url: string) => {
   const response = await fetch(url)
@@ -51,26 +48,14 @@ const StockValues = ({}: {}) => {
 
   const getTemplate = (price: string, currency: string, change: string, title: string, date: Date) => {
     return (
-      <div className="">
-        <div className="flex items-end">
-          <div className="flex items-baseline gap-1">
-            <div className="text-10xl font-normal text-norwegian-woods-100">{price}</div>
-            <div className="text-3xl font-normal text-grey-60">{currency}</div>
-          </div>
-          <div className="mb-2 ms-40 flex items-center gap-3">
-            <ArrowRight className={`h-auto w-[14%] ${Number(change) < 0 ? 'rotate-90' : 'mb-2 -rotate-90'}`} />
-            <div className="text-3xl">{change}%</div>
-          </div>
+      <div className="flex h-full w-full flex-col items-start justify-start p-4">
+        <div className="flex items-baseline gap-1 *:leading-none">
+          <div className="text-3xl font-normal text-norwegian-woods-100">{price}</div>
+          <div className="text-lg font-normal">{currency}</div>
         </div>
-        <div className="mt-8 flex w-full items-center">
-          <Data className="me-20 h-auto w-[17%] text-slate-80" />
-          <div>
-            <h2 className="text-3xl font-normal">{title}</h2>
-            <div>
-              <div className="text-2xl font-normal">{format(new Date(date), 'd LLLL yyyy hh:mm (z)')}</div>{' '}
-            </div>
-          </div>
-        </div>
+        <div className="text-base">{change}%</div>
+        <h2 className="mt-4 text-md font-normal">{title}</h2>
+        <div className="text-base font-normal">{format(new Date(date), 'd LLLL yyyy hh:mm (z)')}</div>{' '}
       </div>
     )
   }

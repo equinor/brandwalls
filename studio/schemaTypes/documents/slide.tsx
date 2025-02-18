@@ -36,6 +36,15 @@ export default {
         {type: 'testSlide'},
       ].filter((e) => e),
     }),
+    defineField({
+      name: 'duration',
+      type: 'number',
+      title: 'Optional slide duration in seconds, default is 30',
+      description:
+        'If there is a video it will play the duration of the video, except if this field is set',
+      validation: (Rule) =>
+        Rule.min(1).integer().positive().warning('Duration should be a positive whole number'),
+    }),
   ].filter((e) => e),
   orderings: [
     {
@@ -47,12 +56,13 @@ export default {
   preview: {
     select: {
       title: 'title',
+      duration: 'duration',
     },
     prepare(selection: any) {
-      const {title} = selection
+      const {title, duration} = selection
       return {
         title: title,
-        subtitle: 'Slide ',
+        subtitle: `Duration: ${duration || 30} seconds`,
       }
     },
   },
