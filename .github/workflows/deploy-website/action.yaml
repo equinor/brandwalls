@@ -92,7 +92,7 @@ runs:
           deploy
           --token-environment
           --component web
-          --image-tag-name brandwalls-web=${{ env.IMAGE_TAG }}
+          --image-tag-name web=${{ env.IMAGE_TAG }}
           --context platform
           -a brandwalls
           -e ${{ inputs.environment }}
