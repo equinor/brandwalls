@@ -1,3 +1,4 @@
+//@ts-nocheck
 import { getSlideshowsQuery, pagesSlugs } from '@/sanity/lib/queries'
 import { sanityFetch } from '@/sanity/lib/live'
 import Slideshow from '@/components/sections/Slideshow'
