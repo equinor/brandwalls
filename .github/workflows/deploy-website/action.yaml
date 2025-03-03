@@ -91,7 +91,7 @@ runs:
           create job
           deploy
           --token-environment
-          --component brandwalls-web
+          --component web
           --image-tag-name brandwalls-web=${{ env.IMAGE_TAG }}
           --context platform
           -a brandwalls
