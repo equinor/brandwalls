@@ -24,6 +24,7 @@ export default function Slideshow({ slideshows }: SlideshowProps) {
   function handleVideoDuration(durationSeconds: number) {
     setVideoDuration(durationSeconds)
   }
+  console.log('slideshows[0]?.slides', slideshows[0]?.slides)
 
   useEffect(() => {
     if (!slideshows[0]) return
@@ -65,5 +66,5 @@ export default function Slideshow({ slideshows }: SlideshowProps) {
     return <div>This slide has no content</div>
   }
 
-  return <SectionMapper section={slide} onVideoDuration={handleVideoDuration} />
+  return <SectionMapper section={slideshows[0]?.slides[4]} onVideoDuration={handleVideoDuration} />
 }

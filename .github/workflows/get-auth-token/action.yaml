@@ -6,7 +6,7 @@ runs:
     - name: 'Az CLI login'
       uses: azure/login@v1
       with:
-        client-id: 460b889f-89e0-4cc9-965c-31f3e7770226 # Managed identity id
+        client-id: f156d585-4042-483e-9864-7d6fe00f0ed1 # Managed identity id
         tenant-id: 3aa4a235-b6e2-48d5-9195-7fcf05b459b0 # Equinor tenant id
         allow-no-subscriptions: true
     - name: 'Get Azure principal token for Radix'
