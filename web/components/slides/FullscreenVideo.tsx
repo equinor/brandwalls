@@ -36,6 +36,7 @@ export default function FullscreenVideo(props: FullscreenVideoProps) {
           Your browser does not support the video tag.
         </video> */}
         <ReactPlayer
+          //@ts-ignore: TODO
           ref={videoRef}
           className="h-screen w-screen object-cover"
           url={video.url}

@@ -16,7 +16,9 @@ export async function generateStaticParams() {
   return data
 }
 
-export default async function Page({ params }: { params: { slug: string } }) {
+type Params = Promise<{ slug: string }>
+
+export default async function Page({ params }: { params: Params }) {
   const { data: slideshows } = await sanityFetch({
     query: getSlideshowsQuery,
     params,
