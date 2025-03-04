@@ -46,6 +46,13 @@ export type Geopoint = {
   alt?: number
 }
 
+export type Screens = Array<string>
+
+export type TestSlide = {
+  _type: 'testSlide'
+  title?: string
+}
+
 export type FullWidthVideo = {
   _type: 'fullWidthVideo'
   videoFile: {
@@ -139,6 +146,7 @@ export type FullWidthImage = {
 export type InfoBoard = {
   _type: 'infoBoard'
   sif?: string
+  trif?: string
 }
 
 export type TextBlock = {
@@ -163,8 +171,7 @@ export type TextBlock = {
 export type TextOptions = {
   _type: 'textOptions'
   textAlignment?: string
-  contentXAlignment?: string
-  contentYAlignment?: string
+  screens?: Screens
 }
 
 export type Slide = {
@@ -188,7 +195,11 @@ export type Slide = {
     | ({
         _key: string
       } & InfoBoard)
+    | ({
+        _key: string
+      } & TestSlide)
   >
+  duration?: number
 }
 
 export type SanityImageCrop = {
@@ -250,13 +261,13 @@ export type SanityImageMetadata = {
 
 export type SlideScheduling = {
   _type: 'slideScheduling'
-  scheduleType?: '1' | '2' | '3'
+  scheduleType?: '0' | '1' | '2' | '3'
   period?: {
     from?: string
     to?: string
   }
   weekdays?: Array<string>
-  slideFrequency?: Array<string>
+  slideFrequency?: '3' | '4' | '5'
 }
 
 export type Slideshow = {
@@ -305,6 +316,8 @@ export type AllSanitySchemaTypes =
   | SanityImagePalette
   | SanityImageDimensions
   | Geopoint
+  | Screens
+  | TestSlide
   | FullWidthVideo
   | VideoFile
   | SanityFileAsset
@@ -346,22 +359,25 @@ export type GetPageQueryResult = {
   lon?: string
 } | null
 // Variable: getSlideshowsQuery
-// Query: *[_type == 'slideshow' && (count((showLocations[]->slug.current)[@ in [$slug]]) > 0)][0...30]{    "type": _type,    "id": _id,    title,    slides[]->{      scheduling{        ...,      },      content[]{        _type == "infoBoard" => {        "type": _type,        "id": _key,        sif,      },      _type == "fullWidthImage" => {        "type": _type,        "id": _key,        image,        text[]{          ...,          markDefs[]{            ...,          },        },        "textOptions":  textOptions{    textAlignment,    contentXAlignment,    contentYAlignment,  }      },      _type == "fullWidthVideo" => {        "type": _type,        "id": _key,        "video": videoFile->{          "url": video.asset->url,          thumbnail        },      },      _type == "textBlock" => {          ...,          "type": _type,          "id": _key,          "textOptions":  textOptions{    textAlignment,    contentXAlignment,    contentYAlignment,  },          text[]{          ...,          markDefs[]{            ...,          },          },        },      }    }  }
+// Query: *[_type == 'slideshow' && (count((showLocations[]->slug.current)[@ in [$slug]]) > 0)][0...30]{    "type": _type,    "id": _id,    "updatedAt": _updatedAt,    title,    slides[]->{      scheduling{        ...,      },      duration,      overrideDuration,      content[]{        _type == "infoBoard" => {        "type": _type,        "id": _key,        sif,        trif      },      _type == "fullWidthImage" => {        "type": _type,        "id": _key,        image,        text[]{          ...,          markDefs[]{            ...,          },        },        "textOptions":  textOptions{    textAlignment,    screens,  }      },      _type == "fullWidthVideo" => {        "type": _type,        "id": _key,        "video": videoFile->{          "url": video.asset->url,          thumbnail        },      },      _type == "textBlock" => {          ...,          "type": _type,          "id": _key,          "textOptions":  textOptions{    textAlignment,    screens,  },          text[]{          ...,          markDefs[]{            ...,          },          },        },        _type == "testSlide" => {        "type": _type,        "id": _key,        title      },      }    }  }
 export type GetSlideshowsQueryResult = Array<{
   type: 'slideshow'
   id: string
+  updatedAt: string
   title: string | null
   slides: Array<{
     scheduling: {
       _type: 'slideScheduling'
-      scheduleType?: '1' | '2' | '3'
+      scheduleType?: '0' | '1' | '2' | '3'
       period?: {
         from?: string
         to?: string
       }
       weekdays?: Array<string>
-      slideFrequency?: Array<string>
+      slideFrequency?: '3' | '4' | '5'
     } | null
+    duration: number | null
+    overrideDuration: null
     content: Array<
       | {
           _key: string
@@ -382,8 +398,7 @@ export type GetSlideshowsQueryResult = Array<{
           }> | null
           textOptions: {
             textAlignment: string | null
-            contentXAlignment: string | null
-            contentYAlignment: string | null
+            screens: Screens | null
           } | null
           type: 'textBlock'
           id: string
@@ -418,14 +433,19 @@ export type GetSlideshowsQueryResult = Array<{
           }> | null
           textOptions: {
             textAlignment: string | null
-            contentXAlignment: string | null
-            contentYAlignment: string | null
+            screens: Screens | null
           } | null
         }
       | {
           type: 'infoBoard'
           id: string
           sif: string | null
+          trif: string | null
+        }
+      | {
+          type: 'testSlide'
+          id: string
+          title: string | null
         }
       | {
           type: 'fullWidthVideo'
@@ -456,6 +476,6 @@ declare module '@sanity/client' {
     '*[_type == "settings"][0]': SettingsQueryResult
     '\n  *[_type == "location" && defined(slug.current)]\n  {\n    "slug": slug.current\n  }\n': PagesSlugsResult
     "\n  *[_type == 'location' && slug.current == $slug][0]{\n    _id,\n    _type,\n    slug,\n    ...\n  }\n": GetPageQueryResult
-    '\n  *[_type == \'slideshow\' && (count((showLocations[]->slug.current)[@ in [$slug]]) > 0)][0...30]{\n    "type": _type,\n    "id": _id,\n    title,\n    slides[]->{\n      scheduling{\n        ...,\n      },\n      content[]{\n        _type == "infoBoard" => {\n        "type": _type,\n        "id": _key,\n        sif,\n      },\n      _type == "fullWidthImage" => {\n        "type": _type,\n        "id": _key,\n        image,\n        text[]{\n          ...,\n          markDefs[]{\n            ...,\n          },\n        },\n        "textOptions":\n  textOptions{\n    textAlignment,\n    contentXAlignment,\n    contentYAlignment,\n  }\n\n      },\n      _type == "fullWidthVideo" => {\n        "type": _type,\n        "id": _key,\n        "video": videoFile->{\n          "url": video.asset->url,\n          thumbnail\n        },\n      },\n      _type == "textBlock" => {\n          ...,\n          "type": _type,\n          "id": _key,\n          "textOptions":\n  textOptions{\n    textAlignment,\n    contentXAlignment,\n    contentYAlignment,\n  }\n,\n          text[]{\n          ...,\n          markDefs[]{\n            ...,\n          },\n          },\n        },\n      }\n    }\n  }\n': GetSlideshowsQueryResult
+    '\n  *[_type == \'slideshow\' && (count((showLocations[]->slug.current)[@ in [$slug]]) > 0)][0...30]{\n    "type": _type,\n    "id": _id,\n    "updatedAt": _updatedAt,\n    title,\n    slides[]->{\n      scheduling{\n        ...,\n      },\n      duration,\n      overrideDuration,\n      content[]{\n        _type == "infoBoard" => {\n        "type": _type,\n        "id": _key,\n        sif,\n        trif\n      },\n      _type == "fullWidthImage" => {\n        "type": _type,\n        "id": _key,\n        image,\n        text[]{\n          ...,\n          markDefs[]{\n            ...,\n          },\n        },\n        "textOptions":\n  textOptions{\n    textAlignment,\n    screens,\n  }\n\n      },\n      _type == "fullWidthVideo" => {\n        "type": _type,\n        "id": _key,\n        "video": videoFile->{\n          "url": video.asset->url,\n          thumbnail\n        },\n      },\n      _type == "textBlock" => {\n          ...,\n          "type": _type,\n          "id": _key,\n          "textOptions":\n  textOptions{\n    textAlignment,\n    screens,\n  }\n,\n          text[]{\n          ...,\n          markDefs[]{\n            ...,\n          },\n          },\n        },\n        _type == "testSlide" => {\n        "type": _type,\n        "id": _key,\n        title\n      },\n      }\n    }\n  }\n': GetSlideshowsQueryResult
   }
 }

@@ -12,6 +12,6 @@ export type ArrowRightProps = {
 } & SVGProps<SVGSVGElement>
 
 export const ArrowRight = forwardRef<SVGSVGElement, ArrowRightProps>(function ArrowRight({ ...rest }, ref) {
-  return <TransformableIcon iconData={arrow_forward} {...rest} ref={ref} />
+  return <TransformableIcon width="100%" height="100%" iconData={arrow_forward} {...rest} ref={ref} />
 })
 export default ArrowRight

@@ -39,7 +39,7 @@ export default {
       console.log('textOptions', textOptions)
       return {
         title: `Fullwidth image component`,
-        subtitle: `Alignment: ${textOptions.contentXAlignment} | ${textOptions.contentYAlignment}`,
+        subtitle: `Screens: ${Array(textOptions?.screens).toString()}`,
         media: image,
       }
     },

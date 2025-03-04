@@ -190,6 +190,39 @@
     }
   },
   {
+    "name": "screens",
+    "type": "type",
+    "value": {
+      "type": "array",
+      "of": {
+        "type": "string"
+      }
+    }
+  },
+  {
+    "name": "testSlide",
+    "type": "type",
+    "value": {
+      "type": "object",
+      "attributes": {
+        "_type": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "string",
+            "value": "testSlide"
+          }
+        },
+        "title": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "string"
+          },
+          "optional": true
+        }
+      }
+    }
+  },
+  {
     "name": "fullWidthVideo",
     "type": "type",
     "value": {
@@ -770,6 +803,13 @@
             "type": "string"
           },
           "optional": true
+        },
+        "trif": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "string"
+          },
+          "optional": true
         }
       }
     }
@@ -967,17 +1007,11 @@
           },
           "optional": true
         },
-        "contentXAlignment": {
+        "screens": {
           "type": "objectAttribute",
           "value": {
-            "type": "string"
-          },
-          "optional": true
-        },
-        "contentYAlignment": {
-          "type": "objectAttribute",
-          "value": {
-            "type": "string"
+            "type": "inline",
+            "name": "screens"
           },
           "optional": true
         }
@@ -1100,9 +1134,31 @@
                   "type": "inline",
                   "name": "infoBoard"
                 }
+              },
+              {
+                "type": "object",
+                "attributes": {
+                  "_key": {
+                    "type": "objectAttribute",
+                    "value": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "rest": {
+                  "type": "inline",
+                  "name": "testSlide"
+                }
               }
             ]
           }
+        },
+        "optional": true
+      },
+      "duration": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "number"
         },
         "optional": true
       }
@@ -1465,6 +1521,10 @@
             "of": [
               {
                 "type": "string",
+                "value": "0"
+              },
+              {
+                "type": "string",
                 "value": "1"
               },
               {
@@ -1515,10 +1575,21 @@
         "slideFrequency": {
           "type": "objectAttribute",
           "value": {
-            "type": "array",
-            "of": {
-              "type": "string"
-            }
+            "type": "union",
+            "of": [
+              {
+                "type": "string",
+                "value": "3"
+              },
+              {
+                "type": "string",
+                "value": "4"
+              },
+              {
+                "type": "string",
+                "value": "5"
+              }
+            ]
           },
           "optional": true
         }

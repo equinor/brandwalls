@@ -1,8 +1,8 @@
 // @ts-nocheck
 
 const SafetyHelmet = ({
-  width = 130,
-  height = 130,
+  width = '100%',
+  height = '100%',
   className = '',
 }: {
   width?: number
@@ -12,24 +12,10 @@ const SafetyHelmet = ({
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
-      x="0px"
-      y="0px"
       fill="currentColor"
       viewBox="0 0 130 130"
-      enableBackground="new 0 0 130 130"
-      width={width}
-      height={height}
-      className={className}
+      className="h-full w-auto text-norwegian-woods-100"
     >
-      {/*       <metadata xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:dc="http://purl.org/dc/elements/1.1/">
-        <rdf:RDF>
-          <dc:rights>
-            <rdf:Alt>
-              <rdf:li xml:lang="x-default">Equinor</rdf:li>
-            </rdf:Alt>
-          </dc:rights>
-        </rdf:RDF>
-      </metadata> */}
       <g>
         <path
           fill="currentColor"

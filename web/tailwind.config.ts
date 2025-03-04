@@ -214,13 +214,6 @@ export default {
         'card-maxWidth': '400px',
       }),
       fontSize: {
-        //--typeScale-00
-        '2xs': 'clamp(calc(11.11 / 16 * 1rem), 0.19vw + 0.65rem, calc(14.08 / 16 * 1rem))',
-        //--typeScale-0
-        xs: 'clamp(calc(13.33 / 16 * 1rem), 0.28vw + 0.77rem, calc(17.60 / 16 * 1rem))',
-        //--typeScale-05
-        sm: 'clamp(calc(14.61 / 16 * 1rem), 0.33vw + 0.84rem, calc(19.68 / 16 * 1rem))',
-        //--typeScale-1
         base: 'clamp(calc(16.00 / 16 * 1rem), 0.39vw + 0.91rem, calc(22.00 / 16 * 1rem))',
         //--typeScale-2
         md: 'clamp(calc(19.20 / 16 * 1rem), 0.54vw + 1.07rem, calc(27.50 / 16 * 1rem))',
@@ -237,6 +230,7 @@ export default {
         //--typeScale-7
         '5xl': 'clamp(calc(51.97 / 16 * 1rem), 2.55vw + 2.64rem, calc(91.31 / 16 * 1rem))',
         '6xl': 'clamp(calc(58.05 / 16 * 1rem), 2.94vw + 2.925rem, calc(103.39 / 16 * 1rem))',
+        '10xl': '13rem',
       },
       size: {
         'arrow-right': '1.58rem',
@@ -306,6 +300,10 @@ export default {
           '0%': { opacity: '0' },
           '100%': { opacity: '1' },
         },
+        fadeIn: {
+          '0%': { opacity: '0' },
+          '100%': { opacity: '1' },
+        },
         fadeOut: {
           '0%': { opacity: '1' },
           '100%': { opacity: '0' },
@@ -324,22 +322,23 @@ export default {
           },
         },
         slideUp: {
-          '0%': { height: '0' },
+          '0%': { height: 0 },
           '100%': { height: 'var(--radix-accordion-content-height)' },
         },
         slideDown: {
           '0%': { height: 'var(--radix-accordion-content-height)' },
-          '100%': { height: '0' },
+          '100%': { height: 0 },
         },
       },
       animation: {
         fadeInOut: 'fade linear both',
+        fadeIn: 'auto linear fadeIn both',
         fadeOut: 'auto linear fadeOut both',
         zoomIn: 'auto linear zoom-in both',
         move: 'auto linear move forwards',
         'spin-slow': 'spin 3s linear infinite',
-        slideUp: 'slideUp 3s ease-out',
-        slideDown: 'slideDown 3s ease-out',
+        slideUp: 'slideUp 0.2s ease-out',
+        slideDown: 'slideDown 0.2s ease-out',
       },
       data: {
         open: 'state~="open"',
@@ -356,20 +355,24 @@ export default {
           css: [
             {
               fontSize: theme('fontSize.lg'),
-              lineHeight: theme('lineHeight.planetary'),
-              h2: {
-                fontSize: theme('fontSize.7xl'),
-                lineHeight: theme('lineHeight.inherit'),
+              lineHeight: theme('lineHeight.tight'),
+              h1: {
+                fontSize: theme('fontSize.2xl'),
+                lineHeight: theme('lineHeight.tight'),
                 fontWeight: theme('fontWeight.normal'),
-                marginTop: theme('spacing.2'),
+                marginBottom: theme('spacing.8'),
+              },
+              h2: {
+                fontSize: theme('fontSize.xl'),
+                lineHeight: theme('lineHeight.tight'),
+                fontWeight: theme('fontWeight.normal'),
                 marginBottom: theme('spacing.8'),
               },
               h3: {
-                fontSize: theme('fontSize.6xl'),
-                lineHeight: theme('lineHeight.inherit'),
-                fontWeight: theme('fontWeight.normal'),
-                marginTop: theme('spacing.2'),
-                marginBottom: theme('spacing.0'),
+                fontSize: theme('fontSize.lg'),
+                lineHeight: theme('lineHeight.tight'),
+                fontWeight: theme('fontWeight.semibold'),
+                marginBottom: theme('spacing.4'),
               },
               'ul ul, ul ol, ol ul, ol ol': {
                 paddingLeft: em(38, 24),

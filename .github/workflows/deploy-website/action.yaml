@@ -82,18 +82,18 @@ runs:
       id: get-token
       uses: ./.github/workflows/get-auth-token/
 
-    # PLAYGROUND CLUSTER
-    - name: Deploy to Radix Playground 🚀
-      id: deploy-playground
+    # DEPLOY RADIX CLUSTER
+    - name: Deploy to Radix Platform 🚀
+      id: deploy-radix-platform
       uses: equinor/radix-github-actions@master
       with:
         args: >
           create job
           deploy
           --token-environment
-          --component brandwalls-web
-          --image-tag-name brandwalls-web=${{ env.IMAGE_TAG }}
-          --context playground
+          --component web
+          --image-tag-name web=${{ env.IMAGE_TAG }}
+          --context platform
           -a brandwalls
           -e ${{ inputs.environment }}
           -f

@@ -12,6 +12,7 @@ export default {
       type: 'string',
       options: {
         list: [
+          {title: 'Default', value: '0'},
           {title: 'Specific period', value: '1'},
           {title: 'Selected weekdays', value: '2'},
           {title: 'Slide frequency', value: '3'},
@@ -19,6 +20,7 @@ export default {
         layout: 'radio',
         direction: 'horizontal',
       },
+      initialValue: '0',
     }),
     defineField({
       title: 'Show on specific period',
@@ -71,14 +73,15 @@ export default {
     defineField({
       title: 'Show in frequency',
       name: 'slideFrequency',
-      type: 'array',
-      of: [{type: 'string'}],
+      type: 'string',
       options: {
         list: [
           {title: 'Every 3rd', value: '3'},
           {title: 'Every 4th', value: '4'},
           {title: 'Every 5th', value: '5'},
         ],
+        layout: 'radio',
+        direction: 'horizontal',
       },
       hidden: ({document}) => document?.scheduling?.scheduleType !== '3',
     }),

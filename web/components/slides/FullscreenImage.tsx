@@ -1,12 +1,13 @@
 import { PortableTextBlock } from 'next-sanity'
 import CoverImage from '../core/CoverImage/CoverImage'
-import TextBlock, { textOptions } from './TextBlock'
+import TextBlock from './TextBlock'
+import { TextOptions } from '@/sanity.types'
 
 interface FullscreenImageProps {
   image: any
   credit?: string
   text?: PortableTextBlock[]
-  textOptions?: textOptions | undefined
+  textOptions?: TextOptions | undefined
 }
 
 export default function FullscreenImage(props: FullscreenImageProps) {

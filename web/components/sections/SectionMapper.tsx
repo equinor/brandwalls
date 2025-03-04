@@ -12,11 +12,11 @@ const componentMap: { [key: string]: React.ComponentType<any> } = {
   testSlide: TestSlide,
 }
 
-export default function SectionMapper({ section, onVideoDuration }: { section?: any; onVideoDuration?: any }) {
+export default function SectionMapper({ section }: { section?: any }) {
   const type = section?.content?.[0]
   const Component = componentMap[type?.type]
   if (!Component) {
     return <div data-type={type} key={type?.id} />
   }
-  return <Component {...type} onVideoDuration={onVideoDuration} key={type?.id} />
+  return <Component {...type} key={type?.id} />
 }

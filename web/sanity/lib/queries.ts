@@ -21,8 +21,7 @@ export const getPageQuery = defineQuery(`
 const textOptions = /* groq */ `
   textOptions{
     textAlignment,
-    contentXAlignment,
-    contentYAlignment,
+    screens,
   }
 `
 
@@ -30,17 +29,20 @@ export const getSlideshowsQuery = defineQuery(`
   *[_type == 'slideshow' && (count((showLocations[]->slug.current)[@ in [$slug]]) > 0)][0...30]{
     "type": _type,
     "id": _id,
+    "updatedAt": _updatedAt,
     title,
     slides[]->{
       scheduling{
         ...,
       },
       duration,
+      overrideDuration,
       content[]{
         _type == "infoBoard" => {
         "type": _type,
         "id": _key,
         sif,
+        trif
       },
       _type == "fullWidthImage" => {
         "type": _type,

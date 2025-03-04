@@ -6,7 +6,23 @@
   html {
     font-family: theme('fontFamily.sans');
     @apply text-slate-80;
+    font-size: 24px;
   }
+  /*   @media screen and (max-width: 4000px) {
+    html {
+      font-size: 8px;
+    }
+  }
+  @media screen and (min-width: 7000px) {
+    html {
+      font-size: 20px;
+    }
+  } */
+
+  /* 8K - 7680 x 4320 pixels
+  16K - 15360 x 8640 pixels <- probably resolutions for 4x4 with 4K displays
+  */
+
   body {
     -webkit-font-smoothing: antialiased;
   }
@@ -33,48 +49,15 @@
   }
 }
 
-@layer components {
-  .react-clock {
-    display: block;
-    position: relative;
-  }
-
-  /*   .react-clock,
-  .react-clock *,
-  .react-clock *:before,
-  .react-clock *:after {
-    -moz-box-sizing: border-box;
-    -webkit-box-sizing: border-box;
-    box-sizing: border-box;
-  }
- */
-  .react-clock > .react-clock__face {
-    @apply absolute inset-0 rounded-full border border-black-100;
-  }
-
-  .react-clock > .react-clock__hand {
-    @apply absolute bottom-0 left-1/2 right-1/2 top-0;
-  }
-
-  .react-clock > .react-clock__hand > .react-clock__hand__body {
-    @apply absolute -translate-x-1/2 rounded-md bg-black-100;
-  }
-
-  .react-clock > .react-clock__face > .react-clock__mark {
-    @apply absolute bottom-0 left-1/2 right-1/2 top-0;
-  }
-
-  .react-clock
-    > .react-clock__face
-    > .react-clock__mark.react-clock__hour-mark:nth-child(3n)
-    > .react-clock__mark__body {
-    @apply absolute h-[10px] w-[10px] -translate-x-[50%] translate-y-2 rounded-full bg-black-100;
-  }
-}
-
 @layer utilities {
   .text-stroke {
     -webkit-text-stroke-width: 1px;
     -webkit-text-stroke-color: theme(colors.slate.80);
+  }
+
+  @starting-style {
+    .starting-hidden {
+      opacity: 0;
+    }
   }
 }

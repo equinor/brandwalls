@@ -1,13 +1,14 @@
 'use client'
-
-import { useEffect, useState } from 'react'
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import SectionMapper from './SectionMapper'
-import { processSlides } from '@/common/helpers/slideScheduling'
+import { useSlideContext } from '../slide-context'
+import { distributeRecurringForSlideshow, isSlideActive } from '@/common/helpers/slideScheduling'
 
 type Slide = {
   content: any
-  duration?: number | null
+  duration?: string
   scheduling?: any
+  overrideDuration?: boolean
 }
 
 type SlideshowProps = {
@@ -17,53 +18,82 @@ type SlideshowProps = {
 }
 
 export default function Slideshow({ slideshows }: SlideshowProps) {
-  const [activeSlides, setActiveSlides] = useState<Slide[]>([])
+  const { videoDuration } = useSlideContext()
   const [currentIndex, setCurrentIndex] = useState(0)
-  const [videoDuration, setVideoDuration] = useState<number | null>(null)
+  const timeout = useRef<NodeJS.Timeout>(undefined)
+  console.log('SlideShow: currentIndex', currentIndex)
 
-  function handleVideoDuration(durationSeconds: number) {
-    setVideoDuration(durationSeconds)
-  }
-
-  useEffect(() => {
-    if (!slideshows[0]) return
-    const initiallyActive = processSlides(slideshows[0].slides) || []
-    setActiveSlides(initiallyActive)
-    setCurrentIndex(0)
+  const slides = useMemo(() => {
+    const allSlides = slideshows?.flatMap((show) => show?.slides)
+    //@ts-ignore: TODO
+    const processedSlides = distributeRecurringForSlideshow(allSlides)
+    return processedSlides
   }, [slideshows])
 
+  const findNextIndex = useCallback(() => {
+    const isLast = currentIndex === slides.length
+    const nextIndex = isLast ? 0 : currentIndex + 1
+    let nextActiveIndex = nextIndex
+    let indexIsActive = false
+    do {
+      if (nextActiveIndex === slides?.length) {
+        nextActiveIndex = 0
+        indexIsActive = isSlideActive(0)
+      } else {
+        nextActiveIndex = nextActiveIndex + 1
+        indexIsActive = isSlideActive(nextActiveIndex + 1)
+      }
+    } while (!indexIsActive)
+    console.log('Found next active index, set to current', nextActiveIndex)
+    setCurrentIndex(nextActiveIndex)
+  }, [currentIndex])
+
+  const play = useCallback(() => {
+    if (slides?.length > 0) {
+      let duration = 30000
+      const currentSlide = slides[currentIndex]
+      if (currentSlide?.content?.[0]?.type === 'fullWidthVideo') {
+        console.log('videoDuration', videoDuration)
+        duration = videoDuration * 1000
+      }
+      if (
+        //@ts-ignore:todo
+        currentSlide?.overrideDuration &&
+        currentSlide?.duration &&
+        typeof currentSlide?.duration !== undefined &&
+        //@ts-ignore:todo
+        currentSlide?.duration !== ''
+      ) {
+        //@ts-ignore:todo
+        duration = parseInt(currentSlide?.duration, 10) * 1000
+      }
+      console.log('play method: set timout with duration', duration)
+      timeout.current = setTimeout(findNextIndex, duration)
+    }
+  }, [currentIndex, videoDuration])
+
   useEffect(() => {
-    if (activeSlides.length === 0) return
-    const currentSlide = activeSlides[currentIndex]
-    const durationMs = (currentSlide?.duration || videoDuration || 30) * 1000
+    clearTimeout(timeout.current)
+    play()
+  }, [currentIndex])
 
-    const timer = setTimeout(() => {
-      const refreshed = processSlides(slideshows[0]?.slides || [])
+  useEffect(() => {
+    clearTimeout(timeout.current)
+    play()
+  }, [videoDuration])
 
-      setActiveSlides((prevActive) => {
-        if (refreshed.length !== prevActive.length && currentIndex >= refreshed.length) {
-          setCurrentIndex(0)
-        }
-        return refreshed
-      })
-
-      setCurrentIndex((prev) => {
-        if (refreshed.length === 0) return 0
-        return (prev + 1) % refreshed.length
-      })
-    }, durationMs)
-
-    return () => clearTimeout(timer)
-  }, [activeSlides, currentIndex, slideshows])
-
-  if (activeSlides.length === 0) {
+  if (slides.length === 0) {
     return <div>No active slides</div>
   }
 
-  const slide = activeSlides[currentIndex]
-  if (!slide || !slide.content || slide.content.length === 0) {
+  const slide = slides[currentIndex]
+  if (!slide || !slide?.content || slide?.content?.length === 0) {
     return <div>This slide has no content</div>
   }
 
-  return <SectionMapper section={slide} onVideoDuration={handleVideoDuration} />
+  return (
+    <div className="starting-hidden h-screen w-screen">
+      <SectionMapper section={slides[currentIndex]} />
+    </div>
+  )
 }
