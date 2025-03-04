@@ -322,12 +322,12 @@ export default {
           },
         },
         slideUp: {
-          '0%': { height: 0 },
+          '0%': { height: '0' },
           '100%': { height: 'var(--radix-accordion-content-height)' },
         },
         slideDown: {
           '0%': { height: 'var(--radix-accordion-content-height)' },
-          '100%': { height: 0 },
+          '100%': { height: '0' },
         },
       },
       animation: {

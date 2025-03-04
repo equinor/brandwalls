@@ -28,6 +28,9 @@ jobs:
           node-version: 20
           cache: 'pnpm'
       - name: Install dependencies
-        run: pnpm install
+        run: |
+          pnpm install
+          pnpm studio install
       - name: Deploy Studio
-        run: pnpm studio run deploy
+        working-directory: ./studio
+        run: pnpm run deploy
