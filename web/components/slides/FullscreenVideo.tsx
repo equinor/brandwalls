@@ -1,52 +1,38 @@
-import React, { useEffect, useRef, Suspense } from 'react'
+import React, { useRef, Suspense } from 'react'
 import ReactPlayer from 'react-player'
+import { useSlideContext } from '../slide-context'
 
 interface FullscreenVideoProps {
   video: { url: string }
   thumbnail?: string
-  onVideoDuration?: any
 }
 
 export default function FullscreenVideo(props: FullscreenVideoProps) {
-  const { video, onVideoDuration } = props
-  const videoRef = useRef<HTMLVideoElement>(null)
-
-  useEffect(() => {
-    const el = videoRef.current
-    if (!el) return
-
-    function handleMetadata() {
-      const duration = el?.duration
-      if (onVideoDuration) {
-        onVideoDuration(duration)
-      }
-    }
-
-    el.addEventListener('loadedmetadata', handleMetadata)
-    return () => el.removeEventListener('loadedmetadata', handleMetadata)
-  }, [onVideoDuration])
-
-  console.log('video', video)
+  const { video } = props
+  const videoRef = useRef(null)
+  const { changeVideoDuration } = useSlideContext()
 
   return (
     <div className="absolute inset-0 -z-10 w-full overflow-hidden">
       <Suspense fallback={<p>Loading video...</p>}>
-        {/*         <video ref={videoRef} autoPlay muted playsInline loop className="h-screen w-screen object-cover">
-          <source src={video.url} type="video/mp4" />
-          Your browser does not support the video tag.
-        </video> */}
-        <ReactPlayer
-          //@ts-ignore: TODO
-          ref={videoRef}
-          className="h-screen w-screen object-cover"
-          url={video.url}
-          muted
-          loop
-          playsinline
-          controls={false}
-          width="100%"
-          height="100%"
-        />
+        <div className="h-screen w-screen object-cover">
+          <ReactPlayer
+            //@ts-ignore: TODO
+            ref={videoRef}
+            className=""
+            url={video.url}
+            muted
+            loop
+            playing={true}
+            playsinline
+            controls={false}
+            width="100vw"
+            height="100vh"
+            onDuration={(duration) => {
+              changeVideoDuration(duration)
+            }}
+          />
+        </div>
       </Suspense>
     </div>
   )

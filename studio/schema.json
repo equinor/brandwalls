@@ -803,6 +803,13 @@
             "type": "string"
           },
           "optional": true
+        },
+        "trif": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "string"
+          },
+          "optional": true
         }
       }
     }
@@ -1145,6 +1152,13 @@
               }
             ]
           }
+        },
+        "optional": true
+      },
+      "duration": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "number"
         },
         "optional": true
       }
@@ -1507,6 +1521,10 @@
             "of": [
               {
                 "type": "string",
+                "value": "0"
+              },
+              {
+                "type": "string",
                 "value": "1"
               },
               {
@@ -1557,10 +1575,21 @@
         "slideFrequency": {
           "type": "objectAttribute",
           "value": {
-            "type": "array",
-            "of": {
-              "type": "string"
-            }
+            "type": "union",
+            "of": [
+              {
+                "type": "string",
+                "value": "3"
+              },
+              {
+                "type": "string",
+                "value": "4"
+              },
+              {
+                "type": "string",
+                "value": "5"
+              }
+            ]
           },
           "optional": true
         }

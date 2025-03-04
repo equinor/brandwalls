@@ -37,13 +37,17 @@ export default {
       ].filter((e) => e),
     }),
     defineField({
+      name: 'overrideDuration',
+      type: 'boolean',
+      title: 'Custom duration',
+    }),
+    defineField({
       name: 'duration',
-      type: 'number',
-      title: 'Optional slide duration in seconds, default is 30',
+      type: 'string',
+      title: 'Override duration in seconds, default is 30',
       description:
         'If there is a video it will play the duration of the video, except if this field is set',
-      validation: (Rule) =>
-        Rule.min(1).integer().positive().warning('Duration should be a positive whole number'),
+      hidden: ({document}) => !document?.overrideDuration,
     }),
   ].filter((e) => e),
   orderings: [
@@ -57,12 +61,36 @@ export default {
     select: {
       title: 'title',
       duration: 'duration',
+      overrideDuration: 'overrideDuration',
+      scheduling: 'scheduling',
     },
     prepare(selection: any) {
-      const {title, duration} = selection
+      const {title, duration, overrideDuration, scheduling} = selection
+      let scheduleType = 'Default'
+      let scheduleSubTitle = ``
+      if (scheduling?.scheduleType === '1') {
+        scheduleType = 'Specific period'
+      }
+      if (scheduling?.scheduleType === '2') {
+        scheduleType = 'Selected weekdays'
+        scheduleSubTitle = `| ${scheduling?.weekdays?.toString()}`
+      }
+      if (scheduling?.scheduleType === '3') {
+        scheduleType = 'Slide frequency'
+        let scheduleFreq = 'Every 3rd'
+        if (scheduling?.scheduleType === '3' && scheduling?.slideFrequency === '4') {
+          scheduleFreq = 'Every 4th'
+        }
+        if (scheduling?.scheduleType === '3' && scheduling?.slideFrequency === '5') {
+          scheduleFreq = 'Every 5th'
+        }
+        scheduleSubTitle = ` | ${scheduleFreq}`
+      }
+      const durationSubtitle = overrideDuration ? ` | Custom duration: ${duration} seconds` : ``
+
       return {
         title: title,
-        subtitle: `Duration: ${duration || 30} seconds`,
+        subtitle: `${scheduleType}${scheduleSubTitle}${durationSubtitle}`,
       }
     },
   },

@@ -2,9 +2,8 @@
 import { getSlideshowsQuery, pagesSlugs } from '@/sanity/lib/queries'
 import { sanityFetch } from '@/sanity/lib/live'
 import Slideshow from '@/components/sections/Slideshow'
-
-export const revalidate = 60
-export const dynamicParams = true
+import { SlideProvider } from '@/components/slide-context'
+import { useMemo } from 'react'
 
 export async function generateStaticParams() {
   const { data } = await sanityFetch({
@@ -25,8 +24,8 @@ export default async function Page({ params }: { params: Params }) {
   })
 
   return (
-    <div className="h-full w-full">
+    <SlideProvider>
       <Slideshow slideshows={slideshows} />
-    </div>
+    </SlideProvider>
   )
 }

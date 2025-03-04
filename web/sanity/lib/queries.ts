@@ -29,12 +29,14 @@ export const getSlideshowsQuery = defineQuery(`
   *[_type == 'slideshow' && (count((showLocations[]->slug.current)[@ in [$slug]]) > 0)][0...30]{
     "type": _type,
     "id": _id,
+    "updatedAt": _updatedAt,
     title,
     slides[]->{
       scheduling{
         ...,
       },
       duration,
+      overrideDuration,
       content[]{
         _type == "infoBoard" => {
         "type": _type,

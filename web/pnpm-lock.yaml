@@ -19,6 +19,9 @@ importers:
       '@sanity/uuid':
         specifier: ^3.0.2
         version: 3.0.2
+      '@sanity/webhook':
+        specifier: ^4.0.4
+        version: 4.0.4
       '@tailwindcss/typography':
         specifier: ^0.5.16
         version: 0.5.16(tailwindcss@3.4.17)
@@ -2234,6 +2237,11 @@ packages:
         optional: true
       svelte:
         optional: true
+
+  '@sanity/webhook@4.0.4':
+    resolution:
+      { integrity: sha512-c8LmzR5Wx93zJ10ohhp0XlmPrTNSFyvPcLbNY/sN45Wj5VOngz4FbBMbX9j64sSQLt+676U6OhiVfjs1yw3YCw== }
+    engines: { node: '>=20.0.0' }
 
   '@sentry-internal/browser-utils@8.48.0':
     resolution:
@@ -9010,6 +9018,8 @@ snapshots:
       next: 15.2.0(@babel/core@7.26.0)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
     transitivePeerDependencies:
       - debug
+
+  '@sanity/webhook@4.0.4': {}
 
   '@sentry-internal/browser-utils@8.48.0':
     dependencies:
