@@ -19,9 +19,8 @@ type SlideshowProps = {
 
 export default function Slideshow({ slideshows }: SlideshowProps) {
   const { videoDuration } = useSlideContext()
-  const [currentIndex, setCurrentIndex] = useState(0)
+  const [currentIndex, setCurrentIndex] = useState<number>(0)
   const timeout = useRef<NodeJS.Timeout>(undefined)
-  console.log('SlideShow: currentIndex', currentIndex)
 
   const slides = useMemo(() => {
     const allSlides = slideshows?.flatMap((show) => show?.slides)
@@ -31,46 +30,58 @@ export default function Slideshow({ slideshows }: SlideshowProps) {
   }, [slideshows])
 
   const findNextIndex = useCallback(() => {
-    const isLast = currentIndex === slides.length
-    const nextIndex = isLast ? 0 : currentIndex + 1
-    let nextActiveIndex = nextIndex
+    console.log('currentIndex', currentIndex)
+    const isLast = currentIndex === slides?.length - 1
+    let nextIndex = isLast ? 0 : currentIndex + 1
     let indexIsActive = false
     do {
-      if (nextActiveIndex === slides?.length) {
-        nextActiveIndex = 0
-        indexIsActive = isSlideActive(0)
+      console.log('do nextIndex', nextIndex)
+      indexIsActive = isSlideActive(slides[nextIndex])
+      console.log('do indexIsActive', indexIsActive)
+      if (nextIndex === slides?.length - 1) {
+        if (!indexIsActive) {
+          nextIndex = 0
+        }
       } else {
-        nextActiveIndex = nextActiveIndex + 1
-        indexIsActive = isSlideActive(nextActiveIndex + 1)
+        if (!indexIsActive) {
+          nextIndex = nextIndex + 1
+        }
       }
     } while (!indexIsActive)
-    console.log('Found next active index, set to current', nextActiveIndex)
-    setCurrentIndex(nextActiveIndex)
+    console.log('Found next active index, set to current', nextIndex)
+    setCurrentIndex(nextIndex)
   }, [currentIndex])
 
   const play = useCallback(() => {
     if (slides?.length > 0) {
-      let duration = 30000
-      const currentSlide = slides[currentIndex]
-      if (currentSlide?.content?.[0]?.type === 'fullWidthVideo') {
-        console.log('videoDuration', videoDuration)
-        duration = videoDuration * 1000
-      }
-      if (
-        //@ts-ignore:todo
-        currentSlide?.overrideDuration &&
-        currentSlide?.duration &&
-        typeof currentSlide?.duration !== undefined &&
-        //@ts-ignore:todo
-        currentSlide?.duration !== ''
-      ) {
-        //@ts-ignore:todo
-        duration = parseInt(currentSlide?.duration, 10) * 1000
+      let duration = 20000
+      if (currentIndex) {
+        const currentSlide = slides[currentIndex]
+        if (currentSlide?.content?.[0]?.type === 'fullWidthVideo') {
+          console.log('videoDuration', videoDuration)
+          duration = videoDuration * 1000
+        }
+        if (
+          //@ts-ignore:todo
+          currentSlide?.overrideDuration &&
+          currentSlide?.duration &&
+          typeof currentSlide?.duration !== undefined &&
+          //@ts-ignore:todo
+          currentSlide?.duration !== ''
+        ) {
+          //@ts-ignore:todo
+          duration = parseInt(currentSlide?.duration, 10) * 1000
+        }
       }
       console.log('play method: set timout with duration', duration)
       timeout.current = setTimeout(findNextIndex, duration)
     }
   }, [currentIndex, videoDuration])
+
+  useEffect(() => {
+    console.log('mount find next index')
+    findNextIndex()
+  }, [])
 
   useEffect(() => {
     clearTimeout(timeout.current)
