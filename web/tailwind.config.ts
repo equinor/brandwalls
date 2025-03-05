@@ -357,18 +357,30 @@ export default {
               fontSize: theme('fontSize.lg'),
               lineHeight: theme('lineHeight.tight'),
               h1: {
-                fontSize: theme('fontSize.2xl'),
+                fontSize: theme('fontSize.4xl'),
                 lineHeight: theme('lineHeight.tight'),
                 fontWeight: theme('fontWeight.normal'),
                 marginBottom: theme('spacing.8'),
               },
               h2: {
-                fontSize: theme('fontSize.xl'),
+                fontSize: theme('fontSize.3xl'),
                 lineHeight: theme('lineHeight.tight'),
                 fontWeight: theme('fontWeight.normal'),
                 marginBottom: theme('spacing.8'),
               },
               h3: {
+                fontSize: theme('fontSize.2xl'),
+                lineHeight: theme('lineHeight.tight'),
+                fontWeight: theme('fontWeight.semibold'),
+                marginBottom: theme('spacing.4'),
+              },
+              h4: {
+                fontSize: theme('fontSize.xl'),
+                lineHeight: theme('lineHeight.tight'),
+                fontWeight: theme('fontWeight.semibold'),
+                marginBottom: theme('spacing.4'),
+              },
+              h5: {
                 fontSize: theme('fontSize.lg'),
                 lineHeight: theme('lineHeight.tight'),
                 fontWeight: theme('fontWeight.semibold'),

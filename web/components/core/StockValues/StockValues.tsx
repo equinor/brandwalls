@@ -50,12 +50,12 @@ const StockValues = ({}: {}) => {
     return (
       <div className="flex h-full w-full flex-col items-start justify-start p-4">
         <div className="flex items-baseline gap-1 *:leading-none">
-          <div className="text-3xl font-normal text-norwegian-woods-100">{price}</div>
-          <div className="text-lg font-normal">{currency}</div>
+          <div className="text-4xl font-normal text-norwegian-woods-100">{price}</div>
+          <div className="text-xl font-normal">{currency}</div>
         </div>
-        <div className="text-base">{change}%</div>
-        <h2 className="mt-4 text-md font-normal">{title}</h2>
-        <div className="text-base font-normal">{format(new Date(date), 'd LLLL yyyy hh:mm (z)')}</div>{' '}
+        <div className="text-md">{change}%</div>
+        <h2 className="mt-4 text-lg font-normal">{title}</h2>
+        <div className="text-md font-normal">{format(new Date(date), 'd LLLL yyyy hh:mm (z)')}</div>{' '}
       </div>
     )
   }
