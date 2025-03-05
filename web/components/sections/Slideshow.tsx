@@ -29,6 +29,8 @@ export default function Slideshow({ slideshows }: SlideshowProps) {
     return processedSlides
   }, [slideshows])
 
+  console.log('slides', slides)
+
   const findNextIndex = useCallback(() => {
     console.log('currentIndex', currentIndex)
     const isLast = currentIndex === slides?.length - 1
