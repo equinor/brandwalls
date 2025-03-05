@@ -17,6 +17,8 @@ export async function generateStaticParams() {
 
 type Params = Promise<{ slug: string }>
 
+export const revalidate = 120 // revalidate at most every hour
+
 export default async function Page({ params }: { params: Params }) {
   const { data: slideshows } = await sanityFetch({
     query: getSlideshowsQuery,
