@@ -29,7 +29,7 @@ export const Clock = forwardRef<HTMLDivElement, ClockProps>(function Clock({ cla
   }
 
   return (
-    <div className="grid h-full w-full grid-cols-2 grid-rows-1 text-10xl text-norwegian-woods-100">
+    <div className="grid h-full w-full grid-cols-2 grid-rows-1 text-12xl text-norwegian-woods-100">
       <div className="flex h-full w-full items-center justify-end px-2 py-4">{convertToTwoDigit(time.hours)}:</div>
       <div className="flex items-center justify-start px-2 py-4">{convertToTwoDigit(time.minutes)}</div>
     </div>
