@@ -1000,6 +1000,13 @@
             "value": "textOptions"
           }
         },
+        "useLight": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "boolean"
+          },
+          "optional": true
+        },
         "textAlignment": {
           "type": "objectAttribute",
           "value": {
@@ -1155,10 +1162,17 @@
         },
         "optional": true
       },
+      "overrideDuration": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "boolean"
+        },
+        "optional": true
+      },
       "duration": {
         "type": "objectAttribute",
         "value": {
-          "type": "number"
+          "type": "string"
         },
         "optional": true
       }

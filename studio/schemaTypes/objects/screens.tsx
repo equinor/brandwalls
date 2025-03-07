@@ -1,5 +1,6 @@
-import {Box, Card, Grid, Heading, Stack} from '@sanity/ui'
-import {Rule} from 'sanity'
+import {Button, Card, Flex, Grid, Heading, Label, Stack} from '@sanity/ui'
+import {useCallback} from 'react'
+import {Rule, set} from 'sanity'
 
 const allowedAdjacentScreens = (currentScreen: string) => {
   switch (currentScreen) {
@@ -41,12 +42,10 @@ const allowedAdjacentScreens = (currentScreen: string) => {
 }
 
 const verifyScreens = (screens: string[]) => {
-  console.log('screens', screens)
   if (screens?.length <= 1) return true
   let hasError = true
   screens?.forEach((currentValue, i, screensArray) => {
     const allowedAdjacent = allowedAdjacentScreens(currentValue)
-    console.log(`allowedAdjacent for ${currentValue}`, allowedAdjacent)
     if (
       allowedAdjacent?.includes(screensArray[i - 1]) ||
       allowedAdjacent?.includes(screensArray[i + 1])
@@ -58,41 +57,51 @@ const verifyScreens = (screens: string[]) => {
   return hasError ? 'Adjacent screens is not next to each other' : true
 }
 
-const ScreensPreview = ({value}: {value: string[]}) => (
-  <Box marginTop={2} marginBottom={2}>
-    <Heading as="h3" size={0}>
-      Preview
-    </Heading>
-    <Card padding={[3, 3, 4]} radius={2} shadow={1} marginTop={3}>
-      <Grid columns={4} rows={4} gap={1}>
-        {Array(16)
-          .fill(0)
-          .map((v, i) => {
-            return (
-              <Box
-                key={`screen_preview_cell_${i}`}
-                padding={[3, 3, 4, 5]}
-                style={{
-                  color: 'black',
-                  ...(value &&
-                    value?.includes(`${i + 1}`) && {color: 'white', backgroundColor: 'black'}),
-                  outline: '1px solid black',
-                }}
-              >
-                {i + 1}
-              </Box>
-            )
-          })}
-      </Grid>
-    </Card>
-  </Box>
-)
-
 const PreviewScreensInputComponent = (props: any) => {
+  const {value = [''], onChange, schemaType} = props
+  const {options} = schemaType
+  const {list} = options
+
+  const handleClick = useCallback(
+    (event: React.MouseEvent<HTMLButtonElement>) => {
+      const nextValue = event.currentTarget.value
+      let newArrayValue = value
+      if (value?.includes(nextValue)) {
+        //remove from value array
+        newArrayValue = newArrayValue.filter((item: string) => item !== nextValue)
+      } else {
+        newArrayValue = [...newArrayValue, nextValue]
+      }
+      onChange(set(newArrayValue))
+    },
+    [onChange],
+  )
+
   return (
     <Stack space={2}>
-      {props.renderDefault(props)}
-      <ScreensPreview value={props.value} />
+      <Heading as="h3" size={0}>
+        Selected: {props?.value.toString()}
+      </Heading>
+      <Card padding={[3, 3, 4]} radius={2} shadow={1} marginTop={3}>
+        <Grid columns={4} rows={4} gap={1}>
+          {list.map((option: any, i: number) => {
+            return (
+              <Button
+                key={`screen_${option.value}`}
+                value={option.value}
+                mode={props.value?.includes(option.value) ? `default` : `ghost`}
+                tone={props.value?.includes(option.value) ? `primary` : `default`}
+                padding={[3, 4]}
+                onClick={handleClick}
+              >
+                <Flex gap={2} align="center">
+                  <Label size={5}>{option.value}</Label>
+                </Flex>
+              </Button>
+            )
+          })}
+        </Grid>
+      </Card>
     </Stack>
   )
 }

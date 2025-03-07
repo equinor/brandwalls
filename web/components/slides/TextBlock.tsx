@@ -24,7 +24,7 @@ const arrayIncludesScreen = (arr: string[], screen: string) =>
 
 const getColumnUtility = (screen: string, hasAdjacentScreen: boolean) => {
   if (arrayIncludesScreen(FirstColumnScreens, screen)) {
-    return `col-start-1 ${hasAdjacentScreen ? 'col-end-2' : 'col-end-1'}`
+    return `col-start-1 ${hasAdjacentScreen ? 'col-end-3' : 'col-end-2'}`
   }
   if (arrayIncludesScreen(SecondColumnScreens, screen)) {
     return `col-start-2 ${hasAdjacentScreen ? 'col-end-4' : 'col-end-2'}`
@@ -38,13 +38,13 @@ const getColumnUtility = (screen: string, hasAdjacentScreen: boolean) => {
 }
 const getRowUtility = (screen: string, hasAdjacentScreen: boolean) => {
   if (arrayIncludesScreen(FirstRowScreens, screen)) {
-    return `row-start-1 ${hasAdjacentScreen ? 'row-end-2' : 'row-end-1'}`
+    return `row-start-1 ${hasAdjacentScreen ? 'row-end-3' : 'row-end-2'}`
   }
   if (arrayIncludesScreen(SecondRowScreens, screen)) {
-    return `row-start-2 ${hasAdjacentScreen ? 'row-end-3' : 'row-end-2'}`
+    return `row-start-2 ${hasAdjacentScreen ? 'row-end-4' : 'row-end-2'}`
   }
   if (arrayIncludesScreen(ThirdRowScreens, screen)) {
-    return `row-start-3 ${hasAdjacentScreen ? 'row-end-4' : 'row-end-3'}`
+    return `row-start-3 ${hasAdjacentScreen ? 'row-end-5' : 'row-end-3'}`
   }
   if (arrayIncludesScreen(FourthRowScreens, screen)) {
     return 'row-start-4 row-end-4'
@@ -52,7 +52,7 @@ const getRowUtility = (screen: string, hasAdjacentScreen: boolean) => {
 }
 
 export default function TextBlock({ text, textOptions }: TextBlockProps) {
-  const { screens, textAlignment } = textOptions || {}
+  const { useLight, applyGradient, screens, textAlignment } = textOptions || {}
 
   const sortedScreens = useMemo(
     () =>
@@ -117,14 +117,45 @@ export default function TextBlock({ text, textOptions }: TextBlockProps) {
     const usesLastRow = FourthRowScreens.some((fcs: string) => {
       return parseInt(fcs, 10) === parseInt(sortedScreens[0], 10)
     })
-    const padding = `${usesFirstColumn ? 'ps-12' : ''} ${usesLastColumn ? 'pe-12' : ''} 
-    ${usesFirstRow ? 'pt-12' : ''} ${usesLastRow ? 'pb-12' : ''}`
+    const padding = `${usesFirstColumn ? 'ps-4xl' : ''} ${usesLastColumn ? 'pe-4xl' : ''} ${usesFirstRow ? 'pt-4xl' : ''} ${usesLastRow ? 'pb-4xl' : ''}`
     return padding
+  }
+
+  const getGradient = () => {
+    const leftColumns = sortedScreens.some((screen: string) => {
+      return FirstColumnScreens?.includes(screen) || SecondColumnScreens?.includes(screen)
+    })
+    const rightColumns = sortedScreens.some((screen: string) => {
+      return ThirdColumnScreens?.includes(screen) || FourthColumnScreens?.includes(screen)
+    })
+    const centerColumns = sortedScreens.some((screen: string) => {
+      return SecondColumnScreens?.includes(screen) || ThirdColumnScreens?.includes(screen)
+    })
+    const topColumns = sortedScreens.some((screen: string) => {
+      return FirstRowScreens?.includes(screen) || SecondRowScreens?.includes(screen)
+    })
+    const bottomColumns = sortedScreens.some((screen: string) => {
+      return ThirdRowScreens?.includes(screen) || FourthRowScreens?.includes(screen)
+    })
+    let grad = ``
+    if (leftColumns && !centerColumns) {
+      grad = useLight ? `black-left-gradient` : `white-left-gradient`
+    }
+    if (rightColumns && !centerColumns) {
+      grad = useLight ? `black-right-gradient` : `white-right-gradient`
+    }
+    if (centerColumns && topColumns) {
+      grad = useLight ? `black-top-gradient` : `white-top-gradient`
+    }
+    if (centerColumns && bottomColumns) {
+      grad = useLight ? `black-bottom-gradient` : `white-bottom-gradient`
+    }
+    return grad
   }
 
   return (
     <div
-      className={`grid h-full w-full grid-cols-4 grid-rows-4 ${hasAdjacentColumn || hasAdjacentRow ? 'items-start justify-start' : 'items-center justify-center'}`}
+      className={`${useLight ? 'dark' : ''} grid h-full w-full grid-cols-4 grid-rows-4 ${applyGradient ? getGradient() : ''}`}
     >
       {text && (
         <Blocks
