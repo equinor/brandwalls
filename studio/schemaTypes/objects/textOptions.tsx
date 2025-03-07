@@ -25,6 +25,17 @@ export default {
   type: 'object',
   fields: [
     defineField({
+      name: 'useLight',
+      type: 'boolean',
+      title: 'Use light text color',
+      description: 'Default is dark',
+    }),
+    defineField({
+      name: 'applyGradient',
+      type: 'boolean',
+      title: 'Apply gradient',
+    }),
+    defineField({
       name: 'textAlignment',
       title: 'Alignment for text',
       description: '',

@@ -20,6 +20,8 @@ export const getPageQuery = defineQuery(`
 
 const textOptions = /* groq */ `
   textOptions{
+    useLight,
+    applyGradient,
     textAlignment,
     screens,
   }

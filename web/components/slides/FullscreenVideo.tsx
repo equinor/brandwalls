@@ -1,5 +1,6 @@
-import React, { useRef, Suspense } from 'react'
-import ReactPlayer from 'react-player'
+'use client'
+import React, { useEffect, useRef } from 'react'
+import BackgroundPlayer from 'next-video/background-player'
 import { useSlideContext } from '../slide-context'
 
 interface FullscreenVideoProps {
@@ -9,31 +10,39 @@ interface FullscreenVideoProps {
 
 export default function FullscreenVideo(props: FullscreenVideoProps) {
   const { video } = props
-  const videoRef = useRef(null)
+  const videoRef = useRef<HTMLVideoElement>(null)
   const { changeVideoDuration } = useSlideContext()
 
+  useEffect(() => {
+    function handleMetadata() {
+      const duration = el?.duration
+      if (duration) {
+        changeVideoDuration(duration)
+      }
+    }
+    const el = videoRef.current
+
+    if (el) {
+      el.addEventListener('loadedmetadata', handleMetadata)
+    }
+    return () => {
+      if (el) {
+        el.removeEventListener('loadedmetadata', handleMetadata)
+      }
+    }
+  }, [videoRef.current])
+
   return (
-    <div className="absolute inset-0 -z-10 w-full overflow-hidden">
-      <Suspense fallback={<p>Loading video...</p>}>
-        <div className="h-screen w-screen object-cover">
-          <ReactPlayer
-            //@ts-ignore: TODO
-            ref={videoRef}
-            className=""
-            url={video.url}
-            muted
-            loop
-            playing={true}
-            playsinline
-            controls={false}
-            width="100vw"
-            height="100vh"
-            onDuration={(duration) => {
-              changeVideoDuration(duration)
-            }}
-          />
-        </div>
-      </Suspense>
+    <div className="relative aspect-video h-screen w-screen pt-[56.25%]">
+      <BackgroundPlayer
+        ref={videoRef}
+        src={video.url}
+        muted
+        loop
+        playsInline
+        autoPlay
+        className="absolute inset-0 aspect-auto h-full w-full"
+      />
     </div>
   )
 }

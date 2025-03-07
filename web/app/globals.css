@@ -47,12 +47,69 @@
   h6 {
     overflow-wrap: break-word;
   }
+  video {
+    @apply h-screen w-screen;
+  }
 }
 
 @layer utilities {
   .text-stroke {
     -webkit-text-stroke-width: 1px;
     -webkit-text-stroke-color: theme(colors.slate.80);
+  }
+  .fade-in-black-gradient {
+    background-image: linear-gradient(to bottom, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.6) 60%, rgba(0, 0, 0, 0.8) 100%);
+  }
+
+  .black-right-gradient {
+    background-image: linear-gradient(to right, rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.3) 30%, rgba(0, 0, 0, 0.4) 100%);
+  }
+  .black-left-gradient {
+    background-image: linear-gradient(to left, rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.3) 30%, rgba(0, 0, 0, 0.4) 100%);
+  }
+  .black-bottom-gradient {
+    background-image: linear-gradient(to top, rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.3) 40%, rgba(0, 0, 0, 0.1) 100%);
+  }
+  .black-top-gradient {
+    background-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.3) 40%, rgba(0, 0, 0, 0.1) 100%);
+  }
+  .black-center-gradient {
+    background-image: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4));
+  }
+  .white-center-gradient {
+    background-image: linear-gradient(rgba(255, 255, 255, 0.4), rgba(255, 255, 255, 0.4));
+  }
+  .white-right-gradient {
+    background-image: linear-gradient(
+      to right,
+      rgba(255, 255, 255, 0.1),
+      rgba(255, 255, 255, 0.3) 30%,
+      rgba(255, 255, 255, 0.4) 100%
+    );
+  }
+  .white-left-gradient {
+    background-image: linear-gradient(
+      to left,
+      rgba(255, 255, 255, 0.1),
+      rgba(255, 255, 255, 0.3) 40%,
+      rgba(255, 255, 255, 0.4) 100%
+    );
+  }
+  .white-bottom-gradient {
+    background-image: linear-gradient(
+      to bottom,
+      rgba(255, 255, 255, 0.1),
+      rgba(255, 255, 255, 0.3) 40%,
+      rgba(255, 255, 255, 0.4) 100%
+    );
+  }
+  .white-top-gradient {
+    background-image: linear-gradient(
+      to top,
+      rgba(255, 255, 255, 0.1),
+      rgba(255, 255, 255, 0.3) 30%,
+      rgba(255, 255, 255, 0.4) 100%
+    );
   }
 
   @starting-style {

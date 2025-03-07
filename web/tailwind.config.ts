@@ -424,6 +424,11 @@ export default {
               '--tw-prose-body': theme('colors.slate.80'),
               '--tw-prose-bullets': theme('colors.slate.80'),
               '--tw-prose-counters': theme('colors.slate.80'),
+              //inverted
+              '--tw-prose-invert-headings': theme('colors.white.100'),
+              '--tw-prose-invert-body': theme('colors.white.100'),
+              '--tw-prose-invert-bullets': theme('colors.white.100'),
+              '--tw-prose-invert-counters': theme('colors.white.100'),
             },
           ],
         },
