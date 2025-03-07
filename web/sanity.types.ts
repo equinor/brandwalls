@@ -171,6 +171,7 @@ export type TextBlock = {
 export type TextOptions = {
   _type: 'textOptions'
   useLight?: boolean
+  applyGradient?: boolean
   textAlignment?: string
   screens?: Screens
 }
@@ -361,7 +362,7 @@ export type GetPageQueryResult = {
   lon?: string
 } | null
 // Variable: getSlideshowsQuery
-// Query: *[_type == 'slideshow' && (count((showLocations[]->slug.current)[@ in [$slug]]) > 0)][0...30]{    "type": _type,    "id": _id,    "updatedAt": _updatedAt,    title,    slides[]->{      scheduling{        ...,      },      duration,      overrideDuration,      content[]{        _type == "infoBoard" => {        "type": _type,        "id": _key,        sif,        trif      },      _type == "fullWidthImage" => {        "type": _type,        "id": _key,        image,        text[]{          ...,          markDefs[]{            ...,          },        },        "textOptions":  textOptions{    useLight,    textAlignment,    screens,  }      },      _type == "fullWidthVideo" => {        "type": _type,        "id": _key,        "video": videoFile->{          "url": video.asset->url,          thumbnail        },      },      _type == "textBlock" => {          ...,          "type": _type,          "id": _key,          "textOptions":  textOptions{    useLight,    textAlignment,    screens,  },          text[]{          ...,          markDefs[]{            ...,          },          },        },        _type == "testSlide" => {        "type": _type,        "id": _key,        title      },      }    }  }
+// Query: *[_type == 'slideshow' && (count((showLocations[]->slug.current)[@ in [$slug]]) > 0)][0...30]{    "type": _type,    "id": _id,    "updatedAt": _updatedAt,    title,    slides[]->{      scheduling{        ...,      },      duration,      overrideDuration,      content[]{        _type == "infoBoard" => {        "type": _type,        "id": _key,        sif,        trif      },      _type == "fullWidthImage" => {        "type": _type,        "id": _key,        image,        text[]{          ...,          markDefs[]{            ...,          },        },        "textOptions":  textOptions{    useLight,    applyGradient,    textAlignment,    screens,  }      },      _type == "fullWidthVideo" => {        "type": _type,        "id": _key,        "video": videoFile->{          "url": video.asset->url,          thumbnail        },      },      _type == "textBlock" => {          ...,          "type": _type,          "id": _key,          "textOptions":  textOptions{    useLight,    applyGradient,    textAlignment,    screens,  },          text[]{          ...,          markDefs[]{            ...,          },          },        },        _type == "testSlide" => {        "type": _type,        "id": _key,        title      },      }    }  }
 export type GetSlideshowsQueryResult = Array<{
   type: 'slideshow'
   id: string
@@ -400,6 +401,7 @@ export type GetSlideshowsQueryResult = Array<{
           }> | null
           textOptions: {
             useLight: boolean | null
+            applyGradient: boolean | null
             textAlignment: string | null
             screens: Screens | null
           } | null
@@ -436,6 +438,7 @@ export type GetSlideshowsQueryResult = Array<{
           }> | null
           textOptions: {
             useLight: boolean | null
+            applyGradient: boolean | null
             textAlignment: string | null
             screens: Screens | null
           } | null
@@ -480,6 +483,6 @@ declare module '@sanity/client' {
     '*[_type == "settings"][0]': SettingsQueryResult
     '\n  *[_type == "location" && defined(slug.current)]\n  {\n    "slug": slug.current\n  }\n': PagesSlugsResult
     "\n  *[_type == 'location' && slug.current == $slug][0]{\n    _id,\n    _type,\n    slug,\n    ...\n  }\n": GetPageQueryResult
-    '\n  *[_type == \'slideshow\' && (count((showLocations[]->slug.current)[@ in [$slug]]) > 0)][0...30]{\n    "type": _type,\n    "id": _id,\n    "updatedAt": _updatedAt,\n    title,\n    slides[]->{\n      scheduling{\n        ...,\n      },\n      duration,\n      overrideDuration,\n      content[]{\n        _type == "infoBoard" => {\n        "type": _type,\n        "id": _key,\n        sif,\n        trif\n      },\n      _type == "fullWidthImage" => {\n        "type": _type,\n        "id": _key,\n        image,\n        text[]{\n          ...,\n          markDefs[]{\n            ...,\n          },\n        },\n        "textOptions":\n  textOptions{\n    useLight,\n    textAlignment,\n    screens,\n  }\n\n      },\n      _type == "fullWidthVideo" => {\n        "type": _type,\n        "id": _key,\n        "video": videoFile->{\n          "url": video.asset->url,\n          thumbnail\n        },\n      },\n      _type == "textBlock" => {\n          ...,\n          "type": _type,\n          "id": _key,\n          "textOptions":\n  textOptions{\n    useLight,\n    textAlignment,\n    screens,\n  }\n,\n          text[]{\n          ...,\n          markDefs[]{\n            ...,\n          },\n          },\n        },\n        _type == "testSlide" => {\n        "type": _type,\n        "id": _key,\n        title\n      },\n      }\n    }\n  }\n': GetSlideshowsQueryResult
+    '\n  *[_type == \'slideshow\' && (count((showLocations[]->slug.current)[@ in [$slug]]) > 0)][0...30]{\n    "type": _type,\n    "id": _id,\n    "updatedAt": _updatedAt,\n    title,\n    slides[]->{\n      scheduling{\n        ...,\n      },\n      duration,\n      overrideDuration,\n      content[]{\n        _type == "infoBoard" => {\n        "type": _type,\n        "id": _key,\n        sif,\n        trif\n      },\n      _type == "fullWidthImage" => {\n        "type": _type,\n        "id": _key,\n        image,\n        text[]{\n          ...,\n          markDefs[]{\n            ...,\n          },\n        },\n        "textOptions":\n  textOptions{\n    useLight,\n    applyGradient,\n    textAlignment,\n    screens,\n  }\n\n      },\n      _type == "fullWidthVideo" => {\n        "type": _type,\n        "id": _key,\n        "video": videoFile->{\n          "url": video.asset->url,\n          thumbnail\n        },\n      },\n      _type == "textBlock" => {\n          ...,\n          "type": _type,\n          "id": _key,\n          "textOptions":\n  textOptions{\n    useLight,\n    applyGradient,\n    textAlignment,\n    screens,\n  }\n,\n          text[]{\n          ...,\n          markDefs[]{\n            ...,\n          },\n          },\n        },\n        _type == "testSlide" => {\n        "type": _type,\n        "id": _key,\n        title\n      },\n      }\n    }\n  }\n': GetSlideshowsQueryResult
   }
 }

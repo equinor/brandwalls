@@ -1007,6 +1007,13 @@
           },
           "optional": true
         },
+        "applyGradient": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "boolean"
+          },
+          "optional": true
+        },
         "textAlignment": {
           "type": "objectAttribute",
           "value": {
