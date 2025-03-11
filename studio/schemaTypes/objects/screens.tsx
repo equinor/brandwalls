@@ -1,6 +1,6 @@
-import {Button, Card, Flex, Grid, Heading, Label, Stack} from '@sanity/ui'
-import {useCallback} from 'react'
-import {Rule, set} from 'sanity'
+import { Button, Card, Flex, Grid, Heading, Label, Stack } from '@sanity/ui'
+import { useCallback } from 'react'
+import { Rule, set } from 'sanity'
 
 const allowedAdjacentScreens = (currentScreen: string) => {
   switch (currentScreen) {
@@ -42,14 +42,11 @@ const allowedAdjacentScreens = (currentScreen: string) => {
 }
 
 const verifyScreens = (screens: string[]) => {
-  if (screens?.length <= 1) return true
+  if (!screens || screens?.length <= 1) return true
   let hasError = true
   screens?.forEach((currentValue, i, screensArray) => {
     const allowedAdjacent = allowedAdjacentScreens(currentValue)
-    if (
-      allowedAdjacent?.includes(screensArray[i - 1]) ||
-      allowedAdjacent?.includes(screensArray[i + 1])
-    ) {
+    if (allowedAdjacent?.includes(screensArray[i - 1]) || allowedAdjacent?.includes(screensArray[i + 1])) {
       console.log('allowedAdjacent for next or past allowed', allowedAdjacent)
       hasError = false
     }
@@ -58,9 +55,9 @@ const verifyScreens = (screens: string[]) => {
 }
 
 const PreviewScreensInputComponent = (props: any) => {
-  const {value = [''], onChange, schemaType} = props
-  const {options} = schemaType
-  const {list} = options
+  const { value = [''], onChange, schemaType } = props
+  const { options } = schemaType
+  const { list } = options
 
   const handleClick = useCallback(
     (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -80,7 +77,7 @@ const PreviewScreensInputComponent = (props: any) => {
   return (
     <Stack space={2}>
       <Heading as="h3" size={0}>
-        Selected: {props?.value.toString()}
+        Selected: {props?.value?.toString()}
       </Heading>
       <Card padding={[3, 3, 4]} radius={2} shadow={1} marginTop={3}>
         <Grid columns={4} rows={4} gap={1}>
@@ -110,29 +107,29 @@ export default {
   description: '',
   name: 'screens',
   type: 'array',
-  of: [{type: 'string'}],
+  of: [{ type: 'string' }],
   options: {
     list: [
-      {title: 'Screen 1', value: '1'},
-      {title: 'Screen 2', value: '2'},
-      {title: 'Screen 3', value: '3'},
-      {title: 'Screen 4', value: '4'},
-      {title: 'Screen 5', value: '5'},
-      {title: 'Screen 6', value: '6'},
-      {title: 'Screen 7', value: '7'},
-      {title: 'Screen 8', value: '8'},
-      {title: 'Screen 9', value: '9'},
-      {title: 'Screen 10', value: '10'},
-      {title: 'Screen 11', value: '11'},
-      {title: 'Screen 12', value: '12'},
-      {title: 'Screen 13', value: '13'},
-      {title: 'Screen 14', value: '14'},
-      {title: 'Screen 15', value: '15'},
-      {title: 'Screen 16', value: '16'},
+      { title: 'Screen 1', value: '1' },
+      { title: 'Screen 2', value: '2' },
+      { title: 'Screen 3', value: '3' },
+      { title: 'Screen 4', value: '4' },
+      { title: 'Screen 5', value: '5' },
+      { title: 'Screen 6', value: '6' },
+      { title: 'Screen 7', value: '7' },
+      { title: 'Screen 8', value: '8' },
+      { title: 'Screen 9', value: '9' },
+      { title: 'Screen 10', value: '10' },
+      { title: 'Screen 11', value: '11' },
+      { title: 'Screen 12', value: '12' },
+      { title: 'Screen 13', value: '13' },
+      { title: 'Screen 14', value: '14' },
+      { title: 'Screen 15', value: '15' },
+      { title: 'Screen 16', value: '16' },
     ],
     layout: 'grid',
   },
-  initialValue: 5,
+  initialValue: ['5'],
   components: {
     input: PreviewScreensInputComponent,
   },
