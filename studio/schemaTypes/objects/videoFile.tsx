@@ -1,6 +1,6 @@
-import {play_circle} from '@equinor/eds-icons'
-import type {Reference, Rule} from 'sanity'
-import {EdsIcon} from '../../icons/edsIcons'
+import { play_circle } from '@equinor/eds-icons'
+import type { Reference, Rule } from 'sanity'
+import { EdsIcon } from '../../icons/edsIcons'
 
 export default {
   type: 'document',
@@ -9,26 +9,28 @@ export default {
   icon: () => EdsIcon(play_circle),
   fields: [
     {
+      name: 'title',
+      type: 'string',
+      title: 'Title',
+    },
+    {
       name: 'video',
       title: 'Video',
       description: 'Upload an video. Preview is not available in  POC',
       type: 'file',
+      options: {
+        storeOriginalFilename: true,
+      },
       validation: (Rule: Rule) => Rule.required(),
-    },
-    {
-      name: 'thumbnail',
-      type: 'image',
-      title: 'Thumbnail',
     },
   ],
   preview: {
     select: {
-      image: 'thumbnail',
+      title: 'title',
     },
-    prepare({title = 'Video component', image}: {title: string; image: Reference}) {
+    prepare({ title = 'Video component' }: { title: string }) {
       return {
         title,
-        media: image,
       }
     },
   },
