@@ -44,7 +44,7 @@ export default async function RootLayout({
         )}
         {/* The <SanityLive> component is responsible for making all sanityFetch calls in your application live, so should always be rendered. */}
         <SanityLive onError={handleError} />
-        <main className="relative h-screen w-screen">{children}</main>
+        <main className="relative h-screen w-screen overflow-hidden">{children}</main>
       </body>
     </html>
   )

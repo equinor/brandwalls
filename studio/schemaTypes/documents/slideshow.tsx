@@ -1,5 +1,5 @@
-import {BiSlideshow} from 'react-icons/bi'
-import {defineField} from 'sanity'
+import { BiSlideshow } from 'react-icons/bi'
+import { defineField } from 'sanity'
 
 export default {
   type: 'document',
@@ -21,7 +21,7 @@ export default {
       of: [
         {
           type: 'reference',
-          to: [{type: 'location'}],
+          to: [{ type: 'location' }],
         },
       ],
       options: {},
@@ -39,7 +39,7 @@ export default {
       of: [
         {
           type: 'reference',
-          to: [{type: 'slide'}],
+          to: [{ type: 'slide' }],
         },
       ],
       options: {},
@@ -49,7 +49,7 @@ export default {
     {
       title: 'Title ',
       name: 'titleAsc',
-      by: [{field: 'title', direction: 'asc'}],
+      by: [{ field: 'title', direction: 'asc' }],
     },
   ],
   preview: {
@@ -57,7 +57,7 @@ export default {
       title: 'title',
     },
     prepare(selection: any) {
-      const {title} = selection
+      const { title } = selection
       return {
         title: title,
         subtitle: 'Slideshow',
