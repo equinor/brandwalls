@@ -16,8 +16,8 @@ export default function Event({
   timeToBeAnnounced,
   hideTime,
 }: EventProps) {
-  const startDate = parseISO(startDatetime)
-  const endDate = parseISO(endDatetime)
+  const startDate = startDatetime ? parseISO(startDatetime) : undefined
+  const endDate = endDatetime ? parseISO(endDatetime) : undefined
   return (
     <div className={`grid h-full w-full grid-cols-4 grid-rows-4`}>
       {eyebrow && <div className="col-span-4 row-start-1 row-end-1 flex items-end pb-xl ps-96 text-2xl">{eyebrow}</div>}
@@ -25,21 +25,23 @@ export default function Event({
         <div className="grid grid-cols-4 bg-moss-green-50 ps-96">
           <div className="col-span-2 py-48">
             {title && <Blocks value={title} className="pb-xl text-4xl" />}
-            <div className="text-2xl text-norwegian-woods-100">
-              {isSameDay(startDate, endDate) ? (
-                <div>{format(startDate, 'd LLLL yyyy')}</div>
-              ) : (
-                <div>
-                  {format(startDate, 'd')} - {format(endDate, 'd')} {format(startDate, 'LLLL yyyy')}
-                </div>
-              )}
-              {!hideTime && (
-                <div className="text-xl">
-                  {format(startDate, 'HH:mm')} - {format(endDate, 'HH:mm')}
-                </div>
-              )}
-              {location && <div className="text-xl">{location}</div>}
-            </div>
+            {startDate && endDate && (
+              <div className="text-2xl text-norwegian-woods-100">
+                {isSameDay(startDate, endDate) ? (
+                  <div>{format(startDate, 'd LLLL yyyy')}</div>
+                ) : (
+                  <div>
+                    {format(startDate, 'd')} - {format(endDate, 'd')} {format(startDate, 'LLLL yyyy')}
+                  </div>
+                )}
+                {!hideTime && (
+                  <div className="text-xl">
+                    {format(startDate, 'HH:mm')} - {format(endDate, 'HH:mm')}
+                  </div>
+                )}
+                {location && <div className="text-xl">{location}</div>}
+              </div>
+            )}
           </div>
           <div className="relative col-span-2 h-full w-full">
             {image && <SanityImage image={image} className="max-w-[25vw]" />}
