@@ -46,6 +46,55 @@ export type Geopoint = {
   alt?: number
 }
 
+export type Event = {
+  _type: 'event'
+  image?: {
+    asset?: {
+      _ref: string
+      _type: 'reference'
+      _weak?: boolean
+      [internalGroqTypeReferenceTo]?: 'sanity.imageAsset'
+    }
+    hotspot?: SanityImageHotspot
+    crop?: SanityImageCrop
+    _type: 'image'
+  }
+  eyebrow?: string
+  title?: Array<{
+    children?: Array<{
+      marks?: Array<string>
+      text?: string
+      _type: 'span'
+      _key: string
+    }>
+    style?: 'normal' | 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6'
+    listItem?: 'number' | 'bullet'
+    markDefs?: null
+    level?: number
+    _type: 'block'
+    _key: string
+  }>
+  introduction?: Array<{
+    children?: Array<{
+      marks?: Array<string>
+      text?: string
+      _type: 'span'
+      _key: string
+    }>
+    style?: 'normal' | 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6'
+    listItem?: 'number' | 'bullet'
+    markDefs?: null
+    level?: number
+    _type: 'block'
+    _key: string
+  }>
+  startDatetime?: string
+  endDatetime?: string
+  timeToBeAnnounced?: boolean
+  hideTime?: boolean
+  location?: string
+}
+
 export type Screens = Array<string>
 
 export type TestSlide = {
@@ -69,6 +118,7 @@ export type VideoFile = {
   _createdAt: string
   _updatedAt: string
   _rev: string
+  title?: string
   video: {
     asset?: {
       _ref: string
@@ -77,17 +127,6 @@ export type VideoFile = {
       [internalGroqTypeReferenceTo]?: 'sanity.fileAsset'
     }
     _type: 'file'
-  }
-  thumbnail?: {
-    asset?: {
-      _ref: string
-      _type: 'reference'
-      _weak?: boolean
-      [internalGroqTypeReferenceTo]?: 'sanity.imageAsset'
-    }
-    hotspot?: SanityImageHotspot
-    crop?: SanityImageCrop
-    _type: 'image'
   }
 }
 
@@ -133,7 +172,7 @@ export type FullWidthImage = {
       _type: 'span'
       _key: string
     }>
-    style?: 'normal' | 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'blockquote'
+    style?: 'normal' | 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6'
     listItem?: 'number' | 'bullet'
     markDefs?: null
     level?: number
@@ -158,7 +197,7 @@ export type TextBlock = {
       _type: 'span'
       _key: string
     }>
-    style?: 'normal' | 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'blockquote'
+    style?: 'normal' | 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6'
     listItem?: 'number' | 'bullet'
     markDefs?: null
     level?: number
@@ -197,6 +236,9 @@ export type Slide = {
     | ({
         _key: string
       } & InfoBoard)
+    | ({
+        _key: string
+      } & Event)
     | ({
         _key: string
       } & TestSlide)
@@ -319,6 +361,7 @@ export type AllSanitySchemaTypes =
   | SanityImagePalette
   | SanityImageDimensions
   | Geopoint
+  | Event
   | Screens
   | TestSlide
   | FullWidthVideo
@@ -362,7 +405,7 @@ export type GetPageQueryResult = {
   lon?: string
 } | null
 // Variable: getSlideshowsQuery
-// Query: *[_type == 'slideshow' && (count((showLocations[]->slug.current)[@ in [$slug]]) > 0)][0...30]{    "type": _type,    "id": _id,    "updatedAt": _updatedAt,    title,    slides[]->{      scheduling{        ...,      },      duration,      overrideDuration,      content[]{        _type == "infoBoard" => {        "type": _type,        "id": _key,        sif,        trif      },      _type == "fullWidthImage" => {        "type": _type,        "id": _key,        image,        text[]{          ...,          markDefs[]{            ...,          },        },        "textOptions":  textOptions{    useLight,    applyGradient,    textAlignment,    screens,  }      },      _type == "fullWidthVideo" => {        "type": _type,        "id": _key,        "video": videoFile->{          "url": video.asset->url,          thumbnail        },      },      _type == "textBlock" => {          ...,          "type": _type,          "id": _key,          "textOptions":  textOptions{    useLight,    applyGradient,    textAlignment,    screens,  },          text[]{          ...,          markDefs[]{            ...,          },          },        },        _type == "testSlide" => {        "type": _type,        "id": _key,        title      },      }    }  }
+// Query: *[_type == 'slideshow' && (count((showLocations[]->slug.current)[@ in [$slug]]) > 0)][0...30]{    "type": _type,    "id": _id,    "updatedAt": _updatedAt,    title,    slides[]->{      scheduling{        ...,      },      duration,      overrideDuration,      content[]{        _type == "infoBoard" => {        "type": _type,        "id": _key,        sif,        trif      },      _type == "fullWidthImage" => {        "type": _type,        "id": _key,        image,        text[]{          ...,          markDefs[]{            ...,          },        },        "textOptions":  textOptions{    useLight,    applyGradient,    textAlignment,    screens,  }      },      _type == "fullWidthVideo" => {        "type": _type,        "id": _key,        "video": videoFile->{          "url": video.asset->url,          thumbnail        },      },      _type == "textBlock" => {          ...,          "type": _type,          "id": _key,          "textOptions":  textOptions{    useLight,    applyGradient,    textAlignment,    screens,  },          text[]{          ...,          markDefs[]{            ...,          },          },        },        _type == "testSlide" => {        "type": _type,        "id": _key,        title        },        _type == "event" => {        "type": _type,        "id": _key,        ...        },      }    }  }
 export type GetSlideshowsQueryResult = Array<{
   type: 'slideshow'
   id: string
@@ -383,6 +426,57 @@ export type GetSlideshowsQueryResult = Array<{
     overrideDuration: boolean | null
     content: Array<
       | {
+          type: 'event'
+          id: string
+          _key: string
+          _type: 'event'
+          image?: {
+            asset?: {
+              _ref: string
+              _type: 'reference'
+              _weak?: boolean
+              [internalGroqTypeReferenceTo]?: 'sanity.imageAsset'
+            }
+            hotspot?: SanityImageHotspot
+            crop?: SanityImageCrop
+            _type: 'image'
+          }
+          eyebrow?: string
+          title?: Array<{
+            children?: Array<{
+              marks?: Array<string>
+              text?: string
+              _type: 'span'
+              _key: string
+            }>
+            style?: 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'normal'
+            listItem?: 'bullet' | 'number'
+            markDefs?: null
+            level?: number
+            _type: 'block'
+            _key: string
+          }>
+          introduction?: Array<{
+            children?: Array<{
+              marks?: Array<string>
+              text?: string
+              _type: 'span'
+              _key: string
+            }>
+            style?: 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'normal'
+            listItem?: 'bullet' | 'number'
+            markDefs?: null
+            level?: number
+            _type: 'block'
+            _key: string
+          }>
+          startDatetime?: string
+          endDatetime?: string
+          timeToBeAnnounced?: boolean
+          hideTime?: boolean
+          location?: string
+        }
+      | {
           _key: string
           _type: 'textBlock'
           text: Array<{
@@ -392,7 +486,7 @@ export type GetSlideshowsQueryResult = Array<{
               _type: 'span'
               _key: string
             }>
-            style?: 'blockquote' | 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'normal'
+            style?: 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'normal'
             listItem?: 'bullet' | 'number'
             markDefs: null
             level?: number
@@ -429,7 +523,7 @@ export type GetSlideshowsQueryResult = Array<{
               _type: 'span'
               _key: string
             }>
-            style?: 'blockquote' | 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'normal'
+            style?: 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'normal'
             listItem?: 'bullet' | 'number'
             markDefs: null
             level?: number
@@ -459,17 +553,7 @@ export type GetSlideshowsQueryResult = Array<{
           id: string
           video: {
             url: string | null
-            thumbnail: {
-              asset?: {
-                _ref: string
-                _type: 'reference'
-                _weak?: boolean
-                [internalGroqTypeReferenceTo]?: 'sanity.imageAsset'
-              }
-              hotspot?: SanityImageHotspot
-              crop?: SanityImageCrop
-              _type: 'image'
-            } | null
+            thumbnail: null
           }
         }
     > | null
@@ -483,6 +567,6 @@ declare module '@sanity/client' {
     '*[_type == "settings"][0]': SettingsQueryResult
     '\n  *[_type == "location" && defined(slug.current)]\n  {\n    "slug": slug.current\n  }\n': PagesSlugsResult
     "\n  *[_type == 'location' && slug.current == $slug][0]{\n    _id,\n    _type,\n    slug,\n    ...\n  }\n": GetPageQueryResult
-    '\n  *[_type == \'slideshow\' && (count((showLocations[]->slug.current)[@ in [$slug]]) > 0)][0...30]{\n    "type": _type,\n    "id": _id,\n    "updatedAt": _updatedAt,\n    title,\n    slides[]->{\n      scheduling{\n        ...,\n      },\n      duration,\n      overrideDuration,\n      content[]{\n        _type == "infoBoard" => {\n        "type": _type,\n        "id": _key,\n        sif,\n        trif\n      },\n      _type == "fullWidthImage" => {\n        "type": _type,\n        "id": _key,\n        image,\n        text[]{\n          ...,\n          markDefs[]{\n            ...,\n          },\n        },\n        "textOptions":\n  textOptions{\n    useLight,\n    applyGradient,\n    textAlignment,\n    screens,\n  }\n\n      },\n      _type == "fullWidthVideo" => {\n        "type": _type,\n        "id": _key,\n        "video": videoFile->{\n          "url": video.asset->url,\n          thumbnail\n        },\n      },\n      _type == "textBlock" => {\n          ...,\n          "type": _type,\n          "id": _key,\n          "textOptions":\n  textOptions{\n    useLight,\n    applyGradient,\n    textAlignment,\n    screens,\n  }\n,\n          text[]{\n          ...,\n          markDefs[]{\n            ...,\n          },\n          },\n        },\n        _type == "testSlide" => {\n        "type": _type,\n        "id": _key,\n        title\n      },\n      }\n    }\n  }\n': GetSlideshowsQueryResult
+    '\n  *[_type == \'slideshow\' && (count((showLocations[]->slug.current)[@ in [$slug]]) > 0)][0...30]{\n    "type": _type,\n    "id": _id,\n    "updatedAt": _updatedAt,\n    title,\n    slides[]->{\n      scheduling{\n        ...,\n      },\n      duration,\n      overrideDuration,\n      content[]{\n        _type == "infoBoard" => {\n        "type": _type,\n        "id": _key,\n        sif,\n        trif\n      },\n      _type == "fullWidthImage" => {\n        "type": _type,\n        "id": _key,\n        image,\n        text[]{\n          ...,\n          markDefs[]{\n            ...,\n          },\n        },\n        "textOptions":\n  textOptions{\n    useLight,\n    applyGradient,\n    textAlignment,\n    screens,\n  }\n\n      },\n      _type == "fullWidthVideo" => {\n        "type": _type,\n        "id": _key,\n        "video": videoFile->{\n          "url": video.asset->url,\n          thumbnail\n        },\n      },\n      _type == "textBlock" => {\n          ...,\n          "type": _type,\n          "id": _key,\n          "textOptions":\n  textOptions{\n    useLight,\n    applyGradient,\n    textAlignment,\n    screens,\n  }\n,\n          text[]{\n          ...,\n          markDefs[]{\n            ...,\n          },\n          },\n        },\n        _type == "testSlide" => {\n        "type": _type,\n        "id": _key,\n        title\n        },\n        _type == "event" => {\n        "type": _type,\n        "id": _key,\n        ...\n        },\n      }\n    }\n  }\n': GetSlideshowsQueryResult
   }
 }

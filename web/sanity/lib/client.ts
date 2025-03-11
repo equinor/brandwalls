@@ -7,7 +7,7 @@ export const client = createClient({
   apiVersion,
   useCdn: false,
   token: process.env.SANITY_API_READ_TOKEN,
-  //perspective: 'published',
+  perspective: 'published',
   stega: {
     studioUrl,
     // Set logger to 'console' for more verbose logging

@@ -21,7 +21,7 @@ export default function InfoBoard({ sif, trif }: InfoBoardProps) {
         <Clock />
       </div>
       <div className="col-start-1 col-end-3 row-span-2 grid grid-cols-2 grid-rows-1">
-        <div className="col-start-2 col-end-3 px-2 py-4 text-xl tracking-widest" suppressHydrationWarning>
+        <div className="col-start-2 col-end-3 px-2 py-4 text-2xl tracking-widest" suppressHydrationWarning>
           <div>{format(new Date(), 'EEEE')}</div>
           <div>{format(new Date(), ' d LLLL')}</div>
           <div>{format(new Date(), 'yyyy')}</div>

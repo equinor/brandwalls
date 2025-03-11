@@ -82,7 +82,12 @@ export const getSlideshowsQuery = defineQuery(`
         "type": _type,
         "id": _key,
         title
-      },
+        },
+        _type == "event" => {
+        "type": _type,
+        "id": _key,
+        ...
+        },
       }
     }
   }

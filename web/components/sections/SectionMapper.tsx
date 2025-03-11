@@ -3,6 +3,7 @@ import FullscreenVideo from '../slides/FullscreenVideo'
 import InfoBoard from '../slides/InfoBoard'
 import TextBlock from '../slides/TextBlock'
 import TestSlide from '../slides/TestSlide'
+import Event from '../slides/Event'
 
 const componentMap: { [key: string]: React.ComponentType<any> } = {
   fullWidthImage: FullscreenImage,
@@ -10,6 +11,7 @@ const componentMap: { [key: string]: React.ComponentType<any> } = {
   infoBoard: InfoBoard,
   textBlock: TextBlock,
   testSlide: TestSlide,
+  event: Event,
 }
 
 export default function SectionMapper({ section }: { section?: any }) {

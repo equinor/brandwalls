@@ -2,12 +2,14 @@ import { TbDeviceIpadHorizontalStar } from 'react-icons/tb'
 import { TbInfoSquare } from 'react-icons/tb'
 import { RxVideo } from 'react-icons/rx'
 import { BsCardText } from 'react-icons/bs'
+import { MdOutlineCalendarMonth } from 'react-icons/md'
 import { defineField } from 'sanity'
 
 const getThumb = (type: string) => {
   if (type === 'fullWidthVideo') return RxVideo
   if (type === 'infoBoard') return TbInfoSquare
   if (type === 'textBlock') return BsCardText
+  if (type === 'event') return MdOutlineCalendarMonth
   return undefined
 }
 
@@ -43,6 +45,7 @@ export default {
         { type: 'fullWidthImage' },
         { type: 'fullWidthVideo' },
         { type: 'infoBoard' },
+        { type: 'event' },
         { type: 'testSlide' },
       ].filter((e) => e),
     }),

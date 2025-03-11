@@ -48,7 +48,7 @@
     overflow-wrap: break-word;
   }
   video {
-    @apply h-screen w-screen;
+    @apply aspect-auto h-full w-full;
   }
 }
 

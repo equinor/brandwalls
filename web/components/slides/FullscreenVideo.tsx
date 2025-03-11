@@ -33,7 +33,7 @@ export default function FullscreenVideo(props: FullscreenVideoProps) {
   }, [videoRef.current])
 
   return (
-    <div className="relative aspect-video h-screen w-screen pt-[56.25%]">
+    <div className="relative h-full w-full">
       <BackgroundPlayer
         ref={videoRef}
         src={video.url}
@@ -41,7 +41,7 @@ export default function FullscreenVideo(props: FullscreenVideoProps) {
         loop
         playsInline
         autoPlay
-        className="absolute inset-0 aspect-auto h-full w-full"
+        className="absolute inset-0 aspect-auto"
       />
     </div>
   )

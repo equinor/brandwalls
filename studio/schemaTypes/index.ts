@@ -6,6 +6,7 @@ import infoBoard from './objects/infoBoard'
 import fullWidthImage from './objects/fullWidthImage'
 import fullWidthVideo from './objects/fullWidthVideo'
 import textBlock from './objects/textBlock'
+import event from './objects/event'
 import slideScheduling from './objects/slideScheduling'
 import videoFile from './objects/videoFile'
 import textOptions from './objects/textOptions'
@@ -28,4 +29,5 @@ export const schemaTypes = [
   textOptions,
   testSlide,
   screens,
+  event,
 ]
