@@ -1,6 +1,6 @@
-import {type Rule, type Reference, defineField, PortableTextBlock} from 'sanity'
-import {configureBlockContent} from '../editors/blockContentType'
-import {validateCharCounterEditor} from '../validations/validateCharCounterEditor'
+import { type Rule, type Reference, defineField, PortableTextBlock } from 'sanity'
+import { configureBlockContent } from '../editors/blockContentType'
+import { validateCharCounterEditor } from '../validations/validateCharCounterEditor'
 
 const blockContentType = configureBlockContent()
 
@@ -22,7 +22,7 @@ export default {
       of: [blockContentType],
       validation: (Rule: Rule) =>
         Rule.custom((value: PortableTextBlock[]) => {
-          return validateCharCounterEditor(value, 600)
+          return validateCharCounterEditor(value, 600, true)
         }).error(),
     }),
     defineField({
@@ -35,8 +35,7 @@ export default {
       image: 'image.asset',
       textOptions: 'textOptions',
     },
-    prepare({image, textOptions}: {alt: string; image: Reference; textOptions: any}) {
-      console.log('textOptions', textOptions)
+    prepare({ image, textOptions }: { alt: string; image: Reference; textOptions: any }) {
       return {
         title: `Fullwidth image component`,
         subtitle: `Screens: ${Array(textOptions?.screens).toString()}`,
