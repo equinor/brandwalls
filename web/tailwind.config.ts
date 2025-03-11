@@ -358,34 +358,42 @@ export default {
               fontSize: theme('fontSize.lg'),
               lineHeight: theme('lineHeight.tight'),
               h1: {
+                fontSize: theme('fontSize.5xl'),
+                lineHeight: theme('lineHeight.tight'),
+                fontWeight: theme('fontWeight.normal'),
+                marginBottom: theme('spacing.4'),
+                marginTop: theme('spacing.0'),
+              },
+              h2: {
                 fontSize: theme('fontSize.4xl'),
                 lineHeight: theme('lineHeight.tight'),
                 fontWeight: theme('fontWeight.normal'),
-                marginBottom: theme('spacing.8'),
+                marginBottom: theme('spacing.0'),
+                marginTop: theme('spacing.0'),
               },
-              h2: {
+              h3: {
                 fontSize: theme('fontSize.3xl'),
                 lineHeight: theme('lineHeight.tight'),
                 fontWeight: theme('fontWeight.normal'),
-                marginBottom: theme('spacing.8'),
-              },
-              h3: {
-                fontSize: theme('fontSize.2xl'),
-                lineHeight: theme('lineHeight.tight'),
-                fontWeight: theme('fontWeight.semibold'),
-                marginBottom: theme('spacing.4'),
+                marginBottom: theme('spacing.0'),
+                marginTop: theme('spacing.0'),
               },
               h4: {
+                fontSize: theme('fontSize.2xl'),
+                lineHeight: theme('lineHeight.tight'),
+                fontWeight: theme('fontWeight.normal'),
+                marginBottom: theme('spacing.0'),
+                marginTop: theme('spacing.0'),
+              },
+              h5: {
                 fontSize: theme('fontSize.xl'),
                 lineHeight: theme('lineHeight.tight'),
                 fontWeight: theme('fontWeight.semibold'),
-                marginBottom: theme('spacing.4'),
               },
-              h5: {
+              h6: {
                 fontSize: theme('fontSize.lg'),
                 lineHeight: theme('lineHeight.tight'),
                 fontWeight: theme('fontWeight.semibold'),
-                marginBottom: theme('spacing.4'),
               },
               'ul ul, ul ol, ol ul, ol ol': {
                 paddingLeft: em(38, 24),

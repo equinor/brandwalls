@@ -128,26 +128,23 @@ export default function TextBlock({ text, textOptions }: TextBlockProps) {
     const rightColumns = sortedScreens.some((screen: string) => {
       return ThirdColumnScreens?.includes(screen) || FourthColumnScreens?.includes(screen)
     })
-    const centerColumns = sortedScreens.some((screen: string) => {
-      return SecondColumnScreens?.includes(screen) || ThirdColumnScreens?.includes(screen)
-    })
     const topColumns = sortedScreens.some((screen: string) => {
-      return FirstRowScreens?.includes(screen) || SecondRowScreens?.includes(screen)
+      return FirstRowScreens?.includes(screen)
     })
     const bottomColumns = sortedScreens.some((screen: string) => {
-      return ThirdRowScreens?.includes(screen) || FourthRowScreens?.includes(screen)
+      return FourthRowScreens?.includes(screen)
     })
     let grad = ``
-    if (leftColumns && !centerColumns) {
-      grad = useLight ? `black-left-gradient` : `white-left-gradient`
-    }
-    if (rightColumns && !centerColumns) {
+    if (leftColumns) {
       grad = useLight ? `black-right-gradient` : `white-right-gradient`
     }
-    if (centerColumns && topColumns) {
+    if (rightColumns) {
+      grad = useLight ? `black-left-gradient` : `white-left-gradient`
+    }
+    if (topColumns) {
       grad = useLight ? `black-top-gradient` : `white-top-gradient`
     }
-    if (centerColumns && bottomColumns) {
+    if (bottomColumns) {
       grad = useLight ? `black-bottom-gradient` : `white-bottom-gradient`
     }
     return grad
