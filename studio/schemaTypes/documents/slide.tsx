@@ -1,5 +1,15 @@
-import {TbDeviceIpadHorizontalStar} from 'react-icons/tb'
-import {defineField} from 'sanity'
+import { TbDeviceIpadHorizontalStar } from 'react-icons/tb'
+import { TbInfoSquare } from 'react-icons/tb'
+import { RxVideo } from 'react-icons/rx'
+import { BsCardText } from 'react-icons/bs'
+import { defineField } from 'sanity'
+
+const getThumb = (type: string) => {
+  if (type === 'fullWidthVideo') return RxVideo
+  if (type === 'infoBoard') return TbInfoSquare
+  if (type === 'textBlock') return BsCardText
+  return undefined
+}
 
 export default {
   type: 'document',
@@ -29,11 +39,11 @@ export default {
       type: 'array',
       title: 'Slide type',
       of: [
-        {type: 'textBlock'},
-        {type: 'fullWidthImage'},
-        {type: 'fullWidthVideo'},
-        {type: 'infoBoard'},
-        {type: 'testSlide'},
+        { type: 'textBlock' },
+        { type: 'fullWidthImage' },
+        { type: 'fullWidthVideo' },
+        { type: 'infoBoard' },
+        { type: 'testSlide' },
       ].filter((e) => e),
     }),
     defineField({
@@ -45,16 +55,15 @@ export default {
       name: 'duration',
       type: 'string',
       title: 'Override duration in seconds, default is 30',
-      description:
-        'If there is a video it will play the duration of the video, except if this field is set',
-      hidden: ({document}) => !document?.overrideDuration,
+      description: 'If there is a video it will play the duration of the video, except if this field is set',
+      hidden: ({ document }) => !document?.overrideDuration,
     }),
   ].filter((e) => e),
   orderings: [
     {
       title: 'Title ',
       name: 'titleAsc',
-      by: [{field: 'title', direction: 'asc'}],
+      by: [{ field: 'title', direction: 'asc' }],
     },
   ],
   preview: {
@@ -63,9 +72,11 @@ export default {
       duration: 'duration',
       overrideDuration: 'overrideDuration',
       scheduling: 'scheduling',
+      content: 'content',
+      image: 'content.0.image.asset',
     },
     prepare(selection: any) {
-      const {title, duration, overrideDuration, scheduling} = selection
+      const { title, duration, overrideDuration, scheduling, content, image } = selection
       let scheduleType = 'Default'
       let scheduleSubTitle = ``
       if (scheduling?.scheduleType === '1') {
@@ -91,6 +102,7 @@ export default {
       return {
         title: title,
         subtitle: `${scheduleType}${scheduleSubTitle}${durationSubtitle}`,
+        media: image ? image : getThumb(content?.[0]?._type),
       }
     },
   },
