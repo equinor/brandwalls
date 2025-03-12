@@ -13,7 +13,6 @@ export default function Event({
   image,
   introduction,
   location,
-  timeToBeAnnounced,
   hideTime,
 }: EventProps) {
   const startDate = startDatetime ? parseISO(startDatetime) : undefined
