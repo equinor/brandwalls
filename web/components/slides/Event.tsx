@@ -43,9 +43,7 @@ export default function Event({
               </div>
             )}
           </div>
-          <div className="relative col-span-2 h-full w-full">
-            {image && <SanityImage image={image} className="max-w-[25vw]" />}
-          </div>
+          <div className="relative col-span-2 h-full w-full">{image && <SanityImage image={image} cover />}</div>
         </div>
         <div className="px-4xl ps-96 pt-xl">
           {introduction && <Blocks value={introduction} className="max-w-prose text-balance text-xl leading-loose" />}
