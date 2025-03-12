@@ -1,9 +1,10 @@
-import {defineConfig, createAuthStore} from 'sanity'
-import {structureTool} from 'sanity/structure'
-import {visionTool} from '@sanity/vision'
-import {schemaTypes} from './schemaTypes'
-import {DocumentLocation, presentationTool} from 'sanity/presentation'
-import {EarthGlobeIcon, RocketIcon} from '@sanity/icons'
+import { defineConfig, createAuthStore } from 'sanity'
+import { structureTool } from 'sanity/structure'
+import { visionTool } from '@sanity/vision'
+import { schemaTypes } from './schemaTypes'
+import { DocumentLocation, presentationTool } from 'sanity/presentation'
+import { EarthGlobeIcon, RocketIcon } from '@sanity/icons'
+import { FotowareAssetSource } from './plugins/asset-source-fotoware'
 
 // URL for preview functionality, defaults to localhost:3000 if not set
 const SANITY_STUDIO_PREVIEW_URL = process.env.SANITY_STUDIO_PREVIEW_URL || 'http://localhost:3000'
@@ -84,6 +85,7 @@ export default defineConfig([
       }),
       structureTool(),
       visionTool(),
+      FotowareAssetSource(),
     ],
     schema: {
       types: schemaTypes,
