@@ -1,23 +1,17 @@
-import { PortableTextBlock } from 'next-sanity'
 import TextBlock from './TextBlock'
-import { TextOptions } from '@/sanity.types'
+import { FullWidthImage, TextOptions } from '@/sanity.types'
 import SanityImage from '../core/SanityImage/SanityImage'
 
-interface FullscreenImageProps {
-  image: any
-  credit?: string
-  text?: PortableTextBlock[]
-  textOptions?: TextOptions | undefined
-}
+type FullscreenImageProps = FullWidthImage
 
 export default function FullscreenImage(props: FullscreenImageProps) {
-  const { image, credit, text, textOptions } = props
-
+  const { image, text, textOptions, containImage = false } = props
   return (
     <div className="relative h-full w-full">
-      <SanityImage cover={true} image={image} />
+      <div className={`${!containImage ? 'absolute inset-0 -z-10' : 'h-full w-full'}`}>
+        <SanityImage image={image} contain={containImage} cover={true} />
+      </div>
       {text && <TextBlock text={text} textOptions={textOptions} />}
-      {credit && <p className={`absolute bottom-5 right-12 text-md font-medium`}>{credit}</p>}
     </div>
   )
 }

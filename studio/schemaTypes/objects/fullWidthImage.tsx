@@ -16,6 +16,12 @@ export default {
       validation: (Rule: Rule) => Rule.required(),
     }),
     defineField({
+      name: 'containImage',
+      type: 'boolean',
+      title: 'Contain image',
+      description: `Add a padding around image/svg and scales image to maintain aspect ratio while fitting within the element's content box`,
+    }),
+    defineField({
       name: 'text',
       title: 'Text content',
       type: 'array',

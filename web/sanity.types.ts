@@ -90,7 +90,6 @@ export type Event = {
   }>
   startDatetime?: string
   endDatetime?: string
-  timeToBeAnnounced?: boolean
   hideTime?: boolean
   location?: string
 }
@@ -165,6 +164,7 @@ export type FullWidthImage = {
     crop?: SanityImageCrop
     _type: 'image'
   }
+  containImage?: boolean
   text?: Array<{
     children?: Array<{
       marks?: Array<string>
@@ -472,7 +472,6 @@ export type GetSlideshowsQueryResult = Array<{
           }>
           startDatetime?: string
           endDatetime?: string
-          timeToBeAnnounced?: boolean
           hideTime?: boolean
           location?: string
         }

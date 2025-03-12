@@ -575,13 +575,6 @@
           },
           "optional": true
         },
-        "timeToBeAnnounced": {
-          "type": "objectAttribute",
-          "value": {
-            "type": "boolean"
-          },
-          "optional": true
-        },
         "hideTime": {
           "type": "objectAttribute",
           "value": {
@@ -978,6 +971,13 @@
             }
           },
           "optional": false
+        },
+        "containImage": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "boolean"
+          },
+          "optional": true
         },
         "text": {
           "type": "objectAttribute",
