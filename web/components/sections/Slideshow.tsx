@@ -106,7 +106,7 @@ export default function Slideshow({ slideshows }: SlideshowProps) {
 
   return (
     <div className="starting-hidden h-full w-full overflow-hidden">
-      <SectionMapper section={slides[3]} />
+      <SectionMapper section={slides[currentIndex]} />
     </div>
   )
 }
