@@ -11,7 +11,13 @@ export default function FullscreenImage(props: FullscreenImageProps) {
       <div className={`${!containImage ? 'absolute inset-0 -z-10' : 'h-full w-full'}`}>
         <SanityImage image={image} contain={containImage} cover={true} />
       </div>
-      {text && <TextBlock text={text} textOptions={textOptions} />}
+      {text && (
+        <TextBlock
+          //@ts-ignore: TODO
+          text={text}
+          textOptions={textOptions}
+        />
+      )}
     </div>
   )
 }
