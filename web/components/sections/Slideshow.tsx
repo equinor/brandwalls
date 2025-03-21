@@ -3,6 +3,7 @@ import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import SectionMapper from './SectionMapper'
 import { useSlideContext } from '../slide-context'
 import { distributeRecurringForSlideshow, isSlideActive } from '@/common/helpers/slideScheduling'
+import { LogoSecondary } from '../core/Logo/Logo'
 
 type Slide = {
   content: any
@@ -95,18 +96,22 @@ export default function Slideshow({ slideshows }: SlideshowProps) {
     play()
   }, [videoDuration])
 
-  if (slides.length === 0) {
-    return <div>No active slides</div>
-  }
-
-  const slide = slides[currentIndex]
-  if (!slide || !slide?.content || slide?.content?.length === 0) {
-    return <div>This slide has no content</div>
-  }
+  useEffect(() => {
+    const currentSlide = slides[currentIndex]
+    if (!currentSlide || !currentSlide?.content || currentSlide?.content?.length === 0) {
+      console.log('no slide or content,skip to next')
+      findNextIndex()
+    }
+  }, [currentIndex, slides])
 
   return (
     <div className="starting-hidden h-full w-full overflow-hidden">
-      <SectionMapper section={slides[currentIndex]} />
+      {slides.length === 0 && (
+        <div className="flex h-full w-full items-center justify-center">
+          <LogoSecondary className="h-2/6 w-2/6" />
+        </div>
+      )}
+      {slides.length > 0 && <SectionMapper section={slides[currentIndex]} />}
     </div>
   )
 }

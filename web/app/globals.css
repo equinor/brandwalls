@@ -2,26 +2,37 @@
 @tailwind components;
 @tailwind utilities;
 
+/* 
+  4K - 4096 x 2160 pixels
+  8K - 8192 x 4320 pixels <- 2x2 with 4K displays
+  16K - 16384 x 8640 pixels <- 4x4 with 4K displays
+  */
 @layer base {
   html {
     font-family: theme('fontFamily.sans');
     @apply text-slate-80;
-    font-size: 24px;
+    font-size: 20px;
   }
-  /*   @media screen and (max-width: 4000px) {
+  @media screen and (min-width: 4000px) {
     html {
-      font-size: 8px;
+      font-size: 24px;
     }
   }
-  @media screen and (min-width: 7000px) {
+  @media screen and (min-width: 6000px) {
     html {
-      font-size: 20px;
+      font-size: 36px;
     }
-  } */
-
-  /* 8K - 7680 x 4320 pixels
-  16K - 15360 x 8640 pixels <- probably resolutions for 4x4 with 4K displays
-  */
+  }
+  @media screen and (min-width: 7500px) {
+    html {
+      font-size: 40px;
+    }
+  }
+  @media screen and (min-width: 9500px) {
+    html {
+      font-size: 46px;
+    }
+  }
 
   body {
     -webkit-font-smoothing: antialiased;

@@ -31,10 +31,10 @@ export default {
   theme: {
     extend: {
       screens: {
-        md: '700px',
-        xl: '1300px',
-        '3xl': '1600px',
-        '4xl': '1920px',
+        lg: '3400px',
+        xl: '5500px',
+        '2xl': '6500px',
+        '3xl': '8000px',
       },
       fontFamily: {
         sans: ['Equinor', 'Open Sans', 'sans-serif'],
@@ -309,9 +309,9 @@ export default {
           '0%': { opacity: '1' },
           '100%': { opacity: '0' },
         },
-        zoomIn: {
-          '0%': { transform: 'scale(0)' },
-          '100%': { transform: 'scale(0.2)' },
+        zoom: {
+          '0%': { transform: 'scale(1.0)' },
+          '100%': { transform: 'scale(1.4)' },
         },
         fade: {
           '0%, 100%': { opacity: '0' },
@@ -335,7 +335,7 @@ export default {
         fadeInOut: 'fade linear both',
         fadeIn: 'auto linear fadeIn both',
         fadeOut: 'auto linear fadeOut both',
-        zoomIn: 'auto linear zoom-in both',
+        zoomIn: 'zoom 60s linear',
         move: 'auto linear move forwards',
         'spin-slow': 'spin 3s linear infinite',
         slideUp: 'slideUp 0.2s ease-out',
