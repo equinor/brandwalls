@@ -979,6 +979,13 @@
           },
           "optional": true
         },
+        "noAnimation": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "boolean"
+          },
+          "optional": true
+        },
         "text": {
           "type": "objectAttribute",
           "value": {

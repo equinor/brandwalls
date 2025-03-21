@@ -22,6 +22,12 @@ export default {
       description: `Add a padding around image/svg and scales image to maintain aspect ratio while fitting within the element's content box`,
     }),
     defineField({
+      name: 'noAnimation',
+      type: 'boolean',
+      title: 'No animation',
+      description: `Removes the zoom effect on image`,
+    }),
+    defineField({
       name: 'text',
       title: 'Text content',
       type: 'array',
