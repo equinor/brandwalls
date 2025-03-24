@@ -81,6 +81,13 @@ runs:
     - name: Get token 🔑
       id: get-token
       uses: ./.github/workflows/get-auth-token/
+    - name: Get component name
+      id: get-component-name
+      shell: bash
+      run: |
+        component=${{ inputs.datasetName == 'production' && 'web' || format('{0}{1}', 'web-', inputs.datasetName) }}
+        echo "Component name is $component"
+        echo "COMPONENT_NAME=$component" >> $GITHUB_ENV
 
     # DEPLOY RADIX CLUSTER
     - name: Deploy to Radix Platform 🚀
@@ -91,7 +98,7 @@ runs:
           create job
           deploy
           --token-environment
-          --component web
+          --component $COMPONENT_NAME
           --image-tag-name web=${{ env.IMAGE_TAG }}
           --context platform
           -a brandwalls
