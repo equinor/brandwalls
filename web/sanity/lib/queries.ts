@@ -57,6 +57,7 @@ export const getSlideshowsQuery = defineQuery(`
           },
         },
         containImage,
+        noAnimation,
         "textOptions":${textOptions}
       },
       _type == "fullWidthVideo" => {
