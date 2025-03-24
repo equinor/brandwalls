@@ -1,0 +1,30 @@
+name: PROD - Build & Deploy Brandwalls
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+    paths:
+      - 'web/**'
+      - '!web/README.md'
+      - '!web/.gitignore'
+permissions:
+  id-token: write
+  packages: write
+jobs:
+  deploy-production:
+    runs-on: ubuntu-latest
+    env:
+      DOCKER_BUILDKIT: 1
+    steps:
+      - name: Checkout 🛎️
+        uses: actions/checkout@v3
+      - id: deploy-production
+        uses: ./.github/workflows/deploy-website/
+        with:
+          imageName: ghcr.io/equinor/brandwalls/web-production
+          datasetName: production
+          projectId: ${{ secrets.SANITY_PROJECT_ID }}
+          githubToken: ${{ secrets.GITHUB_TOKEN }}
+          sanityApiReadToken: ${{ secrets.SANITY_API_READ_TOKEN }}
+          environment: production
