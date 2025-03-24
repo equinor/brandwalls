@@ -5,7 +5,7 @@ type Slide = {
 }
 
 export function isSlideActive(slide: any): boolean {
-  const scheduling = slide.scheduling
+  const scheduling = slide?.scheduling
   if (!scheduling) return true
 
   switch (scheduling.scheduleType) {
