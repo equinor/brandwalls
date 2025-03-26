@@ -24,7 +24,7 @@ export default function TestSlide(props: TestSlideProps) {
   ]
   return (
     <div className="grid h-full w-full grid-cols-4 grid-rows-4">
-      {Array(16)
+      {/*       {Array(16)
         .fill(0)
         .map((v, i) => {
           return (
@@ -35,7 +35,15 @@ export default function TestSlide(props: TestSlideProps) {
               {i !== 5 ? <div>{i + 1}</div> : <div>{title}</div>}
             </div>
           )
-        })}
+        })} */}
+      <button
+        type="button"
+        onClick={() => {
+          throw new Error('Sentry Test Error')
+        }}
+      >
+        Break the world
+      </button>
     </div>
   )
 }
