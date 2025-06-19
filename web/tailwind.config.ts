@@ -355,7 +355,7 @@ export default {
         DEFAULT: {
           css: [
             {
-              fontSize: theme('fontSize.lg'),
+              fontSize: theme('fontSize.2xl'),
               lineHeight: theme('lineHeight.tight'),
               h1: {
                 fontSize: theme('fontSize.5xl'),
