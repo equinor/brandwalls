@@ -2,6 +2,7 @@ import { PortableTextBlock } from 'next-sanity'
 import Blocks from '../Blocks'
 import { TextOptions } from '@/sanity.types'
 import { useMemo } from 'react'
+import { twMerge } from 'tailwind-merge'
 
 type TextBlockProps = {
   text: PortableTextBlock[]
@@ -117,7 +118,14 @@ export default function TextBlock({ text, textOptions }: TextBlockProps) {
     const usesLastRow = FourthRowScreens.some((fcs: string) => {
       return parseInt(fcs, 10) === parseInt(sortedScreens[0], 10)
     })
-    const padding = `${usesFirstColumn ? 'ps-4xl' : ''} ${usesLastColumn ? 'pe-4xl' : ''} ${usesFirstRow ? 'pt-4xl' : ''} ${usesLastRow ? 'pb-4xl' : ''}`
+
+    const padding = twMerge(
+      `ps-2xl pe-2xl pt-2xl pb-2xl`,
+      `${usesFirstColumn ? 'ps-4xl' : ''} 
+      ${usesLastColumn ? 'pe-4xl' : ''}
+       ${usesFirstRow ? 'pt-4xl' : ''} 
+       ${usesLastRow ? 'pb-4xl' : ''}`,
+    )
     return padding
   }
 
@@ -157,7 +165,7 @@ export default function TextBlock({ text, textOptions }: TextBlockProps) {
       {text && (
         <Blocks
           value={text}
-          className={`h-full w-full ${hasAdjacentColumn ? 'max-w-[50vw]' : 'max-w-[25vw]'} ${hasAdjacentRow ? 'max-h-[50vw]' : 'max-h-[25vh]'} ${getPosition().x} ${getPosition().y} px-3xl py-2xl ${getTextAlignX()} text-balance ${useLight ? 'text-white-100' : ''} `}
+          className={`h-full w-full ${hasAdjacentColumn ? 'max-w-[50vw]' : 'max-w-[25vw]'} ${hasAdjacentRow ? 'max-h-[50vw]' : 'max-h-[25vh]'} ${getPosition().x} ${getPosition().y} ${getPadding()} ${getTextAlignX()} text-balance`}
         />
       )}
     </div>
