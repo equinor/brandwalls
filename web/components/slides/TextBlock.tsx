@@ -157,7 +157,7 @@ export default function TextBlock({ text, textOptions }: TextBlockProps) {
       {text && (
         <Blocks
           value={text}
-          className={`h-full w-full ${hasAdjacentColumn ? 'max-w-[50vw]' : 'max-w-[25vw]'} ${hasAdjacentRow ? 'max-h-[50vw]' : 'max-h-[25vh]'} ${getPosition().x} ${getPosition().y} p-4xl ${getTextAlignX()} text-balance`}
+          className={`h-full w-full ${hasAdjacentColumn ? 'max-w-[50vw]' : 'max-w-[25vw]'} ${hasAdjacentRow ? 'max-h-[50vw]' : 'max-h-[25vh]'} ${getPosition().x} ${getPosition().y} px-3xl py-2xl ${getTextAlignX()} text-balance ${useLight ? 'text-white-100' : ''} `}
         />
       )}
     </div>
