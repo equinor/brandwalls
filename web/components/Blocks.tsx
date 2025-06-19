@@ -47,7 +47,7 @@ export default function Blocks({ value, components, className = '' }: BlockProps
           div = []
 
           return (
-            <div key={block._key} className={twMerge(`prose dark:prose-invert`, className)}>
+            <div key={block._key} className={twMerge(`prose dark:prose-invert dark:text-white-100`, className)}>
               <PortableText
                 value={value}
                 //@ts-ignore
