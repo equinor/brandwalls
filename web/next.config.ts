@@ -1,7 +1,12 @@
 import type { NextConfig } from 'next'
+import { withSentryConfig } from '@sentry/nextjs'
 
 const nextConfig: NextConfig = {
   output: 'standalone',
+  experimental: {
+    //@ts-ignore: TODO check why types does not find this property
+    clientInstrumentationHook: true,
+  },
   images: {
     remotePatterns: [
       {
@@ -18,4 +23,9 @@ const nextConfig: NextConfig = {
   },
 }
 
-export default nextConfig
+export default withSentryConfig(nextConfig, {
+  org: 'equinor',
+  project: 'brandwalls',
+  silent: !process.env.CI,
+  disableLogger: true,
+})
