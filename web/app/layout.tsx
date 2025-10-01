@@ -2,11 +2,11 @@ import type { Metadata } from 'next'
 import localFont from 'next/font/local'
 import './globals.css'
 import { Toaster } from 'sonner'
-import { VisualEditing } from 'next-sanity'
 import { SanityLive } from '@/sanity/lib/live'
 import { draftMode } from 'next/headers'
 import { handleError } from './client-utils'
 import DraftModeToast from '@/components/draft-mode/DraftModeToast'
+import { VisualEditing } from 'next-sanity/visual-editing'
 
 const equinorRegular = localFont({
   src: './fonts/equinor/Equinor-Regular.woff',
