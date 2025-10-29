@@ -355,27 +355,27 @@ export default {
         DEFAULT: {
           css: [
             {
-              fontSize: theme('fontSize.lg'),
+              fontSize: theme('fontSize.2xl'),
               lineHeight: theme('lineHeight.tight'),
               h1: {
                 fontSize: theme('fontSize.5xl'),
                 lineHeight: theme('lineHeight.tight'),
                 fontWeight: theme('fontWeight.normal'),
-                marginBottom: theme('spacing.4'),
+                marginBottom: theme('spacing.6'),
                 marginTop: theme('spacing.0'),
               },
               h2: {
                 fontSize: theme('fontSize.4xl'),
                 lineHeight: theme('lineHeight.tight'),
                 fontWeight: theme('fontWeight.normal'),
-                marginBottom: theme('spacing.0'),
+                marginBottom: theme('spacing.6'),
                 marginTop: theme('spacing.0'),
               },
               h3: {
                 fontSize: theme('fontSize.3xl'),
                 lineHeight: theme('lineHeight.tight'),
                 fontWeight: theme('fontWeight.normal'),
-                marginBottom: theme('spacing.0'),
+                marginBottom: theme('spacing.6'),
                 marginTop: theme('spacing.0'),
               },
               h4: {

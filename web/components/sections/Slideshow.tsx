@@ -30,17 +30,12 @@ export default function Slideshow({ slideshows }: SlideshowProps) {
     return processedSlides
   }, [slideshows])
 
-  console.log('slides', slides)
-
   const findNextIndex = useCallback(() => {
-    console.log('currentIndex', currentIndex)
     const isLast = currentIndex === slides?.length - 1
     let nextIndex = isLast ? 0 : currentIndex + 1
     let indexIsActive = false
     do {
-      console.log('do nextIndex', nextIndex)
       indexIsActive = isSlideActive(slides[nextIndex])
-      console.log('do indexIsActive', indexIsActive)
       if (nextIndex === slides?.length - 1) {
         if (!indexIsActive) {
           nextIndex = 0
@@ -51,7 +46,6 @@ export default function Slideshow({ slideshows }: SlideshowProps) {
         }
       }
     } while (!indexIsActive)
-    console.log('Found next active index, set to current', nextIndex)
     setCurrentIndex(nextIndex)
   }, [currentIndex])
 
@@ -61,7 +55,6 @@ export default function Slideshow({ slideshows }: SlideshowProps) {
       if (currentIndex) {
         const currentSlide = slides[currentIndex]
         if (currentSlide?.content?.[0]?.type === 'fullWidthVideo') {
-          console.log('videoDuration', videoDuration)
           duration = videoDuration * 1000
         }
         if (
@@ -76,13 +69,11 @@ export default function Slideshow({ slideshows }: SlideshowProps) {
           duration = parseInt(currentSlide?.duration, 10) * 1000
         }
       }
-      console.log('play method: set timout with duration', duration)
       timeout.current = setTimeout(findNextIndex, duration)
     }
   }, [currentIndex, videoDuration])
 
   useEffect(() => {
-    console.log('mount find next index')
     findNextIndex()
   }, [])
 
