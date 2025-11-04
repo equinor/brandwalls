@@ -7,11 +7,14 @@ import { useMemo } from 'react'
 import { client } from '@/sanity/lib/client'
 
 export async function generateStaticParams() {
-  const { data } = await sanityFetch({
-    query: pagesSlugs,
-    perspective: 'published',
-    stega: false,
-  })
+  const data = await client.fetch(
+    pagesSlugs,
+    {},
+    {
+      perspective: 'published',
+      stega: false,
+    },
+  )
 
   return data
 }
@@ -22,6 +25,8 @@ type Params = Promise<{ slug: string }>
 
 export default async function Page({ params }: { params: Params }) {
   const slideshows = await client.fetch(getSlideshowsQuery, params)
+
+  console.log('Fetching Slides')
   // const { data: slideshows } = await sanityFetch({query: getSlideshowsQuery, params})
 
   return (
