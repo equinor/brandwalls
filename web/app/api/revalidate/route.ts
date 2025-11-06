@@ -5,7 +5,7 @@ import { parseBody } from 'next-sanity/webhook'
 export async function POST(req: NextRequest) {
   try {
     //@ts-ignore: TODO _type error
-    const { isValidSignature, body } = await parseBody<{ _type }>(req, process.env.SANITY_REVALIDATE_SECRET)
+    const { isValidSignature, body } = await parseBody<{ _type }>(req, process.env.SANITY_API_READ_TOKEN)
     if (!isValidSignature) {
       const message = 'Invalid signature'
       return new Response(JSON.stringify({ message, isValidSignature, body }), { status: 401 })
