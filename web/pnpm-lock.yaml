@@ -36,7 +36,6 @@ importers:
         version: 4.1.0
       next:
         specifier: 15.2.8
-<<<<<<< HEAD
         version: 15.2.8(@babel/core@7.26.0)(@opentelemetry/api@1.9.0)(react-dom@19.0.1(react@19.0.1))(react@19.0.1)
       next-sanity:
         specifier: 9.8.35
@@ -47,18 +46,6 @@ importers:
       next-video:
         specifier: ^2.1.0
         version: 2.1.0(@types/react-dom@19.0.4(@types/react@19.0.10))(@types/react@19.0.10)(next@15.2.8(@babel/core@7.26.0)(@opentelemetry/api@1.9.0)(react-dom@19.0.1(react@19.0.1))(react@19.0.1))(react-dom@19.0.1(react@19.0.1))(react@19.0.1)
-=======
-        version: 15.2.8(@babel/core@7.26.0)(react-dom@19.0.1(react@19.0.1))(react@19.0.1)
-      next-sanity:
-        specifier: 9.8.35
-        version: 9.8.35(@sanity/client@6.28.2)(@sanity/icons@3.7.0(react@19.0.1))(@sanity/types@3.70.0(@types/react@19.0.10))(@sanity/ui@2.14.4(@emotion/is-prop-valid@1.2.2)(react-dom@19.0.1(react@19.0.1))(react-is@18.3.1)(react@19.0.1)(styled-components@6.1.14(react-dom@19.0.1(react@19.0.1))(react@19.0.1)))(next@15.2.8(@babel/core@7.26.0)(react-dom@19.0.1(react@19.0.1))(react@19.0.1))(react-dom@19.0.1(react@19.0.1))(react@19.0.1)(sanity@3.70.0(@emotion/is-prop-valid@1.2.2)(@types/babel__core@7.20.5)(@types/node@22.10.6)(@types/react@19.0.10)(react-dom@19.0.1(react@19.0.1))(react@19.0.1)(styled-components@6.1.14(react-dom@19.0.1(react@19.0.1))(react@19.0.1))(terser@5.37.0)(typescript@5.7.2))(styled-components@6.1.14(react-dom@19.0.1(react@19.0.1))(react@19.0.1))
-      next-sanity-image:
-        specifier: ^6.1.1
-        version: 6.1.1(@sanity/client@6.28.2)(next@15.2.8(@babel/core@7.26.0)(react-dom@19.0.1(react@19.0.1))(react@19.0.1))(react@19.0.1)
-      next-video:
-        specifier: ^2.1.0
-        version: 2.1.0(@types/react-dom@19.0.4(@types/react@19.0.10))(@types/react@19.0.10)(next@15.2.8(@babel/core@7.26.0)(react-dom@19.0.1(react@19.0.1))(react@19.0.1))(react-dom@19.0.1(react@19.0.1))(react@19.0.1)
->>>>>>> 61907ff (:art: update version and await params)
       react:
         specifier: 19.0.1
         version: 19.0.1
@@ -11886,19 +11873,11 @@ snapshots:
       - '@types/react'
       - supports-color
 
-<<<<<<< HEAD
   '@sanity/next-loader@1.2.12(next@15.2.8(@babel/core@7.26.0)(@opentelemetry/api@1.9.0)(react-dom@19.0.1(react@19.0.1))(react@19.0.1))(react@19.0.1)':
     dependencies:
       '@sanity/client': 6.28.2(debug@4.4.0)
       '@sanity/comlink': 3.0.0
       next: 15.2.8(@babel/core@7.26.0)(@opentelemetry/api@1.9.0)(react-dom@19.0.1(react@19.0.1))(react@19.0.1)
-=======
-  '@sanity/next-loader@1.2.12(next@15.2.8(@babel/core@7.26.0)(react-dom@19.0.1(react@19.0.1))(react@19.0.1))(react@19.0.1)':
-    dependencies:
-      '@sanity/client': 6.28.2(debug@4.4.0)
-      '@sanity/comlink': 3.0.0
-      next: 15.2.8(@babel/core@7.26.0)(react-dom@19.0.1(react@19.0.1))(react@19.0.1)
->>>>>>> 61907ff (:art: update version and await params)
       react: 19.0.1
       use-effect-event: 1.0.2(react@19.0.1)
     transitivePeerDependencies:
@@ -12101,11 +12080,7 @@ snapshots:
       '@types/uuid': 8.3.4
       uuid: 8.3.2
 
-<<<<<<< HEAD
   '@sanity/visual-editing@2.11.9(@sanity/client@6.28.2)(next@15.2.8(@babel/core@7.26.0)(@opentelemetry/api@1.9.0)(react-dom@19.0.1(react@19.0.1))(react@19.0.1))(react-dom@19.0.1(react@19.0.1))(react@19.0.1)':
-=======
-  '@sanity/visual-editing@2.11.9(@sanity/client@6.28.2)(next@15.2.8(@babel/core@7.26.0)(react-dom@19.0.1(react@19.0.1))(react@19.0.1))(react-dom@19.0.1(react@19.0.1))(react@19.0.1)':
->>>>>>> 61907ff (:art: update version and await params)
     dependencies:
       '@sanity/comlink': 3.0.0
       '@sanity/mutate': 0.11.0-canary.4(xstate@5.19.2)
@@ -12121,11 +12096,7 @@ snapshots:
       xstate: 5.19.2
     optionalDependencies:
       '@sanity/client': 6.28.2(debug@4.4.0)
-<<<<<<< HEAD
       next: 15.2.8(@babel/core@7.26.0)(@opentelemetry/api@1.9.0)(react-dom@19.0.1(react@19.0.1))(react@19.0.1)
-=======
-      next: 15.2.8(@babel/core@7.26.0)(react-dom@19.0.1(react@19.0.1))(react@19.0.1)
->>>>>>> 61907ff (:art: update version and await params)
     transitivePeerDependencies:
       - debug
 
@@ -14711,7 +14682,6 @@ snapshots:
 
   nanoid@5.0.9: {}
 
-<<<<<<< HEAD
   neo-async@2.6.2: {}
 
   next-sanity-image@6.1.1(@sanity/client@6.28.2)(next@15.2.8(@babel/core@7.26.0)(@opentelemetry/api@1.9.0)(react-dom@19.0.1(react@19.0.1))(react@19.0.1))(react@19.0.1):
@@ -14722,40 +14692,19 @@ snapshots:
       react: 19.0.1
 
   next-sanity@9.8.35(@sanity/client@6.28.2)(@sanity/icons@3.7.0(react@19.0.1))(@sanity/types@3.70.0(@types/react@19.0.10))(@sanity/ui@2.14.4(@emotion/is-prop-valid@1.2.2)(react-dom@19.0.1(react@19.0.1))(react-is@18.3.1)(react@19.0.1)(styled-components@6.1.14(react-dom@19.0.1(react@19.0.1))(react@19.0.1)))(next@15.2.8(@babel/core@7.26.0)(@opentelemetry/api@1.9.0)(react-dom@19.0.1(react@19.0.1))(react@19.0.1))(react-dom@19.0.1(react@19.0.1))(react@19.0.1)(sanity@3.70.0(@emotion/is-prop-valid@1.2.2)(@types/babel__core@7.20.5)(@types/node@22.10.6)(@types/react@19.0.10)(react-dom@19.0.1(react@19.0.1))(react@19.0.1)(styled-components@6.1.14(react-dom@19.0.1(react@19.0.1))(react@19.0.1))(terser@5.37.0)(typescript@5.7.2))(styled-components@6.1.14(react-dom@19.0.1(react@19.0.1))(react@19.0.1)):
-=======
-  next-sanity-image@6.1.1(@sanity/client@6.28.2)(next@15.2.8(@babel/core@7.26.0)(react-dom@19.0.1(react@19.0.1))(react@19.0.1))(react@19.0.1):
-    dependencies:
-      '@sanity/client': 6.28.2(debug@4.4.0)
-      '@sanity/image-url': 1.1.0
-      next: 15.2.8(@babel/core@7.26.0)(react-dom@19.0.1(react@19.0.1))(react@19.0.1)
-      react: 19.0.1
-
-  next-sanity@9.8.35(@sanity/client@6.28.2)(@sanity/icons@3.7.0(react@19.0.1))(@sanity/types@3.70.0(@types/react@19.0.10))(@sanity/ui@2.14.4(@emotion/is-prop-valid@1.2.2)(react-dom@19.0.1(react@19.0.1))(react-is@18.3.1)(react@19.0.1)(styled-components@6.1.14(react-dom@19.0.1(react@19.0.1))(react@19.0.1)))(next@15.2.8(@babel/core@7.26.0)(react-dom@19.0.1(react@19.0.1))(react@19.0.1))(react-dom@19.0.1(react@19.0.1))(react@19.0.1)(sanity@3.70.0(@emotion/is-prop-valid@1.2.2)(@types/babel__core@7.20.5)(@types/node@22.10.6)(@types/react@19.0.10)(react-dom@19.0.1(react@19.0.1))(react@19.0.1)(styled-components@6.1.14(react-dom@19.0.1(react@19.0.1))(react@19.0.1))(terser@5.37.0)(typescript@5.7.2))(styled-components@6.1.14(react-dom@19.0.1(react@19.0.1))(react@19.0.1)):
->>>>>>> 61907ff (:art: update version and await params)
     dependencies:
       '@portabletext/react': 3.2.1(react@19.0.1)
       '@sanity/client': 6.28.2(debug@4.4.0)
       '@sanity/icons': 3.7.0(react@19.0.1)
-<<<<<<< HEAD
       '@sanity/next-loader': 1.2.12(next@15.2.8(@babel/core@7.26.0)(@opentelemetry/api@1.9.0)(react-dom@19.0.1(react@19.0.1))(react@19.0.1))(react@19.0.1)
-=======
-      '@sanity/next-loader': 1.2.12(next@15.2.8(@babel/core@7.26.0)(react-dom@19.0.1(react@19.0.1))(react@19.0.1))(react@19.0.1)
->>>>>>> 61907ff (:art: update version and await params)
       '@sanity/preview-kit': 5.1.28(@sanity/client@6.28.2)(react@19.0.1)
       '@sanity/preview-url-secret': 2.0.7(@sanity/client@6.28.2)
       '@sanity/types': 3.70.0(@types/react@19.0.10)(debug@4.4.0)
       '@sanity/ui': 2.14.4(@emotion/is-prop-valid@1.2.2)(react-dom@19.0.1(react@19.0.1))(react-is@18.3.1)(react@19.0.1)(styled-components@6.1.14(react-dom@19.0.1(react@19.0.1))(react@19.0.1))
-<<<<<<< HEAD
       '@sanity/visual-editing': 2.11.9(@sanity/client@6.28.2)(next@15.2.8(@babel/core@7.26.0)(@opentelemetry/api@1.9.0)(react-dom@19.0.1(react@19.0.1))(react@19.0.1))(react-dom@19.0.1(react@19.0.1))(react@19.0.1)
       groq: 3.77.2
       history: 5.3.0
       next: 15.2.8(@babel/core@7.26.0)(@opentelemetry/api@1.9.0)(react-dom@19.0.1(react@19.0.1))(react@19.0.1)
-=======
-      '@sanity/visual-editing': 2.11.9(@sanity/client@6.28.2)(next@15.2.8(@babel/core@7.26.0)(react-dom@19.0.1(react@19.0.1))(react@19.0.1))(react-dom@19.0.1(react@19.0.1))(react@19.0.1)
-      groq: 3.77.2
-      history: 5.3.0
-      next: 15.2.8(@babel/core@7.26.0)(react-dom@19.0.1(react@19.0.1))(react@19.0.1)
->>>>>>> 61907ff (:art: update version and await params)
       react: 19.0.1
       sanity: 3.70.0(@emotion/is-prop-valid@1.2.2)(@types/babel__core@7.20.5)(@types/node@22.10.6)(@types/react@19.0.10)(react-dom@19.0.1(react@19.0.1))(react@19.0.1)(styled-components@6.1.14(react-dom@19.0.1(react@19.0.1))(react@19.0.1))(terser@5.37.0)(typescript@5.7.2)
       styled-components: 6.1.14(react-dom@19.0.1(react@19.0.1))(react@19.0.1)
@@ -14767,11 +14716,7 @@ snapshots:
       - react-router
       - svelte
 
-<<<<<<< HEAD
   next-video@2.1.0(@types/react-dom@19.0.4(@types/react@19.0.10))(@types/react@19.0.10)(next@15.2.8(@babel/core@7.26.0)(@opentelemetry/api@1.9.0)(react-dom@19.0.1(react@19.0.1))(react@19.0.1))(react-dom@19.0.1(react@19.0.1))(react@19.0.1):
-=======
-  next-video@2.1.0(@types/react-dom@19.0.4(@types/react@19.0.10))(@types/react@19.0.10)(next@15.2.8(@babel/core@7.26.0)(react-dom@19.0.1(react@19.0.1))(react@19.0.1))(react-dom@19.0.1(react@19.0.1))(react@19.0.1):
->>>>>>> 61907ff (:art: update version and await params)
     dependencies:
       '@aws-sdk/client-s3': 3.758.0
       '@inquirer/prompts': 4.3.3
@@ -14787,11 +14732,7 @@ snapshots:
       hls-video-element: 1.4.1
       magicast: 0.3.5
       media-chrome: 4.7.1(react@19.0.1)
-<<<<<<< HEAD
       next: 15.2.8(@babel/core@7.26.0)(@opentelemetry/api@1.9.0)(react-dom@19.0.1(react@19.0.1))(react@19.0.1)
-=======
-      next: 15.2.8(@babel/core@7.26.0)(react-dom@19.0.1(react@19.0.1))(react@19.0.1)
->>>>>>> 61907ff (:art: update version and await params)
       player.style: 0.1.5(react@19.0.1)
       react: 19.0.1
       react-dom: 19.0.1(react@19.0.1)
@@ -14806,11 +14747,7 @@ snapshots:
       - aws-crt
       - encoding
 
-<<<<<<< HEAD
   next@15.2.8(@babel/core@7.26.0)(@opentelemetry/api@1.9.0)(react-dom@19.0.1(react@19.0.1))(react@19.0.1):
-=======
-  next@15.2.8(@babel/core@7.26.0)(react-dom@19.0.1(react@19.0.1))(react@19.0.1):
->>>>>>> 61907ff (:art: update version and await params)
     dependencies:
       '@next/env': 15.2.8
       '@swc/counter': 0.1.3
