@@ -24,7 +24,8 @@ type Params = Promise<{ slug: string }>
 // export const revalidate = 120 // revalidate at most every hour
 
 export default async function Page({ params }: { params: Params }) {
-  const slideshows = await client.fetch(getSlideshowsQuery, params)
+  const { slug } = await params
+  const slideshows = await client.fetch(getSlideshowsQuery, { slug })
 
   console.log('Fetching Slides')
   // const { data: slideshows } = await sanityFetch({query: getSlideshowsQuery, params})
