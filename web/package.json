@@ -15,6 +15,11 @@
     "lint": "next lint",
     "typegen": "sanity typegen generate"
   },
+  "pnpm": {
+    "overrides": {
+      "form-data": "4.0.4"
+    }
+  },
   "dependencies": {
     "@equinor/eds-icons": "^0.22.0",
     "@equinor/eds-core-react": "^0.44.0",
