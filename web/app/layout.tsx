@@ -2,7 +2,6 @@ import type { Metadata } from 'next'
 import localFont from 'next/font/local'
 import './globals.css'
 import { Toaster } from 'sonner'
-import { VisualEditing } from 'next-sanity'
 // import { SanityLive } from '@/sanity/lib/live'
 import { draftMode } from 'next/headers'
 import { handleError } from './client-utils'
@@ -39,7 +38,6 @@ export default async function RootLayout({
         {isDraftMode && (
           <>
             <DraftModeToast />
-            <VisualEditing />
           </>
         )}
         {/* The <SanityLive> component is responsible for making all sanityFetch calls in your application live, so should always be rendered. */}
