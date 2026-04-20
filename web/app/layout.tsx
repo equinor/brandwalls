@@ -2,9 +2,8 @@ import type { Metadata } from 'next'
 import localFont from 'next/font/local'
 import './globals.css'
 import { Toaster } from 'sonner'
-// import { SanityLive } from '@/sanity/lib/live'
+import { VisualEditing } from 'next-sanity/visual-editing'
 import { draftMode } from 'next/headers'
-import { handleError } from './client-utils'
 import DraftModeToast from '@/components/draft-mode/DraftModeToast'
 
 const equinorRegular = localFont({
@@ -38,6 +37,7 @@ export default async function RootLayout({
         {isDraftMode && (
           <>
             <DraftModeToast />
+            <VisualEditing />
           </>
         )}
         {/* The <SanityLive> component is responsible for making all sanityFetch calls in your application live, so should always be rendered. */}
