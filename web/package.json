@@ -45,9 +45,11 @@
     "tailwindcss": "^3.4.1",
     "typescript": "5.7.2"
   },
-  "overrides": {
-    "fast-xml-parser": "4.5.4",
-    "form-data": "4.0.5"
+  "pnpm": {
+    "overrides": {
+      "fast-xml-parser": "4.5.4",
+      "form-data": "4.0.5"
+    }
   },
   "packageManager": "pnpm@10.0.0"
 }

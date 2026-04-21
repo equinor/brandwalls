@@ -10,7 +10,8 @@
     "web": "pnpm --filter ./web",
     "studio": "pnpm --filter ./studio",
     "prepare": "husky",
-    "lint": "eslint . --fix"
+    "lint": "eslint . --fix",
+    "cleandep": "rm -rf node_modules && rm -rf pnpm-lock.yaml && pnpm -r exec rm -rf node_modules"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3.3.0",
