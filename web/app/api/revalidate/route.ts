@@ -19,7 +19,7 @@ export async function POST(req: NextRequest) {
     // If the `_type` is `slide`,`slideshow` or `location` then all `client.fetch` calls with
     // `{next: {tags: ['location']}}` will be revalidated
     // TODO ensure that all three types changes trigger location fetches
-    await revalidateTag(body._type)
+    revalidateTag(body._type, 'max')
     return NextResponse.json({ body })
   } catch (err: any) {
     console.error(err)

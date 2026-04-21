@@ -1,3 +1,6 @@
 packages:
-  - "web"
-  - "studio"
+  - 'web'
+  - 'studio'
+minimumReleaseAge: 10080
+#trustPolicy: 'no-downgrade'
+blockExoticSubdeps: true
