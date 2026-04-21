@@ -15,11 +15,6 @@
     "lint": "next lint",
     "typegen": "sanity typegen generate"
   },
-  "pnpm": {
-    "overrides": {
-      "form-data": "4.0.4"
-    }
-  },
   "dependencies": {
     "@equinor/eds-icons": "^1.4.0",
     "@equinor/eds-core-react": "^2.5.0",
@@ -52,10 +47,8 @@
     "typescript": "5.7.2"
   },
   "overrides": {
-    "fast-xml-parser": "4.5.4"
-  },
-  "resolutions": {
-    "fast-xml-parser": "4.5.4"
+    "fast-xml-parser": "4.5.4",
+    "form-data": "4.0.5"
   },
   "packageManager": "pnpm@10.0.0"
 }
