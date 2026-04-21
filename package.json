@@ -13,7 +13,7 @@
     "lint": "eslint . --fix"
   },
   "devDependencies": {
-    "@eslint/eslintrc": "^3.3.0",
+    "@eslint/eslintrc": "^3.3.5",
     "typescript-eslint": "^8.26.1",
     "husky": "^9.1.7",
     "lint-staged": "^15.3.0",
