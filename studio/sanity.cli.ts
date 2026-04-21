@@ -1,4 +1,4 @@
-import {defineCliConfig} from 'sanity/cli'
+import { defineCliConfig } from 'sanity/cli'
 
 const dataset = process.env.SANITY_STUDIO_DATASET || 'development'
 
@@ -8,5 +8,7 @@ export default defineCliConfig({
     dataset,
   },
   studioHost: 'brandwall',
-  autoUpdates: false,
+  deployment: {
+    autoUpdates: false,
+  },
 })

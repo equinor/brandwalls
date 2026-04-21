@@ -3,5 +3,6 @@ packages:
   - 'studio'
 overrides:
   'fast-xml-parser': '4.5.4'
+  'form-data': '4.0.5'
 minimumReleaseAge: 10080
 blockExoticSubdeps: true
