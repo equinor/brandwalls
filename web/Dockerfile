@@ -72,7 +72,6 @@ RUN apk add --no-cache tini
 
 # Automatically leverage output traces to reduce image size
 # https://nextjs.org/docs/advanced-features/output-file-tracing
-COPY --from=build /app/web/public ./public
 COPY --from=builder --chown=nextjs:nodejs /app/web/.next/standalone .
 COPY --from=builder --chown=nextjs:nodejs /app/web/.next/static ./.next/static
 
