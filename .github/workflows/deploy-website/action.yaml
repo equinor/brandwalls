@@ -27,7 +27,7 @@ runs:
   using: 'composite'
   steps:
     - name: Checkout 🛎 ️
-      uses: actions/checkout@v4
+      uses: actions/checkout@v6
       with:
         fetch-depth: 0
     - name: Get long sha ️🏷️
@@ -39,7 +39,7 @@ runs:
     - name: Checkout specific branch 🛎️
       if: "${{ inputs.commitSha != '' }}"
       id: checkout-specific-branch
-      uses: actions/checkout@v3
+      uses: actions/checkout@v6
       with:
         repository: 'equinor/brandwalls'
         fetch-depth: 0
@@ -58,29 +58,32 @@ runs:
       run: |
         echo "IMAGE_TAG=${{inputs.commitSha}}" >> $GITHUB_ENV
         echo "IMAGE_TAG_SHA=${{inputs.commitSha}}" >> $GITHUB_ENV
+    - name: Set up Docker Buildx 🔧
+      uses: docker/setup-buildx-action@v4
+    - name: Login to GHCR 🔐
+      uses: docker/login-action@v4
+      with:
+        registry: ghcr.io
+        username: ${{ github.actor }}
+        password: ${{ inputs.githubToken }}
     - name: Build web component ⚙️
-      shell: bash
       id: build
-      run: |
-        docker build . \
-          --cache-from ${{ inputs.imageName }}:${{ env.IMAGE_TAG }} \
-          --build-arg ARG_SANITY_PROJECT_ID=${{ inputs.projectId }} \
-          --build-arg ARG_SANITY_DATASET=${{ inputs.datasetName }} \
-          --build-arg ARG_SANITY_API_READ_TOKEN=${{ inputs.sanityApiReadToken }} \
-          --build-arg ARG_ENV=${{ inputs.environment }} \
-          --file web/Dockerfile \
-          --tag ${{ inputs.imageName }}:${{ env.IMAGE_TAG }} \
-          --tag ${{ inputs.imageName }}:${{ env.IMAGE_TAG_SHA }} \
-          --build-arg BUILDKIT_INLINE_CACHE=1
-    - name: Push the image to GHCR ☁
-      shell: bash
-      id: push-to-ghcr
-      run: |
-        echo "${{ inputs.githubToken }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
-        docker push ghcr.io/equinor/brandwalls/web-${{ inputs.datasetName  }} --all-tags
-    - name: Get token 🔑
-      id: get-token
-      uses: ./.github/workflows/get-auth-token/
+      uses: docker/build-push-action@v7
+      with:
+        context: .
+        file: web/Dockerfile
+        push: true
+        tags: |
+          ${{ inputs.imageName }}:${{ env.IMAGE_TAG }}
+          ${{ inputs.imageName }}:${{ env.IMAGE_TAG_SHA }}
+        cache-from: type=registry,ref=${{ inputs.imageName }}:${{ env.IMAGE_TAG }}
+        cache-to: type=inline
+        secrets: |
+          sanity_api_token=${{ inputs.sanityApiReadToken }}
+        build-args: |
+          ARG_SANITY_PROJECT_ID=${{ inputs.projectId }}
+          ARG_SANITY_DATASET=${{ inputs.datasetName }}
+          ARG_ENV=${{ inputs.environment }}
     - name: Get component name
       id: get-component-name
       shell: bash
@@ -92,15 +95,14 @@ runs:
     # DEPLOY RADIX CLUSTER
     - name: Deploy to Radix Platform 🚀
       id: deploy-radix-platform
-      uses: equinor/radix-github-actions@v1
+      uses: equinor/radix-github-actions@v2
       with:
-        args: >
-          create job
-          deploy
-          --token-environment
-          --component $COMPONENT_NAME
-          --image-tag-name web=${{ env.IMAGE_TAG }}
-          --context platform
-          -a brandwalls
-          -e ${{ inputs.environment }}
-          -f
+        azure_client_id: f156d585-4042-483e-9864-7d6fe00f0ed1
+        version: latest
+    - run: rx create job deploy
+        --component $COMPONENT_NAME
+        --context platform
+        -a brandwalls
+        -e ${{ inputs.environment }}
+        -f
+      shell: bash

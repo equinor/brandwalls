@@ -1,4 +1,6 @@
 name: PROD - Build & Deploy Brandwalls
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: 'true'
 on:
   workflow_dispatch:
   push:
@@ -18,7 +20,7 @@ jobs:
       DOCKER_BUILDKIT: 1
     steps:
       - name: Checkout 🛎️
-        uses: actions/checkout@v3
+        uses: actions/checkout@v6
       - id: deploy-production
         uses: ./.github/workflows/deploy-website/
         with:
