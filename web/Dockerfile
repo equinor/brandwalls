@@ -1,6 +1,8 @@
 # syntax=docker.io/docker/dockerfile:1
-
-FROM node:22-alpine AS base
+# ============================================
+# Stage 1: Dependencies Installation Stage
+# ============================================
+FROM node:lts-alpine AS base
 ENV PNPM_HOME="/pnpm"
 ENV PATH="$PNPM_HOME:$PATH"
 RUN corepack enable
@@ -10,14 +12,14 @@ WORKDIR /app
 # Install dependencies only when needed
 FROM base AS deps
 # Check https://github.com/nodejs/docker-node/tree/b4117f9333da4138b03a546ec926ef50a31506c3#nodealpine to understand why libc6-compat might be needed.
-RUN apk add --no-cache libc6-compat
+RUN apk add --no-cache libc6-compat curl
 WORKDIR /app
 
 # Install dependencies based on the preferred package manager
-COPY package.json package-lock.json* pnpm-lock.yaml* .npmrc* ./
+COPY package.json pnpm-lock.yaml* .npmrc* ./
 COPY web/package.json web/pnpm-lock.yaml web/
 
-RUN \
+RUN --mount=type=cache,target=/root/.local/share/pnpm/store \
   if [ -f pnpm-lock.yaml ]; then pnpm m i --frozen-lockfile; \
   else echo "Lockfile not found." && exit 1; \
   fi
@@ -31,10 +33,8 @@ COPY --from=deps /app/web/node_modules ./web/node_modules
 COPY . .
 
 ARG ARG_SANITY_DATASET
-ARG ARG_SANITY_API_READ_TOKEN
 ARG ARG_SANITY_PROJECT_ID
 
-ENV SANITY_API_READ_TOKEN ${ARG_SANITY_API_READ_TOKEN}
 ENV NEXT_PUBLIC_SANITY_DATASET ${ARG_SANITY_DATASET}
 ENV NEXT_PUBLIC_SANITY_PROJECT_ID ${ARG_SANITY_PROJECT_ID}
 
@@ -44,6 +44,8 @@ ENV NEXT_PUBLIC_SANITY_PROJECT_ID ${ARG_SANITY_PROJECT_ID}
 ENV NEXT_TELEMETRY_DISABLED=1
 
 RUN pnpm web build
+RUN --mount=type=secret,id=sanity_api_token \
+    sh -ec 'SANITY_API_TOKEN="$(cat /run/secrets/sanity_api_token)" pnpm web build'
 
 # Production image, copy all the files and run next
 FROM base AS runner
@@ -52,10 +54,8 @@ WORKDIR /app
 ENV NODE_ENV=production
 
 ARG ARG_SANITY_DATASET
-ARG ARG_SANITY_API_READ_TOKEN
 ARG ARG_SANITY_PROJECT_ID
 
-ENV SANITY_API_READ_TOKEN ${ARG_SANITY_API_READ_TOKEN}
 ENV NEXT_PUBLIC_SANITY_DATASET ${ARG_SANITY_DATASET}
 ENV NEXT_PUBLIC_SANITY_PROJECT_ID ${ARG_SANITY_PROJECT_ID}
 
@@ -69,11 +69,10 @@ RUN addgroup -S "$USER"
 RUN adduser -S --uid "$UID" "$USER"
 RUN apk add --no-cache tini
 
-# Do we need this in next 15, everything is in app?
-# COPY --from=builder /app/web/public ./public
 
 # Automatically leverage output traces to reduce image size
 # https://nextjs.org/docs/advanced-features/output-file-tracing
+COPY --from=build /app/web/public ./public
 COPY --from=builder --chown=nextjs:nodejs /app/web/.next/standalone .
 COPY --from=builder --chown=nextjs:nodejs /app/web/.next/static ./.next/static
 
