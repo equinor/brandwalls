@@ -45,7 +45,7 @@ ENV NEXT_TELEMETRY_DISABLED=1
 
 RUN pnpm web build
 RUN --mount=type=secret,id=sanity_api_token \
-    sh -ec 'SANITY_API_TOKEN="$(cat /run/secrets/sanity_api_token)" pnpm web build'
+    sh -ec 'SANITY_API_READ_TOKEN="$(cat /run/secrets/sanity_api_token)" pnpm web build'
 
 # Production image, copy all the files and run next
 FROM base AS runner
