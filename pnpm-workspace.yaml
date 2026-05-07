@@ -2,7 +2,7 @@ packages:
   - 'web'
   - 'studio'
 overrides:
-  'fast-xml-parser': '^4.5.4'
+  'fast-xml-parser': '^5.7.0'
   'form-data': '4.0.5'
 minimumReleaseAge: 10080
 blockExoticSubdeps: true
