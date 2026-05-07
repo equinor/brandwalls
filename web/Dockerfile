@@ -72,7 +72,7 @@ RUN apk add --no-cache tini
 # Automatically leverage output traces to reduce image size
 # https://nextjs.org/docs/advanced-features/output-file-tracing
 COPY --from=builder --chown=nextjs:nodejs /app/web/.next/standalone .
-COPY --from=builder --chown=nextjs:nodejs /app/web/.next/static ./.next/static
+COPY --from=builder --chown=nextjs:nodejs /app/web/.next/static ./web/.next/static
 
 USER "$UID"
 
@@ -85,4 +85,4 @@ ENV PORT=3000
 # ENV HOSTNAME="0.0.0.0"
 ENTRYPOINT ["/sbin/tini", "--"]
 
-CMD ["node", "server.js"]
+CMD ["node", "web/server.js"]
