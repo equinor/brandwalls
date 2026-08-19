@@ -34,6 +34,7 @@
     "typescript": "^5.1.6"
   },
   "overrides": {
-    "form-data": "4.0.4"
+    "form-data": "4.0.4",
+    "tar": "7.5.19"
   }
 }
