@@ -1,6 +1,6 @@
-# Energyvision - GitHub Copilot instructions
+# Brandwalls - GitHub Copilot instructions
 
-This file tells Copilot how to work inside the Energyvision monorepo. Prefer existing patterns and symbols, keep changes minimal, and reference real files in this repo.
+This file tells Copilot how to work inside the Brandwalls monorepo. Prefer existing patterns and symbols, keep changes minimal, and reference real files in this repo.
 
 These instructions apply repository-wide.
 
@@ -9,14 +9,12 @@ Before proposing code changes, consult:
 - `README.md`
 - `web/README.md` (for web work)
 - `studio/README.md` (for studio work)
-- `search/README.md` (for search work)
 
 When the task is limited to a specific area of the repository, prefer scoped instruction files in `.github/instructions/` that apply to the touched paths.
 
 Then apply scoped skills from:
 - `.github/skills/web/SKILL.md`
 - `.github/skills/studio/SKILL.md`
-- `.github/skills/search/SKILL.md`
 
 - Edit only what’s asked. Don’t invent files/APIs or refactors.
 - One file at a time. Provide a single coherent diff per file.
@@ -55,7 +53,7 @@ Then apply scoped skills from:
 
 
 ## Repository overview
-Energyvision is a pnpm workspaces monorepo
+Brandwalls is a pnpm workspaces monorepo
 
 - Languages: TypeScript, CSS, React, Next.js
 - Package manager: pnpm
@@ -68,11 +66,11 @@ Related files: `package.json`, `eslint.config.js`, `biome.json`, `tsconfig.json`
 
 - **Workspaces**: `web`, `studio`, `search`, `packages/energyvision`, `packages/typescript-config`
 - **Task definitions** (`turbo.json`):
-  - `energy-vision-web#build`: Next.js static build with caching
-  - `energy-vision-studio#build`: Sanity Studio build
+  - `brandwalls-web#build`: Next.js static build with caching
+  - `brandwalls-studio#build`: Sanity Studio build
   - `lint`, `check-types`, `dev`: root-level tasks with workspace dependencies
-- **Building**: Run `pnpm web build` or `pnpm turbo build --filter=energy-vision-web` to build the web package
-- **Docker build**: Uses `turbo prune energy-vision-web --docker`, then installs from the generated `out/pnpm-lock.yaml`, `out/pnpm-workspace.yaml`, and `out/json/` with `pnpm install --frozen-lockfile`.
+-- **Building**: Run `pnpm web build` or `pnpm turbo build --filter=brandwalls-web` to build the web package
+-- **Docker build**: Uses `turbo prune brandwalls-web --docker`, then installs from the generated `out/pnpm-lock.yaml`, `out/pnpm-workspace.yaml`, and `out/json/` with `pnpm install --frozen-lockfile`.
 - **Shared config**: TypeScript configs, Tailwind presets, and other shared utilities live in `packages/`
 - **pnpm-workspace.yaml**: The authoritative workspace definition. It explicitly lists all workspaces and contains pnpm settings, overrides, build approvals, and hoisting rules. Do not add a `workspaces` field to root `package.json`.
 - **Lockfile**: The root `pnpm-lock.yaml` is shared by the workspace. When package manifests or pnpm workspace settings change, update it with pnpm `11.24.0`; keep Docker installs frozen.
