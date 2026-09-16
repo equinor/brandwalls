@@ -1,88 +1,58 @@
 # syntax=docker/dockerfile:1
-# ============================================
-# Stage 1: Dependencies Installation Stage
-# ============================================
-FROM node:lts-alpine AS base
-ENV PNPM_HOME="/pnpm"
-ENV PATH="$PNPM_HOME:$PATH"
-RUN corepack enable
-COPY . /app
-WORKDIR /app
 
-# Install dependencies only when needed
-FROM base AS deps
-# Check https://github.com/nodejs/docker-node/tree/b4117f9333da4138b03a546ec926ef50a31506c3#nodealpine to understand why libc6-compat might be needed.
+FROM node:24-alpine AS core-os
 RUN apk add --no-cache libc6-compat curl
+
+FROM core-os AS base
 WORKDIR /app
+RUN npm install --global pnpm@10.0.0 turbo@2.10.10
 
-# Install dependencies based on the preferred package manager
-COPY package.json pnpm-lock.yaml* .npmrc* ./
-COPY web/package.json web/pnpm-lock.yaml web/
-
-RUN --mount=type=cache,target=/root/.local/share/pnpm/store \
-  if [ -f pnpm-lock.yaml ]; then pnpm m i --frozen-lockfile; \
-  else echo "Lockfile not found." && exit 1; \
-  fi
-
-
-# Rebuild the source code only when needed
-FROM base AS builder
-WORKDIR /app
-COPY --from=deps /app/node_modules ./node_modules
-COPY --from=deps /app/web/node_modules ./web/node_modules
+FROM base AS prepare
 COPY . .
+RUN turbo prune brandwalls-web --docker
+
+FROM base AS builder
+COPY --from=prepare /app/out/pnpm-lock.yaml ./pnpm-lock.yaml
+COPY --from=prepare /app/out/pnpm-workspace.yaml ./pnpm-workspace.yaml
+COPY --from=prepare /app/out/json/ .
+
+RUN --mount=type=cache,id=pnpm,target=/pnpm/store pnpm install --frozen-lockfile
+
+COPY --from=prepare /app/out/full/ .
 
 ARG ARG_SANITY_DATASET
 ARG ARG_SANITY_PROJECT_ID
 
-ENV NEXT_PUBLIC_SANITY_DATASET ${ARG_SANITY_DATASET}
-ENV NEXT_PUBLIC_SANITY_PROJECT_ID ${ARG_SANITY_PROJECT_ID}
-
-# Next.js collects completely anonymous telemetry data about general usage.
-# Learn more here: https://nextjs.org/telemetry
-# Uncomment the following line in case you want to disable telemetry during the build.
+ENV NEXT_PUBLIC_SANITY_DATASET=${ARG_SANITY_DATASET}
+ENV NEXT_PUBLIC_SANITY_PROJECT_ID=${ARG_SANITY_PROJECT_ID}
 ENV NEXT_TELEMETRY_DISABLED=1
+ENV TURBO_TELEMETRY_DISABLED=1
 
-RUN --mount=type=secret,id=sanity_api_token,required=true \
-  sh -ec 'export SANITY_API_READ_TOKEN="$(cat /run/secrets/sanity_api_token)" && pnpm web build'
+RUN --mount=type=secret,id=sanity_api_token \
+  sh -ec 'SANITY_API_READ_TOKEN="$(cat /run/secrets/sanity_api_token)" turbo build --filter=brandwalls-web'
 
-# Production image, copy all the files and run next
-FROM base AS runner
-WORKDIR /app
-
-ENV NODE_ENV=production
-
-ARG ARG_SANITY_DATASET
-ARG ARG_SANITY_PROJECT_ID
-
-ENV NEXT_PUBLIC_SANITY_DATASET ${ARG_SANITY_DATASET}
-ENV NEXT_PUBLIC_SANITY_PROJECT_ID ${ARG_SANITY_PROJECT_ID}
-
-# Uncomment the following line in case you want to disable telemetry during runtime.
-ENV NEXT_TELEMETRY_DISABLED=1
-
-ENV USER nextjs
-ENV UID 1001
-
-RUN addgroup -S "$USER"
-RUN adduser -S --uid "$UID" "$USER"
+FROM core-os AS runner
 RUN apk add --no-cache tini
 
+ARG ARG_SANITY_DATASET
+ARG ARG_SANITY_PROJECT_ID
 
-# Automatically leverage output traces to reduce image size
-# https://nextjs.org/docs/advanced-features/output-file-tracing
-COPY --from=builder --chown=nextjs:nodejs /app/web/.next/standalone .
-COPY --from=builder --chown=nextjs:nodejs /app/web/.next/static ./web/.next/static
+ENV NODE_ENV=production
+ENV NEXT_PUBLIC_SANITY_DATASET=${ARG_SANITY_DATASET}
+ENV NEXT_PUBLIC_SANITY_PROJECT_ID=${ARG_SANITY_PROJECT_ID}
+ENV NEXT_TELEMETRY_DISABLED=1
+ENV USER=nextjs
+ENV UID=12345
+
+RUN addgroup -S "$USER" && adduser -S --uid "$UID" "$USER"
+
+WORKDIR /app
+COPY --from=builder /app/web/public ./web/public
+COPY --from=builder --chown="$USER":"$USER" /app/web/.next/standalone ./
+COPY --from=builder --chown="$USER":"$USER" /app/web/.next/static ./web/.next/static
 
 USER "$UID"
-
 EXPOSE 3000
 
-ENV PORT=3000
-
-# server.js is created by next build from the standalone output
-# https://nextjs.org/docs/pages/api-reference/config/next-config-js/output
-# ENV HOSTNAME="0.0.0.0"
 ENTRYPOINT ["/sbin/tini", "--"]
-
-CMD ["node", "web/server.js"]
+CMD ["node", "./web/server.js"]
