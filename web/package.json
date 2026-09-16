@@ -5,45 +5,43 @@
   "private": true,
   "type": "module",
   "author": {
-    "name": "Heap Purple",
+    "name": "Envis",
     "email": "fg_envis@equinor.com"
   },
   "scripts": {
     "dev": "next dev --turbopack",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint",
     "typegen": "sanity typegen generate"
   },
   "dependencies": {
-    "@equinor/eds-icons": "^1.4.0",
-    "@equinor/eds-core-react": "^2.5.0",
-    "@sanity/client": "^7.21.0",
-    "@sanity/image-url": "^1.1.0",
-    "@sanity/uuid": "^3.0.2",
+    "@equinor/eds-core-react": "^2.6.2",
+    "@equinor/eds-icons": "^1.5.1",
+    "@sanity/client": "8.5.0",
+    "@sanity/image-url": "^2.1.1",
+    "@sanity/uuid": "^3.0.3",
     "@sanity/webhook": "^4.0.4",
-    "@tailwindcss/typography": "^0.5.16",
-    "date-fns": "^4.1.0",
-    "next": "16.2.5",
-    "next-sanity": "12.3.0",
+    "date-fns": "^4.4.0",
+    "next": "16.3.4",
+    "next-sanity": "13.3.4",
     "next-sanity-image": "^6.2.0",
-    "next-video": "^2.7.1",
-    "react": "19.2.5",
-    "react-dom": "19.2.5",
-    "sonner": "^2.0.7",
-    "swr": "^2.4.1",
-    "tailwind-merge": "^3.5.0",
+    "next-video": "^2.8.0",
+    "react": "19.2.4",
+    "react-dom": "19.2.4",
+    "sonner": "^2.0.8",
+    "swr": "2.5.1",
+    "tailwind-merge": "3.6.0",
     "xml2js": "^0.6.2"
   },
   "devDependencies": {
-    "@types/node": "^25",
-    "@types/react": "^19.0.10",
-    "@types/react-dom": "^19.0.4",
+    "@tailwindcss/postcss": "^4.3.3",
+    "@types/node": "^24.0.9999",
+    "@types/react": "^19.2.4",
+    "@types/react-dom": "^19.2.4",
     "@types/xml2js": "^0.4.14",
-    "autoprefixer": "^10.4.20",
-    "postcss": "^8",
-    "tailwindcss": "^3.4.1",
-    "typescript": "5.7.2"
+    "postcss": "^8.5.28",
+    "tailwindcss": "^4.3.3",
+    "typescript": "7.0.2"
   },
   "pnpm": {
     "overrides": {
@@ -52,5 +50,5 @@
       "tar": "7.5.19"
     }
   },
-  "packageManager": "pnpm@10.0.0"
+  "packageManager": "pnpm@11.24.0"
 }
