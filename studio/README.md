@@ -1,9 +1,27 @@
-# Sanity Clean Content Studio
+<p align="center">
+  <a href="https://www.equinor.com">
+    <img width="300" src=".github/Equinor_HORIZ_logo_RGB_RED.png">
+  </a>
+</p>
 
-Congratulations, you have now installed the Sanity Content Studio, an open-source real-time content editing environment connected to the Sanity backend.
+# Brandwalls Studio
 
-Now you can do the following things:
+Brandwalls Studio is the Sanity-powered content management environment for creating and maintaining Equinor brandwall content.
+The brandwall application is built using the [Sanity content platform](https://www.sanity.io/) as headless CMS and [Next.js](https://nextjs.org/) for the web frontend.
 
-- [Read “getting started” in the docs](https://www.sanity.io/docs/introduction/getting-started?utm_source=readme)
-- [Join the community Slack](https://slack.sanity.io/?utm_source=readme)
-- [Extend and build plugins](https://www.sanity.io/docs/content-studio/extending?utm_source=readme)
+The project is licensed under the [MIT license](https://github.com/equinor/energyvision/blob/main/LICENSE) following [the open source strategy of Equinor](https://opensource.equinor.com) and integrates elements from the [Equinor Design System](https://eds.equinor.com).
+
+## Package managers
+
+This project uses [pnpm](https://pnpm.io) as main package manager. You can install pnpm using npm as shown below, or use one of the [alternative installation methods](https://pnpm.io/installation).
+
+```bash
+# Install pnpm
+npm i -g pnpm
+```
+
+This project uses the pnpm package manager. All commands should be run from root. There are filter aliases in the root `package.json` file that can be used to run commands in specific directories.
+
+## Contributing
+
+If you want to report a bug, please create an issue in GitHub unless it is a security issue. If it is a security issue, please follow our Security Reporting Policy in SECURITY.md file.

@@ -2,7 +2,7 @@
   "name": "brandwalls",
   "private": true,
   "engines": {
-    "pnpm": ">=6"
+    "pnpm": ">=11"
   },
   "type": "module",
   "scripts": {
@@ -17,12 +17,12 @@
     "@biomejs/biome": "2.5.10",
     "husky": "^9.1.7",
     "lint-staged": "^16.4.0",
-    "typescript": "5.7.2"
+    "typescript": "7.0.2"
   },
   "lint-staged": {
     "*.{js,ts,cjs,mjs,d.cts,d.mts,jsx,tsx,json,jsonc,css}": [
       "biome check --files-ignore-unknown=true --no-errors-on-unmatched"
     ]
   },
-  "packageManager": "pnpm@10.0.0"
+  "packageManager": "pnpm@11.24.0"
 }

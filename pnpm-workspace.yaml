@@ -1,9 +1,13 @@
 packages:
-  - 'web'
-  - 'studio'
+  - "web"
+  - "studio"
 overrides:
-  'fast-xml-parser': '^5.7.0'
-  'form-data': '4.0.5'
-  tar: '7.5.19'
+  "fast-xml-parser": "^5.7.0"
+  "form-data": "4.0.5"
+  tar: "7.5.19"
 minimumReleaseAge: 10080
 blockExoticSubdeps: true
+# Ignore trust policy assuming they are safe due to their age
+trustPolicyIgnoreAfter: 10080
+allowBuilds:
+  esbuild: false

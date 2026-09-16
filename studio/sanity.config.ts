@@ -1,106 +1,77 @@
-import {defineConfig, createAuthStore} from 'sanity'
-import {structureTool} from 'sanity/structure'
-import {visionTool} from '@sanity/vision'
-import {schemaTypes} from './schemaTypes'
-import {DocumentLocation, presentationTool} from 'sanity/presentation'
-import {EarthGlobeIcon, RocketIcon} from '@sanity/icons'
+import { EarthGlobeIcon, RocketIcon } from "@sanity/icons";
+import { visionTool } from "@sanity/vision";
+import {
+  createAuthStore,
+  defineConfig,
+  type SchemaTypeDefinition,
+} from "sanity";
+import { presentationTool } from "sanity/presentation";
+import { structureTool } from "sanity/structure";
+import { schemaTypes } from "./schemaTypes";
 
 // URL for preview functionality, defaults to localhost:3000 if not set
-const SANITY_STUDIO_PREVIEW_URL = process.env.SANITY_STUDIO_PREVIEW_URL || 'http://localhost:3000'
+const SANITY_STUDIO_PREVIEW_URL =
+  process.env.SANITY_STUDIO_PREVIEW_URL || "http://localhost:3000";
 
-// Define the home location for the presentation tool
-const homeLocation = {
-  title: 'Home',
-  href: '/',
-} satisfies DocumentLocation
-
-// resolveHref() is a convenience function that resolves the URL
-// path for different document types and used in the presentation tool.
-function resolveHref(documentType?: string, slug?: string): string | undefined {
-  switch (documentType) {
-    case 'page':
-      return slug ? `/${slug}` : undefined
-    default:
-      console.warn('Invalid document type:', documentType)
-      return undefined
-  }
-}
+const sharedWorkspaceConfig = {
+  projectId: "l3891ift",
+  plugins: [
+    presentationTool({
+      previewUrl: {
+        origin: SANITY_STUDIO_PREVIEW_URL,
+        previewMode: {
+          enable: "/api/draft-mode/enable",
+        },
+      },
+    }),
+    structureTool(),
+    visionTool(),
+  ],
+  schema: {
+    types: schemaTypes as SchemaTypeDefinition[],
+  },
+  auth: {
+    redirectOnSingle: true,
+    providers: [
+      {
+        name: "saml",
+        title: "Equinor SSO",
+        url: "https://api.sanity.io/v2021-10-01/auth/saml/login/55ba173c",
+        logo: "/static/favicon.ico",
+      },
+    ],
+  },
+};
 
 export default defineConfig([
   {
-    projectId: 'l3891ift',
-    dataset: 'production',
-    name: 'production-workspace',
-    basePath: '/production',
-    title: 'Production Workspace',
-    subtitle: 'production',
+    ...sharedWorkspaceConfig,
+    dataset: "production",
+    name: "production-workspace",
+    basePath: "/production",
+    title: "Production Workspace",
+    subtitle: "production",
     icon: EarthGlobeIcon,
-    plugins: [
-      presentationTool({
-        previewUrl: {
-          origin: SANITY_STUDIO_PREVIEW_URL,
-          previewMode: {
-            enable: '/api/draft-mode/enable',
-          },
-        },
-      }),
-      structureTool(),
-      visionTool(),
-    ],
-    schema: {
-      types: schemaTypes,
-    },
     auth: createAuthStore({
-      projectId: 'l3891ift',
-      dataset: 'production',
-      mode: 'replace',
-      redirectOnSingle: true,
-      providers: [
-        {
-          name: 'saml',
-          title: 'Equinor SSO',
-          url: 'https://api.sanity.io/v2021-10-01/auth/saml/login/55ba173c',
-          logo: '/static/favicon.ico',
-        },
-      ],
+      ...sharedWorkspaceConfig.auth,
+      projectId: sharedWorkspaceConfig.projectId,
+      dataset: "production",
+      providers: (prev) => [...prev, ...sharedWorkspaceConfig.auth.providers],
     }),
   },
   {
-    projectId: 'l3891ift',
-    dataset: 'development',
-    name: 'development-workspace',
-    basePath: '/development',
-    title: 'Development Workspace',
-    subtitle: 'development',
+    ...sharedWorkspaceConfig,
+    dataset: "development",
+    name: "development-workspace",
+    basePath: "/development",
+    title: "Development Workspace",
+    subtitle: "development",
     icon: RocketIcon,
-    plugins: [
-      presentationTool({
-        previewUrl: {
-          origin: SANITY_STUDIO_PREVIEW_URL,
-          previewMode: {
-            enable: '/api/draft-mode/enable',
-          },
-        },
-      }),
-      structureTool(),
-      visionTool(),
-    ],
-    schema: {
-      types: schemaTypes,
-    },
     auth: createAuthStore({
-      projectId: 'l3891ift',
-      dataset: 'development',
-      mode: 'replace',
-      redirectOnSingle: true,
-      providers: [
-        {
-          name: 'saml',
-          title: 'Equinor SSO',
-          url: 'https://api.sanity.io/v2021-10-01/auth/saml/login/55ba173c',
-          logo: '/static/favicon.ico',
-        },
-      ],
+      ...sharedWorkspaceConfig.auth,
+      projectId: sharedWorkspaceConfig.projectId,
+      dataset: "development",
+      providers: (prev) => [...prev, ...sharedWorkspaceConfig.auth.providers],
     }),
   },
-])
+]);

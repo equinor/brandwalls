@@ -1,5 +1,4 @@
-@import "tailwindcss" source('../');
-@plugin "@tailwindcss/typography";
+@import "tailwindcss" source("../");
 
 @theme {
   --breakpoint-lg: 3400px;
@@ -106,6 +105,7 @@
   --spacing-2xl: 2.5rem;
   --spacing-3xl: 3.5rem;
   --spacing-4xl: 6rem;
+  --spacing-6xl: 9rem;
   --spacing-card-minWidth: 220px;
   --spacing-card-maxWidth: 400px;
   --spacing-layout-sm: clamp(16px, calc(-38.3689px + 14.4984vw), 250px);
@@ -140,13 +140,11 @@
   --max-width-menuText: calc(35 * var(--spacing-md));
   --min-width-viewport: 375px;
   --radius-xs: 0.1rem;
+  --radius-card: 1rem;
+
   --shadow-card:
-    rgba(0, 0, 0, 0.08) 0px 1px 3px, 1px -1px 2px 0px rgba(0, 0, 0, 0.07), rgba(
-      0,
-      0,
-      0,
-      0.2
-    ) 0px 1px 2px;
+    rgba(0, 0, 0, 0.08) 0px 1px 3px, 1px -1px 2px 0px rgba(0, 0, 0, 0.07),
+    rgba(0, 0, 0, 0.2) 0px 1px 2px;
   --shadow-card-interact:
     rgba(0, 0, 0, 0.14) 0px 1px 3px, rgba(0, 0, 0, 0.36) 0px 1px 2px;
   --ease-scroll: cubic-bezier(0.645, 0.045, 0.355, 1);
@@ -240,58 +238,52 @@
 }
 
 @layer components {
-  .prose {
-    font-size: var(--text-2xl);
+  .portable-text {
+    color: var(--color-slate-80);
+    font-size: var(--text-xl);
     line-height: 1.1;
   }
-  .prose :where(h1) {
+  .dark .portable-text {
+    color: var(--color-white-100);
+  }
+  .portable-text :where(h1) {
     font-size: var(--text-5xl);
     line-height: 1.1;
     font-weight: 400;
     margin-block: 0 var(--spacing-lg);
   }
-  .prose :where(h2) {
+  .portable-text :where(h2) {
     font-size: var(--text-4xl);
     line-height: 1.1;
     font-weight: 400;
     margin-block: 0 var(--spacing-lg);
   }
-  .prose :where(h3) {
+  .portable-text :where(h3) {
     font-size: var(--text-3xl);
     line-height: 1.1;
     font-weight: 400;
     margin-block: 0 var(--spacing-lg);
   }
-  .prose :where(h4) {
+  .portable-text :where(h4) {
     font-size: var(--text-2xl);
     line-height: 1.1;
     font-weight: 400;
     margin-block: 0;
   }
-  .prose :where(h5) {
+  .portable-text :where(h5) {
     font-size: var(--text-xl);
     line-height: 1.1;
-    font-weight: 600;
+    font-weight: 400;
   }
-  .prose :where(h6) {
+  .portable-text :where(h6) {
     font-size: var(--text-lg);
     line-height: 1.1;
-    font-weight: 600;
+    font-weight: 400;
   }
-  .prose :where(p) {
+  .portable-text :where(p) {
+    font-size: var(--text-xl);
     text-wrap: pretty;
     margin-block: 0.25em;
-  }
-  .prose {
-    --tw-prose-body: var(--color-slate-80);
-    --tw-prose-bullets: var(--color-slate-80);
-    --tw-prose-counters: var(--color-slate-80);
-  }
-  .prose-invert {
-    --tw-prose-invert-headings: var(--color-white-100);
-    --tw-prose-invert-body: var(--color-white-100);
-    --tw-prose-invert-bullets: var(--color-white-100);
-    --tw-prose-invert-counters: var(--color-white-100);
   }
 }
 
@@ -357,6 +349,66 @@
 }
 
 @layer utilities {
+  /*   .backdrop-glass {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    border-radius: inherit;
+    pointer-events: none;
+  } */
+  /*   .glass-border {
+    isolation: isolate;
+    overflow: hidden;
+    border-radius: var(--radius-card);
+    background: linear-gradient(
+      to bottom,
+      rgb(255 255 255 / 23%),
+      rgb(255 255 255 / 13%) 50%
+    );
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+  } */
+  .glass-border::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    border: 1px solid transparent;
+    border-radius: var(--radius-card);
+    background: linear-gradient(
+        hsl(from var(--color-white-100) h s l / 0.22),
+        hsl(from var(--color-white-100) h s l / 0.2)
+      )
+      border-box;
+    mask:
+      linear-gradient(black, black) border-box,
+      linear-gradient(black, black) padding-box;
+    mask-composite: subtract;
+  }
+  .glass-border {
+    isolation: isolate;
+  }
+  .backdrop-glass:before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    -webkit-backdrop-filter: blur(16px);
+    backdrop-filter: blur(16px);
+    border-radius: var(--radius-card);
+    background: linear-gradient(
+      to bottom,
+      hsl(from var(--color-white-100) h s l / 0.23),
+      hsl(from var(--color-white-100) h s l / 0.13) 50% /*transparent 50%*/
+    );
+  }
+    .backdrop-glass-lighter:before {
+    background: linear-gradient(
+      to bottom,
+      hsl(from var(--color-white-100) h s l / 0.39),
+      hsl(from var(--color-white-100) h s l / 0.28) 50% /*transparent 50%*/
+    );
+  }
   .text-stroke {
     -webkit-text-stroke-width: 1px;
     -webkit-text-stroke-color: var(--color-slate-80);
@@ -367,79 +419,6 @@
       rgba(0, 0, 0, 0) 0%,
       rgba(0, 0, 0, 0.6) 60%,
       rgba(0, 0, 0, 0.8) 100%
-    );
-  }
-
-  .black-right-gradient {
-    background-image: linear-gradient(
-      to right,
-      rgba(0, 0, 0, 0.4),
-      rgba(0, 0, 0, 0.2) 25%,
-      rgba(0, 0, 0, 0.1) 50%,
-      rgba(0, 0, 0, 0) 100%
-    );
-  }
-  .black-left-gradient {
-    background-image: linear-gradient(
-      to left,
-      rgba(0, 0, 0, 0.4),
-      rgba(0, 0, 0, 0.2) 25%,
-      rgba(0, 0, 0, 0.1) 50%,
-      rgba(0, 0, 0, 0) 100%
-    );
-  }
-  .black-bottom-gradient {
-    background-image: linear-gradient(
-      to top,
-      rgba(0, 0, 0, 0.5),
-      rgba(0, 0, 0, 0.4) 25%,
-      rgba(0, 0, 0, 0.1) 50%,
-      rgba(0, 0, 0, 0) 100%
-    );
-  }
-  .black-top-gradient {
-    background-image: linear-gradient(
-      to bottom,
-      rgba(0, 0, 0, 0.5),
-      rgba(0, 0, 0, 0.4) 25%,
-      rgba(0, 0, 0, 0.1) 50%,
-      rgba(0, 0, 0, 0) 100%
-    );
-  }
-  .white-right-gradient {
-    background-image: linear-gradient(
-      to right,
-      rgba(255, 255, 255, 0.4),
-      rgba(255, 255, 255, 0.2) 25%,
-      rgba(255, 255, 255, 0.1) 50%,
-      rgba(255, 255, 255, 0) 100%
-    );
-  }
-  .white-left-gradient {
-    background-image: linear-gradient(
-      to left,
-      rgba(255, 255, 255, 0.4),
-      rgba(255, 255, 255, 0.2) 25%,
-      rgba(255, 255, 255, 0.1) 50%,
-      rgba(255, 255, 255, 0) 100%
-    );
-  }
-  .white-bottom-gradient {
-    background-image: linear-gradient(
-      to bottom,
-      rgba(255, 255, 255, 0.5),
-      rgba(255, 255, 255, 0.4) 25%,
-      rgba(255, 255, 255, 0.1) 50%,
-      rgba(255, 255, 255, 0) 100%
-    );
-  }
-  .white-top-gradient {
-    background-image: linear-gradient(
-      to top,
-      rgba(255, 255, 255, 0.5),
-      rgba(255, 255, 255, 0.4) 25%,
-      rgba(255, 255, 255, 0.1) 50%,
-      rgba(255, 255, 255, 0) 100%
     );
   }
 
