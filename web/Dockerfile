@@ -47,7 +47,6 @@ ENV UID=12345
 RUN addgroup -S "$USER" && adduser -S --uid "$UID" "$USER"
 
 WORKDIR /app
-COPY --from=builder /app/web/public ./web/public
 COPY --from=builder --chown="$USER":"$USER" /app/web/.next/standalone ./
 COPY --from=builder --chown="$USER":"$USER" /app/web/.next/static ./web/.next/static
 
