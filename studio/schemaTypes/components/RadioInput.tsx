@@ -1,26 +1,26 @@
-import {StringInputProps, set} from 'sanity'
-import {Button, Label, Flex} from '@sanity/ui'
-import {createElement, useCallback} from 'react'
+import { Button, Flex, Label } from "@sanity/ui";
+import { createElement, useCallback } from "react";
+import { type StringInputProps, set } from "sanity";
 
-type RadioIconSelectorOption = {
-  value: string
-  icon: () => JSX.Element
-}
+export type RadioIconSelectorOption = {
+  value: string;
+  icon: any;
+};
 
 type RadioInputProps = {
-  options: RadioIconSelectorOption[]
-} & StringInputProps
+  options: RadioIconSelectorOption[];
+} & StringInputProps;
 
 export function RadioInput(props: RadioInputProps) {
-  const {options, value, onChange} = props
+  const { options, value, onChange } = props;
 
   const handleClick = useCallback(
     (event: React.MouseEvent<HTMLButtonElement>) => {
-      const nextValue = event.currentTarget.value
-      onChange(set(nextValue))
+      const nextValue = event.currentTarget.value;
+      onChange(set(nextValue));
     },
     [onChange],
-  )
+  );
 
   return (
     <Flex gap={3}>
@@ -40,5 +40,5 @@ export function RadioInput(props: RadioInputProps) {
         </Button>
       ))}
     </Flex>
-  )
+  );
 }

@@ -1,31 +1,32 @@
-import type { Metadata } from 'next'
-import localFont from 'next/font/local'
-import './globals.css'
-import { Toaster } from 'sonner'
-import { VisualEditing } from 'next-sanity/visual-editing'
-import { draftMode } from 'next/headers'
-import DraftModeToast from '@/components/draft-mode/DraftModeToast'
+import type { Metadata } from 'next';
+import localFont from 'next/font/local';
+import './globals.css';
+import { draftMode } from 'next/headers';
+import { Toaster } from 'sonner';
+import DraftModeToast from '@/components/draft-mode/DraftModeToast';
+import { SanityLive } from '@/sanity/lib/live';
+import { ConditionalVisualEditing } from './ConditionalVisualEditing';
 
 const equinorRegular = localFont({
   src: './fonts/equinor/Equinor-Regular.woff',
-})
+});
 const equinorVariableWoff = localFont({
   src: './fonts/equinor/EquinorVariable-VF.woff',
-})
+});
 const equinorVariableWoff2 = localFont({
   src: './fonts/equinor/EquinorVariable-VF.woff2',
-})
+});
 
 export const metadata: Metadata = {
   title: 'Equinor Brandwalls',
   robots: 'noindex, nofollow',
-}
+};
 export default async function RootLayout({
   children,
 }: Readonly<{
-  children: React.ReactNode
+  children: React.ReactNode;
 }>) {
-  const { isEnabled: isDraftMode } = await draftMode()
+  const { isEnabled: isDraftMode } = await draftMode();
   return (
     <html
       lang="en"
@@ -37,13 +38,14 @@ export default async function RootLayout({
         {isDraftMode && (
           <>
             <DraftModeToast />
-            <VisualEditing />
+            <ConditionalVisualEditing />
           </>
         )}
-        {/* The <SanityLive> component is responsible for making all sanityFetch calls in your application live, so should always be rendered. */}
-        {/* <SanityLive onError={handleError} /> */}
-        <main className="relative h-screen max-h-[100vh] w-screen max-w-[100vw]">{children}</main>
+        <SanityLive />
+        <main className="relative h-screen max-h-[100vh] w-screen max-w-[100vw]">
+          {children}
+        </main>
       </body>
     </html>
-  )
+  );
 }

@@ -1,0 +1,13 @@
+**/README*
+**/Dockerfile
+**/.dockerignore
+**/.env*
+**/node_modules
+**/.next
+**/.sanity
+**/dist
+**/build
+.git
+.github
+coverage
+out

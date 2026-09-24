@@ -1,11 +1,13 @@
-import {ReactNode} from 'react'
+import type { ReactNode } from "react";
 
 type Props = {
-  children: ReactNode
-}
+  children: ReactNode;
+};
 
-export const SubScriptRenderer = ({children}: Props) => <sub>{children}</sub>
+export const SubScriptRenderer = ({ children }: Props) => <sub>{children}</sub>;
 
-export const SuperScriptRenderer = ({children}: Props) => <sup>{children}</sup>
+export const SuperScriptRenderer = ({ children }: Props) => (
+  <sup>{children}</sup>
+);
 
-export const StrikeThroughRenderer = ({children}: Props) => <s>{children}</s>
+export const StrikeThroughRenderer = ({ children }: Props) => <s>{children}</s>;

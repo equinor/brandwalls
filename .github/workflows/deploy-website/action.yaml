@@ -34,8 +34,10 @@ runs:
       if: "${{ inputs.commitSha != '' }}"
       id: get-long-sha
       shell: bash
+      env:
+        COMMIT_SHA: ${{ inputs.commitSha }}
       run: |
-        echo "sha=$(git rev-parse ${{ inputs.commitSha }})" >> $GITHUB_OUTPUT
+        printf 'sha=%s\n' "$(git rev-parse "$COMMIT_SHA")" >> "$GITHUB_OUTPUT"
     - name: Checkout specific branch 🛎️
       if: "${{ inputs.commitSha != '' }}"
       id: checkout-specific-branch
@@ -49,15 +51,25 @@ runs:
       shell: bash
       id: set-default-image-tag
       run: |
-        echo "IMAGE_TAG=$(echo ${GITHUB_REF##*/}-latest)" >> $GITHUB_ENV
-        echo "IMAGE_TAG_SHA=$(git rev-parse --short=12 ${GITHUB_SHA})" >> $GITHUB_ENV
+        image_tag="${GITHUB_REF##*/}-latest"
+        image_tag_sha="$(git rev-parse --short=12 "$GITHUB_SHA")"
+        printf 'IMAGE_TAG=%s\n' "$image_tag" >> "$GITHUB_ENV"
+        printf 'IMAGE_TAG_SHA=%s\n' "$image_tag_sha" >> "$GITHUB_ENV"
+        printf 'Image tag is %s\n' "$image_tag"
+        printf 'Image tag SHA is %s\n' "$image_tag_sha"
     - name: Set image tags based on commit sha 🏷
       if: "${{ inputs.commitSha != '' }}"
       shell: bash
       id: set-image-tag
+      env:
+        COMMIT_SHA: ${{ inputs.commitSha }}
       run: |
-        echo "IMAGE_TAG=${{inputs.commitSha}}" >> $GITHUB_ENV
-        echo "IMAGE_TAG_SHA=${{inputs.commitSha}}" >> $GITHUB_ENV
+        image_tag="$COMMIT_SHA"
+        image_tag_sha="$COMMIT_SHA"
+        printf 'IMAGE_TAG=%s\n' "$image_tag" >> "$GITHUB_ENV"
+        printf 'IMAGE_TAG_SHA=%s\n' "$image_tag_sha" >> "$GITHUB_ENV"
+        printf 'Image tag is %s\n' "$image_tag"
+        printf 'Image tag SHA is %s\n' "$image_tag_sha"
     - name: Set up Docker Buildx 🔧
       uses: docker/setup-buildx-action@v4
     - name: Login to GHCR 🔐
@@ -87,10 +99,11 @@ runs:
     - name: Get component name
       id: get-component-name
       shell: bash
+      env:
+        COMPONENT_NAME: ${{ inputs.datasetName == 'production' && 'web' || format('{0}{1}', 'web-', inputs.datasetName) }}
       run: |
-        component=${{ inputs.datasetName == 'production' && 'web' || format('{0}{1}', 'web-', inputs.datasetName) }}
-        echo "Component name is $component"
-        echo "COMPONENT_NAME=$component" >> $GITHUB_ENV
+        printf 'Component name is %s\n' "$COMPONENT_NAME"
+        printf 'COMPONENT_NAME=%s\n' "$COMPONENT_NAME" >> "$GITHUB_ENV"
 
     # DEPLOY RADIX CLUSTER
     - name: Deploy to Radix Platform 🚀

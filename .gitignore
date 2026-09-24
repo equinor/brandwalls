@@ -21,6 +21,10 @@ videos
 # studio
 .sanity/
 
+#turbo
+.turbo
+
+
 
 # production
 build
