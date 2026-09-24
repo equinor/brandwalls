@@ -22,8 +22,8 @@ npm i -g pnpm
 
 This project uses the pnpm package manager. All commands should be run from root. There are filter aliases in the root `package.json` file that can be used to run commands in specific directories.
 
-##Testing
-To test web use developer tools and responsive mode with resolution 7680 x 4320 (8K UHD)
+## Testing
+To test web use developer tools and responsive mode with resolution 7680 x 4320
 
 ## Contributing
 
