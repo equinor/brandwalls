@@ -422,30 +422,6 @@ PR-specific items:
 the rig, the differential (F) holds, and every item above is checked. Until all
 three hold, you are not done.
 
-## Driving the navigation in tests
-
-- **Soft navigation** → drive a real `<Link>` click. **Initial load** → use
-  `page.goto()` inside `instant()` with the `baseURL` option. Do not substitute
-  `goto` for a soft-nav verdict; the two shells can differ
-  (`test-template.md`, `reference/real-app-patterns.md`).
-- With parallel routes, only the slots that change re-render on a soft
-  navigation; client-rendered navigation UI does not re-render at all. Do not
-  chase a slot the navigation never touches
-  (`reference/real-app-patterns.md`).
-
-## Files
-
-- `rig-template.md`: phase 0, the six-question rig discovery, the
-  `instant-nav.rig.md` template, and filled examples (local-only, generic CI,
-  preview deploy).
-- `test-template.md`: the shipped `instant()` specs for both navigation
-  types (phase C), and the delete-before-PR baseline scaffold (phase B).
-- `reference/red-test-robustness.md`: the C-gate and phase F. The taxonomy of
-  untrustworthy REDs, the checklist, the differential recipe, the vacuous-pass
-  failure mode, and worked cases.
-- `reference/real-app-patterns.md`: parallel routes, deferring an auth gate,
-  initial-load vs soft-navigation shells, the empty-shell failure mode, the
-  responsive-skeleton mismatch, edge cases.
 
 ## After optimization
 
