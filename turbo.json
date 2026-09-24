@@ -2,6 +2,7 @@
   "$schema": "https://turborepo.dev/schema.json",
   "tasks": {
     "build": {
+      "passThroughEnv": ["SANITY_API_READ_TOKEN"],
       "outputs": [".next/**", "!.next/cache/**"]
     }
   }
