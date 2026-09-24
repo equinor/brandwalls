@@ -399,14 +399,14 @@
     background: linear-gradient(
       to bottom,
       hsl(from var(--color-white-100) h s l / 0.23),
-      hsl(from var(--color-white-100) h s l / 0.13) 50% /*transparent 50%*/
+      hsl(from var(--color-white-100) h s l / 0.13) 50%
     );
   }
-    .backdrop-glass-lighter:before {
+  .backdrop-glass-lighter:before {
     background: linear-gradient(
       to bottom,
       hsl(from var(--color-white-100) h s l / 0.39),
-      hsl(from var(--color-white-100) h s l / 0.28) 50% /*transparent 50%*/
+      hsl(from var(--color-white-100) h s l / 0.28) 50%
     );
   }
   .text-stroke {
