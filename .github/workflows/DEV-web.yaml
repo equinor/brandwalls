@@ -18,7 +18,7 @@ jobs:
       DOCKER_BUILDKIT: 1
     steps:
       - name: Checkout 🛎️
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
       - id: deploy-development
         uses: ./.github/workflows/deploy-website/
         with:
