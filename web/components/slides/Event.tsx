@@ -1,9 +1,28 @@
-import { format, isSameDay, parseISO } from "date-fns";
-import type { Event as _Event } from "@/sanity.types";
-import Blocks from "../Blocks";
-import SanityImage from "../core/SanityImage/SanityImage";
+import { format, isSameDay, parseISO } from 'date-fns';
+import type { PortableTextBlock } from 'next-sanity';
+import type { Event as _Event } from '@/sanity.types';
+import Blocks from '../Blocks';
+import SanityImage from '../core/SanityImage/SanityImage';
 
 type EventProps = _Event;
+type EventPortableTextBlock = NonNullable<EventProps['title']>[number];
+
+const hasRenderableChildren = (
+  block: EventPortableTextBlock,
+): block is EventPortableTextBlock & {
+  children: NonNullable<EventPortableTextBlock['children']>;
+} => Array.isArray(block.children);
+
+const getRenderableBlocks = (
+  blocks: EventProps['title'] | EventProps['introduction'],
+): PortableTextBlock[] | undefined => {
+  if (!blocks) return undefined;
+
+  return blocks.filter(hasRenderableChildren).map((block) => ({
+    ...block,
+    markDefs: block.markDefs ?? [],
+  }));
+};
 
 export default function Event({
   title,
@@ -17,6 +36,8 @@ export default function Event({
 }: EventProps) {
   const startDate = startDatetime ? parseISO(startDatetime) : undefined;
   const endDate = endDatetime ? parseISO(endDatetime) : undefined;
+  const renderableTitle = getRenderableBlocks(title);
+  const renderableIntroduction = getRenderableBlocks(introduction);
   return (
     <div className={`flex h-full w-full flex-col`}>
       {eyebrow && (
@@ -26,20 +47,22 @@ export default function Event({
       )}
       <div className="grid grow grid-cols-4 bg-moss-green-60 ps-96">
         <div className="col-span-2 py-48">
-          {title && <Blocks value={title} className="pb-xl text-4xl" />}
+          {renderableTitle && (
+            <Blocks value={renderableTitle} className="pb-xl text-4xl" />
+          )}
           {startDate && endDate && (
             <div className="text-2xl text-norwegian-woods-100">
               {isSameDay(startDate, endDate) ? (
-                <div>{format(startDate, "d LLLL yyyy")}</div>
+                <div>{format(startDate, 'd LLLL yyyy')}</div>
               ) : (
                 <div>
-                  {format(startDate, "d")} - {format(endDate, "d")}{" "}
-                  {format(startDate, "LLLL yyyy")}
+                  {format(startDate, 'd')} - {format(endDate, 'd')}{' '}
+                  {format(startDate, 'LLLL yyyy')}
                 </div>
               )}
               {!hideTime && (
                 <div className="text-xl">
-                  {format(startDate, "HH:mm")} - {format(endDate, "HH:mm")}
+                  {format(startDate, 'HH:mm')} - {format(endDate, 'HH:mm')}
                 </div>
               )}
               {location && <div className="text-xl">{location}</div>}
@@ -51,9 +74,9 @@ export default function Event({
         </div>
       </div>
       <div className="px-4xl ps-96 pt-2xl pb-4xl">
-        {introduction && (
+        {renderableIntroduction && (
           <Blocks
-            value={introduction}
+            value={renderableIntroduction}
             className="max-w-[65ch] text-balance text-xl leading-loose"
           />
         )}
