@@ -5,7 +5,7 @@ RUN apk add --no-cache libc6-compat curl
 
 FROM core-os AS base
 WORKDIR /app
-RUN npm install --global pnpm@10.0.0 turbo@2.10.10
+RUN npm install --global pnpm@11.24.0 turbo@2.10.10
 
 FROM base AS prepare
 COPY . .
