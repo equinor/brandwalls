@@ -37,8 +37,8 @@ importers:
         specifier: 8.5.0
         version: 8.5.0
       '@sanity/icons':
-        specifier: ^3.7.4
-        version: 3.8.0(react@19.2.4)
+        specifier: ^5.2.2
+        version: 5.2.2(react@19.2.4)
       '@sanity/ui':
         specifier: ^4.0.7
         version: 4.2.0(react-dom@19.2.4(react@19.2.4))(react@19.2.4)(styled-components@6.5.3(react-dom@19.2.4(react@19.2.4))(react@19.2.4))
@@ -2337,18 +2337,6 @@ packages:
   '@sanity/groq-condition-describe@0.4.1':
     resolution: {integrity: sha512-dvPD4LTqAwK52WlZutYGkCcHmntUfhbgzZ5MKEHO9WEK37V+l7dbtbY9et3rysdUrxOHagwZbyXpNnGhthkCiA==}
     engines: {node: '>=20'}
-
-  '@sanity/icons@3.8.0':
-    resolution: {integrity: sha512-LXa8eoE6U2e46L/9Pk6VU1aOWNxEqEG1osTb2YWItPIAa8MyXkICRwdNRWwW3kr5gmf+Sh2ZmfKol/Q+oGKSqw==}
-    engines: {node: '>=14.0.0'}
-    peerDependencies:
-      react: ^18.3 || ^19.0.0-0
-
-  '@sanity/icons@5.2.1':
-    resolution: {integrity: sha512-P5gY1HRungh4RgCcypdIpu/SKoTwRBTttpbHntZjdW1MO3MK6xEOs+pbAzSARyhh22OcN9PkBBEYk2FL34BvfQ==}
-    engines: {node: '>=20.19 <22 || >=22.12'}
-    peerDependencies:
-      react: ^18 || ^19
 
   '@sanity/icons@5.2.2':
     resolution: {integrity: sha512-v+5dMjYJ6pC4x8IS/4O/GvQBet5GqsXsqJxBiiS6WHZt21EgntpW+q5hxU3dO4q/njiyR8O1JsdLAs3NranoXA==}
@@ -8845,14 +8833,6 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  '@sanity/icons@3.8.0(react@19.2.4)':
-    dependencies:
-      react: 19.2.4
-
-  '@sanity/icons@5.2.1(react@19.2.4)':
-    dependencies:
-      react: 19.2.4
-
   '@sanity/icons@5.2.2(react@19.2.4)':
     dependencies:
       react: 19.2.4
@@ -9438,7 +9418,7 @@ snapshots:
     dependencies:
       '@floating-ui/react-dom': 2.1.9(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
       '@sanity/color': 3.0.8
-      '@sanity/icons': 5.2.1(react@19.2.4)
+      '@sanity/icons': 5.2.2(react@19.2.4)
       '@vanilla-extract/dynamic': 2.1.5
       clsx: 2.1.1
       csstype: 3.2.3
@@ -9590,7 +9570,7 @@ snapshots:
       '@rexxars/react-split-pane': 1.0.0(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
       '@sanity/client': 8.5.0
       '@sanity/color': 3.0.8
-      '@sanity/icons': 5.2.1(react@19.2.4)
+      '@sanity/icons': 5.2.2(react@19.2.4)
       '@sanity/lezer-groq': 1.0.4
       '@sanity/ui': 4.2.0(react-dom@19.2.4(react@19.2.4))(react@19.2.4)(styled-components@6.5.3(react-dom@19.2.4(react@19.2.4))(react@19.2.4))
       '@sanity/uuid': 3.0.3
@@ -9652,7 +9632,7 @@ snapshots:
   '@sanity/visual-editing@6.1.2(@sanity/client@8.5.0)(@types/react@19.2.18)(next@16.3.4(@babel/core@7.29.7(supports-color@8.1.1))(@types/node@24.13.3)(react-dom@19.2.4(react@19.2.4))(react@19.2.4))(react-dom@19.2.4(react@19.2.4))(react@19.2.4)(styled-components@6.5.3(react-dom@19.2.4(react@19.2.4))(react@19.2.4))(typescript@7.0.2)':
     dependencies:
       '@sanity/comlink': 4.0.3
-      '@sanity/icons': 5.2.1(react@19.2.4)
+      '@sanity/icons': 5.2.2(react@19.2.4)
       '@sanity/mutate': 0.18.1(xstate@5.32.6)
       '@sanity/presentation-comlink': 2.2.3(@sanity/types@6.12.0(@types/react@19.2.18))
       '@sanity/preview-url-secret': 4.1.5(@sanity/client@8.5.0)

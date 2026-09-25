@@ -19,7 +19,7 @@
   "dependencies": {
     "@sanity/client": "8.5.0",
     "@sanity/vision": "6.12.0",
-    "@sanity/icons": "^3.7.4",
+    "@sanity/icons": "^5.2.2",
     "@sanity/ui": "^4.0.7",
     "react-icons": "5.7.0",
     "@equinor/eds-icons": "^1.5.1",
