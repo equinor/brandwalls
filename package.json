@@ -14,7 +14,7 @@
     "cleandep": "rm -rf node_modules && rm -rf pnpm-lock.yaml && pnpm -r exec rm -rf node_modules"
   },
   "devDependencies": {
-    "@biomejs/biome": "2.5.10",
+    "@biomejs/biome": "2.5.14",
     "husky": "^9.1.7",
     "lint-staged": "^16.4.0",
     "typescript": "7.0.2"
