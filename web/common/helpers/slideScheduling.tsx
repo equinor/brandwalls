@@ -1,6 +1,7 @@
 type Slide = {
   content: any
-  duration?: number | null
+  duration?: number | string | null
+  overrideDuration?: boolean
   scheduling?: any
 }
 
@@ -11,7 +12,7 @@ export function isSlideActive(slide: any): boolean {
   switch (scheduling.scheduleType) {
     case '1': {
       // Specific period
-      const nowDateTime = new Date().getTime()
+      const nowDateTime = Date.now()
       const from = scheduling.period?.from ? new Date(scheduling.period.from).getTime() : null
       const to = scheduling.period?.to ? new Date(scheduling.period.to).getTime() : null
       if (from && to) {
