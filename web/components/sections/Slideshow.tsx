@@ -1,5 +1,5 @@
 'use client'
-import { useCallback, useEffect, useMemo, useState } from 'react'
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import SectionMapper from './SectionMapper'
 import { useSlideContext } from '../slide-context'
 import { distributeRecurringForSlideshow, isSlideActive } from '@/common/helpers/slideScheduling'
@@ -24,6 +24,7 @@ export default function Slideshow({ slideshows }: SlideshowProps) {
   const { videoDuration } = useSlideContext()
   const [currentIndex, setCurrentIndex] = useState<number | null>(null)
   const [schedulingTime, setSchedulingTime] = useState(() => new Date())
+  const previousSchedulingTime = useRef(schedulingTime)
 
   const slides = useMemo(() => {
     const allSlides = slideshows
@@ -34,8 +35,7 @@ export default function Slideshow({ slideshows }: SlideshowProps) {
     return processedSlides
   }, [slideshows])
 
-  const findNextIndex = useCallback((startIndex: number) => {
-    const now = new Date()
+  const findNextIndex = useCallback((startIndex: number, now: Date) => {
     for (let offset = 1; offset <= slides.length; offset += 1) {
       const nextIndex = (startIndex + offset) % slides.length
       if (isSlideActive(slides[nextIndex], now)) {
@@ -55,6 +55,20 @@ export default function Slideshow({ slideshows }: SlideshowProps) {
   }, [])
 
   useEffect(() => {
+    const lastSchedulingTime = previousSchedulingTime.current
+    previousSchedulingTime.current = schedulingTime
+
+    const newlyActiveIndex = slides.findIndex(
+      (slide, index) =>
+        index !== currentIndex &&
+        !isSlideActive(slide, lastSchedulingTime) &&
+        isSlideActive(slide, schedulingTime),
+    )
+    if (newlyActiveIndex >= 0) {
+      setCurrentIndex(newlyActiveIndex)
+      return
+    }
+
     const currentSlide = currentIndex === null ? undefined : slides[currentIndex]
     if (currentSlide && isSlideActive(currentSlide, schedulingTime)) return
 
@@ -86,7 +100,9 @@ export default function Slideshow({ slideshows }: SlideshowProps) {
     let timeout: ReturnType<typeof setTimeout>
     const scheduleNextSlide = () => {
       timeout = setTimeout(() => {
-        const nextIndex = findNextIndex(currentIndex)
+        const now = new Date()
+        const nextIndex = findNextIndex(currentIndex, now)
+        setSchedulingTime(now)
         if (nextIndex === currentIndex) {
           scheduleNextSlide()
           return
