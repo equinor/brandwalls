@@ -5,14 +5,14 @@ type Slide = {
   scheduling?: any
 }
 
-export function isSlideActive(slide: any): boolean {
+export function isSlideActive(slide: any, now = new Date()): boolean {
   const scheduling = slide?.scheduling
   if (!scheduling) return true
 
   switch (scheduling.scheduleType) {
     case '1': {
       // Specific period
-      const nowDateTime = Date.now()
+      const nowDateTime = now.getTime()
       const from = scheduling.period?.from ? new Date(scheduling.period.from).getTime() : null
       const to = scheduling.period?.to ? new Date(scheduling.period.to).getTime() : null
       if (from && to) {
@@ -29,7 +29,6 @@ export function isSlideActive(slide: any): boolean {
 
     case '2': {
       // Selected weekdays
-      const now = new Date()
       const today = now.toLocaleString('en-US', { weekday: 'long' }).toLowerCase()
       return scheduling.weekdays?.includes(today) || false
     }
