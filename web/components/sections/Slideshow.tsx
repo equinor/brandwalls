@@ -5,6 +5,8 @@ import { useSlideContext } from '../slide-context'
 import { distributeRecurringForSlideshow, isSlideActive } from '@/common/helpers/slideScheduling'
 import { LogoSecondary } from '../core/Logo/Logo'
 
+const SCHEDULING_CHECK_INTERVAL = 1000
+
 type Slide = {
   content: any
   duration?: string
@@ -20,89 +22,111 @@ type SlideshowProps = {
 
 export default function Slideshow({ slideshows }: SlideshowProps) {
   const { videoDuration } = useSlideContext()
-  const [currentIndex, setCurrentIndex] = useState<number>(0)
-  const timeout = useRef<NodeJS.Timeout>(undefined)
+  const [currentIndex, setCurrentIndex] = useState<number | null>(null)
+  const [schedulingTime, setSchedulingTime] = useState(() => new Date())
+  const previousSchedulingTime = useRef(schedulingTime)
 
   const slides = useMemo(() => {
-    const allSlides = slideshows?.flatMap((show) => show?.slides)
+    const allSlides = slideshows
+      ?.flatMap((show) => show?.slides ?? [])
+      .filter((slide) => slide?.content?.length > 0)
     //@ts-ignore: TODO
     const processedSlides = distributeRecurringForSlideshow(allSlides)
     return processedSlides
   }, [slideshows])
 
-  const findNextIndex = useCallback(() => {
-    const isLast = currentIndex === slides?.length - 1
-    let nextIndex = isLast ? 0 : currentIndex + 1
-    let indexIsActive = false
-    do {
-      indexIsActive = isSlideActive(slides[nextIndex])
-      if (nextIndex === slides?.length - 1) {
-        if (!indexIsActive) {
-          nextIndex = 0
-        }
-      } else {
-        if (!indexIsActive) {
-          nextIndex = nextIndex + 1
-        }
+  const findNextIndex = useCallback((startIndex: number, now: Date) => {
+    for (let offset = 1; offset <= slides.length; offset += 1) {
+      const nextIndex = (startIndex + offset) % slides.length
+      if (isSlideActive(slides[nextIndex], now)) {
+        return nextIndex
       }
-    } while (!indexIsActive)
-    setCurrentIndex(nextIndex)
-  }, [currentIndex])
-
-  const play = useCallback(() => {
-    if (slides?.length > 0) {
-      let duration = 20000
-      if (currentIndex) {
-        const currentSlide = slides[currentIndex]
-        if (currentSlide?.content?.[0]?.type === 'fullWidthVideo') {
-          duration = videoDuration * 1000
-        }
-        if (
-          //@ts-ignore:todo
-          currentSlide?.overrideDuration &&
-          currentSlide?.duration &&
-          typeof currentSlide?.duration !== undefined &&
-          //@ts-ignore:todo
-          currentSlide?.duration !== ''
-        ) {
-          //@ts-ignore:todo
-          duration = parseInt(currentSlide?.duration, 10) * 1000
-        }
-      }
-      timeout.current = setTimeout(findNextIndex, duration)
     }
-  }, [currentIndex, videoDuration])
+
+    return null
+  }, [slides])
 
   useEffect(() => {
-    findNextIndex()
+    const interval = setInterval(() => {
+      setSchedulingTime(new Date())
+    }, SCHEDULING_CHECK_INTERVAL)
+
+    return () => clearInterval(interval)
   }, [])
 
   useEffect(() => {
-    clearTimeout(timeout.current)
-    play()
-  }, [currentIndex])
+    const lastSchedulingTime = previousSchedulingTime.current
+    previousSchedulingTime.current = schedulingTime
 
-  useEffect(() => {
-    clearTimeout(timeout.current)
-    play()
-  }, [videoDuration])
-
-  useEffect(() => {
-    const currentSlide = slides[currentIndex]
-    if (!currentSlide || !currentSlide?.content || currentSlide?.content?.length === 0) {
-      console.log('no slide or content,skip to next')
-      findNextIndex()
+    const newlyActiveIndex = slides.findIndex(
+      (slide, index) =>
+        index !== currentIndex &&
+        !isSlideActive(slide, lastSchedulingTime) &&
+        isSlideActive(slide, schedulingTime),
+    )
+    if (newlyActiveIndex >= 0) {
+      setCurrentIndex(newlyActiveIndex)
+      return
     }
-  }, [currentIndex, slides])
+
+    const currentSlide = currentIndex === null ? undefined : slides[currentIndex]
+    if (currentSlide && isSlideActive(currentSlide, schedulingTime)) return
+
+    const firstActiveIndex = slides.findIndex((slide) => isSlideActive(slide, schedulingTime))
+    const nextIndex = firstActiveIndex >= 0 ? firstActiveIndex : null
+    if (nextIndex !== currentIndex) {
+      setCurrentIndex(nextIndex)
+    }
+  }, [currentIndex, schedulingTime, slides])
+
+  useEffect(() => {
+    if (currentIndex === null) return
+
+    const currentSlide = slides[currentIndex]
+    if (!currentSlide || !isSlideActive(currentSlide)) return
+
+    let duration = 20000
+    if (currentSlide.content?.[0]?.type === 'fullWidthVideo') {
+      duration = videoDuration * 1000
+    }
+
+    if (currentSlide.overrideDuration && currentSlide.duration) {
+      const overrideDuration = Number.parseInt(String(currentSlide.duration), 10)
+      if (Number.isFinite(overrideDuration)) {
+        duration = overrideDuration * 1000
+      }
+    }
+
+    let timeout: ReturnType<typeof setTimeout>
+    const scheduleNextSlide = () => {
+      timeout = setTimeout(() => {
+        const now = new Date()
+        const nextIndex = findNextIndex(currentIndex, now)
+        setSchedulingTime(now)
+        if (nextIndex === currentIndex) {
+          scheduleNextSlide()
+          return
+        }
+        setCurrentIndex(nextIndex)
+      }, duration)
+    }
+
+    scheduleNextSlide()
+    return () => clearTimeout(timeout)
+  }, [currentIndex, findNextIndex, slides, videoDuration])
+
+  const currentSlide = currentIndex === null ? undefined : slides[currentIndex]
+  const activeSlide =
+    currentSlide && isSlideActive(currentSlide, schedulingTime) ? currentSlide : undefined
 
   return (
     <div className="starting-hidden h-full w-full overflow-hidden">
-      {slides.length === 0 && (
+      {!activeSlide && (
         <div className="flex h-full w-full items-center justify-center">
           <LogoSecondary className="h-2/6 w-2/6" />
         </div>
       )}
-      {slides.length > 0 && <SectionMapper section={slides[currentIndex]} />}
+      {activeSlide && <SectionMapper section={activeSlide} />}
     </div>
   )
 }
